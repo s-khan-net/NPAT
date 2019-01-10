@@ -1,0 +1,28 @@
+{
+  "name": "npat",
+  "version": "1.0.0",
+  "description": "multiplyer game with nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-khan-net/NPAT.git"
+  },
+  "keywords": [
+    "name",
+    "place",
+    "animal",
+    "thing"
+  ],
+  "author": "Saud Khan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s-khan-net/NPAT/issues"
+  },
+  "homepage": "https://github.com/s-khan-net/NPAT#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
