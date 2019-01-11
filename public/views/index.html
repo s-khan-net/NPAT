@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <title>CCTV</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="js/validate.js"></script>
+    <script>
+        $(document).ready(function(){
+            validate('');
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+    <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+    </button>
+    <a class="navbar-brand" href="/">CCTV</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/about">About us</a></li>
+        <li><a href="/contact">Contact us</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+    </div>
+</div>
+</nav>
+ <br/>
+ <div class="container" data-ng-app="" style="border:1px solid red;min-height:520px">
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Players{{1+1}}</h4>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-md-12">player list</div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Game</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="txtName" aria-label="txtName">Name</label>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" id="txtName" class="form-control" autocomplete="none"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="txtPlace" aria-label="txtPlace">Place</label>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" id="txtPlace" class="form-control" autocomplete="none"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="txtAnimal" aria-label="txtAnimal">Animal</label>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" id="txtAnimal" class="form-control" autocomplete="none"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="txtThing" aria-label="txtThing">Thing</label>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" id="txtThing" class="form-control" autocomplete="none"/>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-3">
+
+        </div>
+    </div>
+    
+</div>
+</body>
+
+</html>

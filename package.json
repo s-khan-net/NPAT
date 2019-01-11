@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/s-khan-net/NPAT#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "fast-csv": "^2.4.1"
   }
 }
