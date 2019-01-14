@@ -1226,7 +1226,7 @@ adieu
 adieus
 adieux
 adigranth
-adiós
+adiÛs
 adipic
 adipocere
 adipose
@@ -1858,8 +1858,8 @@ afterwords
 afterworld
 aftmost
 aga
-agaçant
-agaçante
+agaÁant
+agaÁante
 again
 against
 agalactia
@@ -2189,9 +2189,9 @@ aimless
 aimlessly
 aims
 ain
-aîne
-aînee
-aïoli
+aÓne
+aÓnee
+aÔoli
 air
 airborne
 airbrush
@@ -2433,8 +2433,8 @@ alcatras
 alcatrases
 alcayde
 alcaydes
-alcázar
-alcázars
+alc·zar
+alc·zars
 alchemic
 alchemical
 alchemise
@@ -2525,7 +2525,7 @@ alexins
 alfa
 alfalfa
 alfalfas
-alfaquí
+alfaquÌ
 alfas
 alferez
 alferezes
@@ -3885,8 +3885,8 @@ angrily
 angriness
 angry
 angst
-Ångström
-Ångströms
+≈ngstrˆm
+≈ngstrˆms
 angsts
 anguiform
 anguine
@@ -4510,8 +4510,8 @@ apeman
 apemen
 apepsia
 apepsy
-aperçu
-aperçus
+aperÁu
+aperÁus
 aperient
 aperients
 aperies
@@ -4929,7 +4929,7 @@ appuyed
 appuying
 appuys
 apraxia
-après
+aprËs
 apricate
 apricated
 apricates
@@ -5266,8 +5266,8 @@ areostyles
 arere
 ares
 aret
-arête
-arêtes
+arÍte
+arÍtes
 arets
 arett
 aretted
@@ -5569,8 +5569,8 @@ arrestment
 arrestor
 arrestors
 arrests
-arrêt
-arrêts
+arrÍt
+arrÍts
 arrhythmia
 arrhythmic
 arriage
@@ -5728,7 +5728,7 @@ asafetida
 asafoetida
 asana
 asanas
-åsar
+Âsar
 asarabacca
 asarum
 asarums

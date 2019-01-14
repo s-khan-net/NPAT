@@ -6225,7 +6225,7 @@ trudgers
 trudges
 trudging
 trudgings
-TRUE
+true
 trued
 trueing
 trueman

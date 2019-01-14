@@ -330,7 +330,7 @@ fallowing
 fallowness
 fallows
 falls
-FALSE
+false
 falsehood
 falsehoods
 falsely
