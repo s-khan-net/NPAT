@@ -3,13 +3,13 @@ Albania
 Algeria
 Andorra
 Angola
-Antigua and Barbuda
+Antigua & Deps
 Argentina
 Armenia
 Australia
 Austria
 Azerbaijan
-The Bahamas
+Bahamas
 Bahrain
 Bangladesh
 Barbados
@@ -19,27 +19,26 @@ Belize
 Benin
 Bhutan
 Bolivia
-Bosnia and Herzegovina
+Bosnia Herzegovina
 Botswana
 Brazil
 Brunei
 Bulgaria
-Burkina Faso
+Burkina
 Burundi
 Cambodia
 Cameroon
 Canada
 Cape Verde
-Central African Republic
+Central African Rep
 Chad
 Chile
 China
 Colombia
 Comoros
-Congo, Republic of the
-Congo, Democratic Republic of the
+Congo
+Congo {Democratic Rep}
 Costa Rica
-Cote d'Ivoire
 Croatia
 Cuba
 Cyprus
@@ -48,7 +47,7 @@ Denmark
 Djibouti
 Dominica
 Dominican Republic
-East Timor (Timor-Leste)
+East Timor
 Ecuador
 Egypt
 El Salvador
@@ -60,7 +59,7 @@ Fiji
 Finland
 France
 Gabon
-The Gambia
+Gambia
 Georgia
 Germany
 Ghana
@@ -78,17 +77,18 @@ India
 Indonesia
 Iran
 Iraq
-Ireland
+Ireland {Republic}
 Israel
 Italy
+Ivory Coast
 Jamaica
 Japan
 Jordan
 Kazakhstan
 Kenya
 Kiribati
-Korea, North
-Korea, South
+Korea North
+Korea South
 Kosovo
 Kuwait
 Kyrgyzstan
@@ -112,14 +112,14 @@ Marshall Islands
 Mauritania
 Mauritius
 Mexico
-Micronesia, Federated States of
+Micronesia
 Moldova
 Monaco
 Mongolia
 Montenegro
 Morocco
 Mozambique
-Myanmar (Burma)
+Myanmar, {Burma}
 Namibia
 Nauru
 Nepal
@@ -141,14 +141,14 @@ Poland
 Portugal
 Qatar
 Romania
-Russia
+Russian Federation
 Rwanda
-Saint Kitts and Nevis
-Saint Lucia
-Saint Vincent and the Grenadines
+St Kitts & Nevis
+St Lucia
+Saint Vincent & the Grenadines
 Samoa
 San Marino
-Sao Tome and Principe
+Sao Tome & Principe
 Saudi Arabia
 Senegal
 Serbia
@@ -175,7 +175,7 @@ Tanzania
 Thailand
 Togo
 Tonga
-Trinidad and Tobago
+Trinidad & Tobago
 Tunisia
 Turkey
 Turkmenistan
@@ -184,11 +184,11 @@ Uganda
 Ukraine
 United Arab Emirates
 United Kingdom
-United States of America
+United States
 Uruguay
 Uzbekistan
 Vanuatu
-Vatican City (Holy See)
+Vatican City
 Venezuela
 Vietnam
 Yemen

@@ -1,10 +1,6 @@
-var csv = require("fast-csv");
- 
-csv
- .fromPath("assets/EOWL-v1.1.2/CSV Format/A Words.csv")
- .on("data", function(data){
-     console.log(data);
- })
- .on("end", function(){
-     console.log("done");
- });
+const cities = require("all-the-cities")
+let s,d;
+s= cities.filter(city => {
+    return city.name.match('mumbai');
+  });
+console.log(s);

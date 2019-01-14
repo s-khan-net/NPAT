@@ -26,7 +26,7 @@ African leopard
 Albatross
 Alligator
 Alpaca
-American buffalo (bison)
+American buffalo
 American robin
 Amphibian
 list
@@ -45,7 +45,7 @@ Arctic Wolf
 Armadillo
 Arrow crab
 Asp
-Ass (donkey)
+Ass
 Baboon
 Badger
 Bald eagle

@@ -11,9 +11,9 @@ app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/images', express.static(__dirname + '/public/images'));
 
-app.use('/',(req,res)=>{
-    res.sendFile(`${__dirname}/public/views/index.html`)}
-);
+// app.use('/',(req,res)=>{
+//     res.sendFile(`${__dirname}/public/views/index.html`)}
+// );
 if(!config.get('jwtKey')) {
     console.log('FATAL ERROR: jwt token key not set');
     process.exit(1);
