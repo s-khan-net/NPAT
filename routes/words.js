@@ -7,9 +7,10 @@ router.get('/thing/:word',async (req,res)=>{
     let valid =false;//check if word is present
     let filename = (req.params.word.substring(0,1)).toUpperCase() +' Words.txt';
     //console.log(filename+'  '+req.params.word);
-    var data = fs.readFileSync(`assets/LF Delimited Format/${filename}`,'UTF-8');
+    var data = fs.readFileSync(`assets/thing/${filename}`,'UTF-8');
     data.split(/\n/).forEach(element => {
         if(element.toLowerCase()==req.params.word.toLowerCase()){
+            console.log(`found thingy ${element}`);
             valid=true;
         }
     });
@@ -21,6 +22,7 @@ router.get('/animal/:word',async (req,res)=>{
     var data = fs.readFileSync(`assets/animals.txt`,'UTF-8');
     data.split(/\n/).forEach(element => {
         if(element.toLowerCase()==req.params.word.toLowerCase()){
+            console.log(`found animal ${element}`);
             valid=true;
         }
     });
@@ -28,10 +30,10 @@ router.get('/animal/:word',async (req,res)=>{
 });
 router.get('/place/:word',async (req,res)=>{
     let valid =false;//check if word is present
-   console.log(req.params.word);
     var data = fs.readFileSync(`assets/countries_1`,'UTF-8');
     data.split(/\n/).forEach(element => {
         if(element.toLowerCase()==req.params.word.toLowerCase()){
+            console.log(`found country ${element}`);
             valid=true;
         }
     });
@@ -39,8 +41,12 @@ router.get('/place/:word',async (req,res)=>{
         let s = cities.filter(city => {
             return city.name.match(capitalizeFirstLetter(req.params.word.toLowerCase()));
         });
-        console.log(s);
-        if(s.length>0) valid=true
+        s.forEach(element => {
+            if(element.name.toLowerCase()==req.params.word.toLowerCase()){
+                console.log(`found city ${element.name}`);
+                valid=true;
+            }  
+        });
     }
     res.send(valid);
 });
