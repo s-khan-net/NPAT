@@ -25,6 +25,11 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
             gameId:gameid,
             gameName:$scope.gameName,
             gameTime:$scope.gameTime?$scope.gameTime:0,
+            gameActive:true,
+            gameStarted:false,
+            gameStatedAt:null,
+            gameEnded:false,
+            gameEndedAt:null,
             gamePlayers:[
                 {
                     playerId:playerid,
