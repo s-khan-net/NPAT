@@ -9,6 +9,15 @@ function validate(type){
     // });
 }
 function initialize(){
+    let w= $(window).width();
+    if(w>412){
+        $('#logoDiv').css({left:200});
+    }
+    else{
+        $('#logoDiv').css({top:-63});
+    }
+    let pos = $('#mainContainer').position();
+    $('#gameContainer').css({top: pos.top, left:0});
     $('#box').focus(function()
     {
         $(this).animate({ width: '+=50' }, 'slow');
