@@ -18,6 +18,16 @@ function initialize(){
     }
     let pos = $('#mainContainer').position();
     $('#gameContainer').css({top: pos.top, left:0});
+    //alet on refresh
+    window.onbeforeunload = function() {
+        return "Dude, are you sure you want to leave? Think of the kittens!";
+    }
+    //disable back
+    history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
+
     $('#box').focus(function()
     {
         $(this).animate({ width: '+=50' }, 'slow');
@@ -43,6 +53,10 @@ function initialize(){
                 $('#btnPlayerOn').attr('disabled','disabled');
             }
         });
+        $('#btnPlayerOn').click(function(){
+            $('.js-playerStuff').hide();
+            $('.js-gameStuff').show();
+        });
         $('#txtGameName').on('keyup',function(){
             if($('#txtGameName').val().length>3){
                 $('#btnGameOn').removeAttr('disabled');
@@ -51,10 +65,7 @@ function initialize(){
                 $('#btnGameOn').attr('disabled','disabled');
             }
         });
-        $('#btnPlayerOn').click(function(){
-            $('.js-playerStuff').hide();
-            $('.js-gameStuff').show();
-        });
+        
     }
     
 }

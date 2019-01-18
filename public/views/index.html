@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Name Place Animal Thing">
     <title>Name Place Animal Thing</title>
-    <script src="js/angular/angular.min.js"></script>
-    <script src="js/angular/angular-route.min.js"></script>
+    
     <script src="js/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css" />
     <script src="js/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/main.js"></script>
-    
-    <script src="js/validate.js"></script>
+    <script src="js/validate.js"></script> 
     <link rel="stylesheet" href="css/main.css">
     <script>
         $(document).ready(function(){
@@ -47,8 +43,9 @@
      
 </div>
 </nav>
- <div id="appDiv" name="appDiv" data-ng-app="app-npat" >
- <div class="container"  id="mainContainer" data-ng-controller="main" style="border: 1px solid red;">
+ <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
+<div style="width:300px;height:40px;background-color:lightpink;position:absolute;z-index: 5;top:20px;left:45%;display: none" data-ng-show="wait" >wait up!!!</div>
+<div class="container"  id="mainContainer"  style="border: 1px solid red;">
     <div class="row">
         <div class="col-xs-3" style="border-right:1px solid #CCC">
             <div class="row">
@@ -112,17 +109,16 @@
             </form>
         </div>
         <div class="col-xs-3 col-md-3" id="chatSection">
-                <div class="row">
-                        <div class="col-xs-12 text-center" style="background-color:mediumturquoise">
-                            <h4>Chat</h4>
-                        </div>
-                    </div> 
+            <div class="row">
+                <div class="col-xs-12 text-center" style="background-color:mediumturquoise">
+                    <h4>Chat</h4>
+                </div>
+            </div> 
         </div>
     </div>
 </div>
-<div  id="gameContainer" data-ng-controller="game" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 2;opacity:1;width: 100%;height:100%; ">
+<div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 2;opacity:1;width: 100%;height:100%; ">
     <div class="container" style="border: 1px solid red;">
-    
     <div class="row" >
         <div class="col-md-3 col-xs-0">
             <div id="logoDiv" style="position:absolute;top:-43px;z-index:3"><img src="/images/logo_75X75.png" /></div>
@@ -179,7 +175,7 @@
                     <div class="col-md-12 col-xs-12 text-center">
                         <label for="txtGameName">or create a new one... <i style="padding-top:6px" class="fa fa-arrow-down fa-lg"></i></label>
                     </div>
-                </div>
+            </div>
             <div class="row formrowpadding js-gameStuff">
                 <div class="col-md-12 col-xs-12">
                     <label for="txtGameName">Name your game</label>
@@ -213,7 +209,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-xs-3" style="border:1px solid blue">
+        <div class="col-md-3 col-xs-3" style="border-left:1px solid #CCC">
             <div class="row">
                 <div class="col-md-12 col-xs-12 text-center">
                     {{game}}
@@ -222,8 +218,9 @@
             <div class="row" style="padding-top:3px">
                     <div id="gamesContainer">
                         <div class="row" ng-repeat="g in games" style="padding-top:3px">
-                            <div class="col-xs-6 js-gameName">{{g}}</div>
-                            <div class="col-xs-6 js-gamePic">PIC</div>
+                            <div class="col-xs-6 js-gameName text-center" >
+                                <button data-ng-class=gameStartedClass(g.gameStarted) title="join" ng-click="joinGame(g.gameId)" style="width: 40px;height: 39px;padding-left:3px;">{{g.gameName}}</button></div>
+                            <div class="col-xs-6 js-gamePic">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div>
                         </div>
                     </div>
                 </div>
@@ -231,6 +228,14 @@
     </div>
     </div>
 </div>
+</div>
+
+<script src="js/angular/angular.min.js"></script>
+<script src="js/angular/angular-route.min.js"></script>
+<script src="js/game.js"></script>
+<script src="js/gameService.js"></script>
+<script src="js/main.js"></script>
+
 </body>
 
 </html>
