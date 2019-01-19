@@ -9,18 +9,59 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     $scope.alphabet = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1).toUpperCase();
     $scope.players =[];
     $scope.games =[];
+    $scope.gameStarted = false;
     //if no game is going on then show covering div
     $scope.game = `games`;
-
+    const interval = 15000;
     //get current games if any...
-    $http.get('/api/game')
+    refreshGameList();
+    let loadGamesTimer = setInterval(() => {
+        refreshGameList();
+    }, interval);
+    let loadPlayerTimer = setInterval(function () {
+        if(!$('#gameContainer').is(':visible'))
+            refreshPlayerList();
+    }, interval); 
+    function refreshGameList(){
+        $http.get('/api/game')
         .then(function (result) {
-            $scope.games = result.data;
+            if(result.status==200){
+                $scope.games=[];
+                $scope.games = result.data.game;
+            }
+            else
+                $scope.games = [];
         },
         function(error){
             alert(error.statusText);
             $scope.wait = false;
         });
+    }
+    
+    function refreshPlayerList(){
+        let gameId=$('#hidGameId').val();
+        $http.get('/api/game/'+gameId)
+        .then(function (result) {
+            if(result.status==200){
+                //build players list
+                $.each(result.data.game.gamePlayers,function(i,v){
+                    $scope.players=[];
+                    let p = v.pointsForGame.reduce((a, b) => a + b, 0);
+                    $scope.players.push({playerId:v.playerid,playerName:v.playerName,pointsForGame:p,isCreator:v.isCreator,playerAvatar:`images/avatars/${v.playerAvatar}`});
+                })
+            }
+            else{
+
+                //$scope.players = [];
+            }
+                
+        },
+        function(error){
+            alert(error.statusText);
+            $scope.wait = false;
+        });
+    }
+
     $scope.gameStartedClass = function(v){
         return v?'green':'red';
     }
@@ -57,9 +98,17 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
         $scope.wait=true;
         $http.post('/api/game',JSON.stringify(game))
         .then(function (result) {
-            //game saved
-            $('#hidGameId').val(gameid);
-            $('#gameContainer').fadeOut('slow');
+            if(result.status=='201'){
+                //game saved
+                //build player list
+                $scope.players.push({playerId:game.playerid,playerName:game.playerName,pointsForGame:0,isCreator:game.isCreator,playerAvatar:`images/avatars/${game.playerAvatar}`});
+                $('#hidPlayerId').val(playerid);
+                $('#hidGameId').val(gameid);
+                $('#gameContainer').fadeOut('slow');
+            }
+            else{
+                alert('Sorry, couldnt create the game... ');
+            }
         },
         function(error){
             alert(error.statusText);
@@ -69,14 +118,45 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     }
     $scope.joinGame = function(gameId){
         console.log(gameId);
+        $scope.wait=true;
+        let playerid = `PLA-${gameId.split('-')[1]}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
+        var obj={gameId:gameId,playerId:playerid,playerName:$scope.playerName,playerAvatar:'1.png'};
+        $http.post('api/game/join',JSON.stringify(obj))
+            .then(function(result){
+                console.log(result);
+                // if(result.status==200){
+                //     clearInterval(loadGamesTimer);
+                //     $('#hidPLayerId').val(playerid);
+                //     $('#hidGameId').val(result.data.game.gameId);
+                //     $('#gameContainer').fadeOut('slow');
+                //     //build players list
+                //     $.each(result.data.game.gamePlayers,function(i,v){
+                //         //let p = v.pointsForGame.reduce((a, b) => a + b, 0);
+                //         $scope.players.push({playerId:v.playerid,playerName:v.playerName,pointsForGame:0,isCreator:v.isCreator,playerAvatar:`images/avatars/${v.playerAvatar}`});
+                //     })
+                //     $scope.gameStarted = result.data.game.gameStarted;
+                // }
+                // else{
+                //     alert('this game was not active, please create a game or join another one');
+                // }
+            },
+            function(error){
+                alert(error.statusText);
+                $scope.wait = false;
+            });
+        
+    }
+
+    $scope.gameStartedIndicatorClass = function(){
+        return $scope.gameStarted?'fa fa-play green':'fa fa-clock-o';
     }
     /*----validate name-----*/
     $scope.ValName = function(v){
         let s='';
-        if($scope.game.name) {
-            s = $scope.game.name.substring(0,1).toUpperCase();
+        if($scope.playingGame.name) {
+            s = $scope.playingGame.name.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
-                $scope.game.name = '';
+                $scope.playingGame.name = '';
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -86,9 +166,9 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
             }
             else{
                 //validate name
-                if($scope.game.name.length>=4){
-                    let vc = vowel_count($scope.game.name);
-                    if(vc>0 && vc<$scope.game.name.length ){
+                if($scope.playingGame.name.length>=4){
+                    let vc = vowel_count($scope.playingGame.name);
+                    if(vc>0 && vc<$scope.playingGame.name.length ){
                         $scope.nameVal = true;
                     }
                     else{
@@ -105,15 +185,14 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
         if($('#txtName').val().length>=1)
             return $scope.nameVal ? 'fa fa-check-circle green' : 'fa fa-close red';
     }
-    
 
     /*-----validate place-------------*/
     $scope.ValPlace = function(v){
         let s='';
-        if($scope.game.place) {
-            s = v.game.place.substring(0,1).toUpperCase();
+        if($scope.playingGame.place) {
+            s = v.playingGame.place.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
-                $scope.game.place = '';
+                $scope.playingGame.place = '';
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -123,12 +202,12 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
             }
             else{
                 //validate place
-                if($scope.game.place.length>=3){
-                    let vc = vowel_count($scope.game.place);
-                    if(vc>0 && vc<$scope.game.place.length ){
+                if($scope.playingGame.place.length>=3){
+                    let vc = vowel_count($scope.playingGame.place);
+                    if(vc>0 && vc<$scope.playingGame.place.length ){
                         //call api to check
                         $scope.wait=true;
-                        $http.get('api/words/place/'+$scope.game.place)
+                        $http.get('api/words/place/'+$scope.playingGame.place)
                         .then(function (result) {
                             $scope.wait = false;
                             if(result.data) $scope.placeVal = true;
@@ -162,10 +241,10 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     /*-----validate animal----*/
     $scope.ValAnimal = function(v){
         let s='';
-        if($scope.game.animal) {
-            s = $scope.game.animal.substring(0,1).toUpperCase();
+        if($scope.playingGame.animal) {
+            s = $scope.playingGame.animal.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
-                $scope.game.animal = '';
+                $scope.playingGame.animal = '';
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -175,12 +254,12 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
             }
             else{
                 //validate animal
-                if($scope.game.animal.length>=3){
-                    let vc = vowel_count($scope.game.animal);
-                    if(vc>0 && vc<$scope.game.animal.length ){
+                if($scope.playingGame.animal.length>=3){
+                    let vc = vowel_count($scope.playingGame.animal);
+                    if(vc>0 && vc<$scope.playingGame.animal.length ){
                         //call api to check
                         $scope.wait=true;
-                        $http.get('api/words/animal/'+$scope.game.animal)
+                        $http.get('api/words/animal/'+$scope.playingGame.animal)
                         .then(function (result) {
                             $scope.wait = false;
                             if(result.data) $scope.animalVal = true;
@@ -214,10 +293,10 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     /*------validate thing-----*/
     $scope.ValThing = function(v){
         let s='';
-        if($scope.game.thing) {
-            s = $scope.game.thing.substring(0,1).toUpperCase();
+        if($scope.playingGame.thing) {
+            s = $scope.playingGame.thing.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
-                $scope.game.thing = '';
+                $scope.playingGame.thing = '';
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -227,12 +306,12 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
             }
             else{
                 //validate animal
-                if($scope.game.thing.length>=3){
-                    let vc = vowel_count($scope.game.thing);
-                    if(vc>0 && vc<$scope.game.thing.length ){
+                if($scope.playingGame.thing.length>=3){
+                    let vc = vowel_count($scope.playingGame.thing);
+                    if(vc>0 && vc<$scope.playingGame.thing.length ){
                         //call api to check
                         $scope.wait=true;
-                        $http.get('api/words/thing/'+$scope.game.thing)
+                        $http.get('api/words/thing/'+$scope.playingGame.thing)
                         .then(function (result) {
                             $scope.wait = false;
                             if(result.data) $scope.thingVal = true;
@@ -263,6 +342,9 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
         return c;
     }
 
+    $scope.updateGame = function(){
+
+    }
     function uuidv4() {
         return Math.random().toString(36).split('.')[1].substr(0,4)
     }

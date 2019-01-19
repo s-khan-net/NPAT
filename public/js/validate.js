@@ -35,6 +35,28 @@ function initialize(){
     {
         $(this).animate({ width: '-=50' }, 'slow');
     });
+    if(window.location.href.indexOf('Join')>-1){ 
+        var url = new URL(window.location.href);
+        var gid = url.searchParams.get("id");
+        //var gid = url.split('?')[1].substr(0,url.length);
+        //verifyGameId
+        let u=url.host+'/api/game/'+gid;
+        // $.get(u,function(data,status){
+        //     if(data.game)
+        //     $('#hidGameId').val(gid);
+        // })
+        $.ajax({
+            url: '/api/game/'+gid,
+            type: 'GET',
+            async: true,
+            crossDomain: true,
+            dataType: 'jsonP', // added data type
+            success: function(data) {
+                if(data.game)
+                    $('#hidGameId').val(gid);
+            }
+        });
+    }
     if($('#hidGameId').val().length>3){
         $('#gameContainer').hide();
     }
@@ -55,6 +77,7 @@ function initialize(){
         });
         $('#btnPlayerOn').click(function(){
             $('.js-playerStuff').hide();
+            $('#gamesList').show();
             $('.js-gameStuff').show();
         });
         $('#txtGameName').on('keyup',function(){

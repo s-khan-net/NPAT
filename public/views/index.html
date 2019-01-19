@@ -47,17 +47,17 @@
 <div style="width:300px;height:40px;background-color:lightpink;position:absolute;z-index: 5;top:20px;left:45%;display: none" data-ng-show="wait" >wait up!!!</div>
 <div class="container"  id="mainContainer"  style="border: 1px solid red;">
     <div class="row">
-        <div class="col-xs-3" style="border-right:1px solid #CCC">
+        <div class="col-xs-3" style="border-right:1px solid #CCC;" id="playerList">
             <div class="row">
-                <div class="col-xs-12 text-center" style="background-color:mediumturquoise">
+                <div class="col-xs-12 text-center blueBg">
                     <h4>Players</h4>
                 </div>
             </div> 
             <div class="row" style="padding-top:3px">
                 <div id="playersContainer">
-                    <div class="row" ng-repeat="div in divs" style="padding-top:3px">
-                        <div class="col-xs-6 js-playerName">{{div}}</div>
-                        <div class="col-xs-6 js-PlayerPic">PIC</div>
+                    <div class="row" ng-repeat="p in players" style="padding-top:3px">
+                        <div class="col-md-6 col-xs-0 js-playerName">{{p.playerName}}</div>
+                        <div class="col-md-6 col-xs-11 js-PlayerPic"><button><img src="{{p.playerAvatar}}" /></button></div>
                     </div>
                 </div>
             </div>
@@ -65,16 +65,21 @@
         <div class="col-xs-9 col-md-6">
             <form class="form-horizontal"  ng-submit="updateGame()" name="frmGame" novalidate>
             <div class="row">
-                <div class="col-md-12 col-xs-12 text-center blueBg" ><div class="alphabet js-alphabet">{{alphabet}}</div>
+                <div class="col-md-9 col-xs-9 text-center blueBg" >
+                    <div class="alphabet js-alphabet">{{alphabet}}</div>
+                </div>
+                <div class="col-md-3 col-xs-3 text-right bluebg">
+                    <i data-ng-class="gameStartedIndicatorClass()"></i>
+                </div>
                 <input type="hidden" id="hidGameId" value="" />
-            </div>
+                <input type="hidden" id="hidPlayerId" value="" />
             </div>
             <div class="row" style="padding-top:9px">
                 <div class="col-md-12">
                     <label for="txtName" aria-label="txtName">Name</label>&nbsp;&nbsp;<i ng-class="nameValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtName" name="txtName" class="form-control" data-ng-model="game.name" data-ng-change="ValName(this)" autocomplete="none" required/>
+                    <input type="text" id="txtName" name="txtName" class="form-control" data-ng-model="playingGame.name" data-ng-change="ValName(this)" autocomplete="none" required/>
                 </div>
             </div>
             <div class="row">
@@ -82,7 +87,7 @@
                     <label for="txtPlace" aria-label="txtPlace">Place</label>&nbsp;&nbsp;<i ng-class="placeValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtPlace" name="txtPlace" class="form-control" data-ng-model="game.place" data-ng-change="ValPlace(this)"autocomplete="none" required/>
+                    <input type="text" id="txtPlace" name="txtPlace" class="form-control" data-ng-model="playingGame.place" data-ng-change="ValPlace(this)"autocomplete="none" required/>
                 </div>
             </div>
             <div class="row">
@@ -90,7 +95,7 @@
                     <label for="txtAnimal" aria-label="txtAnimal">Animal</label>&nbsp;&nbsp;<i ng-class="animalValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtAnimal" name="txtAnimal" class="form-control" data-ng-model="game.animal" data-ng-change="ValAnimal(this)"autocomplete="none" required/>
+                    <input type="text" id="txtAnimal" name="txtAnimal" class="form-control" data-ng-model="playingGame.animal" data-ng-change="ValAnimal(this)"autocomplete="none" required/>
                 </div>
             </div>
             <div class="row">
@@ -98,7 +103,7 @@
                     <label for="txtThing" aria-label="txtThing">Thing</label>&nbsp;&nbsp;<i ng-class="thingValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtThing" name="txtThing" class="form-control" data-ng-model="game.thing" data-ng-change="ValThing(this)"autocomplete="none" required/>
+                    <input type="text" id="txtThing" name="txtThing" class="form-control" data-ng-model="playingGame.thing" data-ng-change="ValThing(this)"autocomplete="none" required/>
                 </div>
             </div>
             <div class="row" style="padding-top:9px">
@@ -110,20 +115,20 @@
         </div>
         <div class="col-xs-3 col-md-3" id="chatSection">
             <div class="row">
-                <div class="col-xs-12 text-center" style="background-color:mediumturquoise">
+                <div class="col-xs-12 text-center blueBg" >
                     <h4>Chat</h4>
                 </div>
             </div> 
         </div>
     </div>
 </div>
-<div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 2;opacity:1;width: 100%;height:100%; ">
-    <div class="container" style="border: 1px solid red;">
+<div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 2;opacity:1;width: 100%;min-height:419px; ">
+    <div class="container" style="border: 1px solid red;min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
             <div id="logoDiv" style="position:absolute;top:-43px;z-index:3"><img src="/images/logo_75X75.png" /></div>
         </div>
-        <div class="col-md-6 col-xs-9" style="padding-top:21px;border:1px solid blue">
+        <div class="col-md-6 col-xs-9" style="padding-top:21px;">
             <div class="row">
                 <div class="col-md-12 col-xs-12">
                     &nbsp;
@@ -182,7 +187,7 @@
                 </div>
             </div>
             <div class="row formrowpadding js-gameStuff">
-                <div class="col-md-10 col-xs-10" style="padding-right:0px">
+                <div class="col-md-11 col-xs-11" style="padding-right:0px">
                     <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1"/>
                 </div>
             </div>
@@ -209,21 +214,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-xs-3" style="border-left:1px solid #CCC">
+        <div class="col-md-3 col-xs-3" style="border-left:1px solid #CCC;display:none" id="gamesList">
             <div class="row">
                 <div class="col-md-12 col-xs-12 text-center">
                     {{game}}
                 </div>
             </div>
             <div class="row" style="padding-top:3px">
-                    <div id="gamesContainer">
-                        <div class="row" ng-repeat="g in games" style="padding-top:3px">
-                            <div class="col-xs-6 js-gameName text-center" >
-                                <button data-ng-class=gameStartedClass(g.gameStarted) title="join" ng-click="joinGame(g.gameId)" style="width: 40px;height: 39px;padding-left:3px;">{{g.gameName}}</button></div>
-                            <div class="col-xs-6 js-gamePic">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div>
-                        </div>
-                    </div>
+                <div id="gamesContainer">
+                <div class="row" ng-repeat="g in games" style="padding-top:3px" >
+                    <div class="col-xs-6 js-gameName text-center" >
+                        <button data-ng-class=gameStartedClass(g.gameStarted) title="join" ng-click="joinGame(g.gameId)" style="width: 40px;height: 39px;padding-left:3px;">{{g.gameName}}</button></div>
+                    <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div>
                 </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>
@@ -233,7 +238,6 @@
 <script src="js/angular/angular.min.js"></script>
 <script src="js/angular/angular-route.min.js"></script>
 <script src="js/game.js"></script>
-<script src="js/gameService.js"></script>
 <script src="js/main.js"></script>
 
 </body>

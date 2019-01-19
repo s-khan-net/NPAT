@@ -1,5 +1,5 @@
 
-
+body {overflow:hidden;}
 .alphabet{
     font-size: 23px;
     font-weight:bolder;
@@ -36,10 +36,14 @@
   #playersContainer{
     overflow-y:scroll;
     overflow-x:hidden;
+    min-height: 319px;
+    max-height: 319px;
   }
   #gamesContainer{
     overflow-y:scroll;
     overflow-x:hidden;
+    min-height: 319px;
+    max-height: 319px;
   }
   .green{
       color:green;
@@ -51,7 +55,7 @@
       color: darkgrey;
   }
   .blueBg{
-      background-color: mediumturquoise;
+      background-color: rgb(198, 223, 234);
   }
   label{
       letter-spacing: 3px
