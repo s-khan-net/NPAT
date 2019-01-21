@@ -9,9 +9,10 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     $scope.alphabet = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1).toUpperCase();
     $scope.players =[];
     $scope.games =[];
-    $scope.gameStarted = false;
+    $scope.avatars=[];
+    $scope.game = {};
     //if no game is going on then show covering div
-    $scope.game = `games`;
+    
     const interval = 15000;
     //get current games if any...
     refreshGameList();
@@ -43,6 +44,7 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
         $http.get('/api/game/'+gameId)
         .then(function (result) {
             if(result.status==200){
+                $scope.game =result.data.game;
                 //build players list
                 $.each(result.data.game.gamePlayers,function(i,v){
                     $scope.players=[];
@@ -148,7 +150,10 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     }
 
     $scope.gameStartedIndicatorClass = function(){
-        return $scope.gameStarted?'fa fa-play green':'fa fa-clock-o';
+        if($scope.game.gameStarted)
+            return $scope.game.gameStarted?'fa fa-play fa-2x green ':'fa fa-clock-o';
+        else
+            return 'fa fa-clock-o';
     }
     /*----validate name-----*/
     $scope.ValName = function(v){
