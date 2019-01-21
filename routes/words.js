@@ -38,8 +38,13 @@ router.get('/place/:word',async (req,res)=>{
         }
     });
     if(!valid){
+        var x = '';
+        
+        req.params.word.toLowerCase().split(' ').forEach(e=>{
+            x += capitalizeFirstLetter(e)+' ';
+        });
         let s = cities.filter(city => {
-            return city.name.match(capitalizeFirstLetter(req.params.word.toLowerCase()));
+            return city.name.match(x.substr(0,x.length-1));
         });
         s.forEach(element => {
             if(element.name.toLowerCase()==req.params.word.toLowerCase()){

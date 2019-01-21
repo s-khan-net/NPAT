@@ -5,12 +5,10 @@ body {overflow:hidden;}
     font-weight:bolder;
     transition: transform .2s;
     margin: 0 auto;
-    
     padding: 3px;
 }
 
 .vibrate{
-    
     animation: shake 0.5s; 
 }
 
@@ -63,3 +61,8 @@ body {overflow:hidden;}
   .formrowpadding{
       padding-top:13px
   }
+  h4{
+      letter-spacing:2px;
+      font-family:"Verdana, Geneva, Tahoma, sans-serif" 
+  }
+ 

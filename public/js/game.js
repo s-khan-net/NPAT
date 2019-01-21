@@ -13,7 +13,7 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     $scope.game = {};
     //if no game is going on then show covering div
     
-    const interval = 15000;
+    const interval = 50000;
     //get current games if any...
     refreshGameList();
     let loadGamesTimer = setInterval(() => {
@@ -40,27 +40,26 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     }
     
     function refreshPlayerList(){
+        $('.js-playerLoad').show();
         let gameId=$('#hidGameId').val();
         $http.get('/api/game/'+gameId)
         .then(function (result) {
             if(result.status==200){
                 $scope.game =result.data.game;
                 //build players list
+                $scope.players=[];
                 $.each(result.data.game.gamePlayers,function(i,v){
-                    $scope.players=[];
                     let p = v.pointsForGame.reduce((a, b) => a + b, 0);
                     $scope.players.push({playerId:v.playerid,playerName:v.playerName,pointsForGame:p,isCreator:v.isCreator,playerAvatar:`images/avatars/${v.playerAvatar}`});
                 })
             }
             else{
-
-                //$scope.players = [];
-            }
                 
+            }
+            $('.js-playerLoad').hide();
         },
         function(error){
-            alert(error.statusText);
-            $scope.wait = false;
+            $('.js-playerLoad').hide();
         });
     }
 
@@ -88,9 +87,10 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
                 {
                     playerId:playerid,
                     playerName:$scope.playerName,
-                    playerAvatar:'1.png',
+                    playerAvatar:$('#hidPlayerAv').val(),
                     isCreator:true,
                     pointsForGame:[],
+                    wordsForGame:[],
                     joinedAt:Date.now()
                 }
             ]
@@ -103,10 +103,14 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
             if(result.status=='201'){
                 //game saved
                 //build player list
-                $scope.players.push({playerId:game.playerid,playerName:game.playerName,pointsForGame:0,isCreator:game.isCreator,playerAvatar:`images/avatars/${game.playerAvatar}`});
-                $('#hidPlayerId').val(playerid);
+                $scope.players=[];
+                $scope.players.push({playerId:game.playerid,playerName:game.playerName,pointsForGame:0,isCreator:true,playerAvatar:`images/avatars/${game.playerAvatar}`});
+                $('#hidPlayerId').val(`${playerid}~c`); //to indicate the creator
                 $('#hidGameId').val(gameid);
-                $('#gameContainer').fadeOut('slow');
+                $scope.gameStarted = false;
+                $('#gameContainer').fadeOut('slow',function(){
+                    $scope.wait=false;
+                });
             }
             else{
                 alert('Sorry, couldnt create the game... ');
@@ -121,26 +125,30 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     $scope.joinGame = function(gameId){
         console.log(gameId);
         $scope.wait=true;
-        let playerid = `PLA-${gameId.split('-')[1]}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
-        var obj={gameId:gameId,playerId:playerid,playerName:$scope.playerName,playerAvatar:'1.png'};
+        var playerid = `PLA-${gameId.split('-')[1]}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
+        var obj={gameId:gameId,playerId:playerid,playerName:$scope.playerName,playerAvatar:$('#hidPlayerAv').val()};
         $http.post('api/game/join',JSON.stringify(obj))
             .then(function(result){
                 console.log(result);
-                // if(result.status==200){
-                //     clearInterval(loadGamesTimer);
-                //     $('#hidPLayerId').val(playerid);
-                //     $('#hidGameId').val(result.data.game.gameId);
-                //     $('#gameContainer').fadeOut('slow');
-                //     //build players list
-                //     $.each(result.data.game.gamePlayers,function(i,v){
-                //         //let p = v.pointsForGame.reduce((a, b) => a + b, 0);
-                //         $scope.players.push({playerId:v.playerid,playerName:v.playerName,pointsForGame:0,isCreator:v.isCreator,playerAvatar:`images/avatars/${v.playerAvatar}`});
-                //     })
-                //     $scope.gameStarted = result.data.game.gameStarted;
-                // }
-                // else{
-                //     alert('this game was not active, please create a game or join another one');
-                // }
+                if(result.status==201){
+                    clearInterval(loadGamesTimer);
+                    $('#hidPlayerId').val(playerid);
+                    $('#hidGameId').val(result.data.game.gameId);
+                    $('#gameContainer').fadeOut('slow');
+                    //build players list
+                    $scope.players=[];
+                    $.each(result.data.game.gamePlayers,function(i,v){
+                        let p = v.pointsForGame.reduce((a, b) => a + b, 0);
+                        $scope.players.push({playerId:v.playerid,playerName:v.playerName,pointsForGame:p,isCreator:v.isCreator,playerAvatar:`images/avatars/${v.playerAvatar}`});
+                    })
+                    $scope.gameStarted = result.data.game.gameStarted;
+                }
+                else if(result.status==400){
+                    alert(result.data);
+                }
+                else{
+                    alert('this game was not active, please create a game or join another one');
+                }
             },
             function(error){
                 alert(error.statusText);
@@ -150,10 +158,12 @@ mainmodule.controller("game", ['$scope', '$http', function ($scope, $http) {
     }
 
     $scope.gameStartedIndicatorClass = function(){
-        if($scope.game.gameStarted)
-            return $scope.game.gameStarted?'fa fa-play fa-2x green ':'fa fa-clock-o';
-        else
-            return 'fa fa-clock-o';
+        if($('#hidPlayerId').val().split('~')[1]=='c'){
+            return $scope.game.gameStarted?'fa fa-play fa-lg green ':'fa fa-play btn btn-success';
+        }
+        else{
+            return $scope.game.gameStarted?'fa fa-play fa-lg green ':'fa fa-clock-o fa-spin';
+        }
     }
     /*----validate name-----*/
     $scope.ValName = function(v){

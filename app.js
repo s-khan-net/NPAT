@@ -1,3 +1,10 @@
+const cities = require("all-the-cities")
+let s;
+s= cities.filter(city => {
+    return city.name.match('Varanasi');
+  });
+console.log(s); 
+
 let gameName = 'nasgarth'
 let gameid = `GAM-${gameName.substring(0, 3)}-${uuidv4().toString().substring(1, 4)}-${Date.now()}-${uuidv4().toString().substring(1, 4)}`;
 console.log(gameid);

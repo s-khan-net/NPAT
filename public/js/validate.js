@@ -79,6 +79,8 @@ function initialize(){
             $('.js-playerStuff').hide();
             $('#gamesList').show();
             $('.js-gameStuff').show();
+            $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
+            $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
         });
         $('#txtGameName').on('keyup',function(){
             if($('#txtGameName').val().length>3){
@@ -88,7 +90,16 @@ function initialize(){
                 $('#btnGameOn').attr('disabled','disabled');
             }
         });
-        
+        $('.js-avRight').click(function(){
+            var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
+            v = v==12?1:v+1;
+            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+        });
+        $('.js-avLeft').click(function(){
+            var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
+            v = v==1?12:v-1;
+            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+        });
     }
     
 }

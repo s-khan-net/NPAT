@@ -45,34 +45,50 @@
 </nav>
  <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
 <div style="width:300px;height:40px;background-color:lightpink;position:absolute;z-index: 5;top:20px;left:45%;display: none" data-ng-show="wait" >wait up!!!</div>
-<div class="container"  id="mainContainer"  style="border: 1px solid red;">
+<div class="container"  id="mainContainer">
     <div class="row">
         <div class="col-xs-3" style="border-right:1px solid #CCC;" id="playerList">
-            <div class="row">
-                <div class="col-xs-12 text-center blueBg">
-                    <label>Players</label>
+            <div class="row blueBg">
+                <div class="col-xs-10 text-center ">
+                    <h4>Players</h4>
+                </div>
+                <div class="col-xs-1 text-center">
+                    <span class="fa fa-refresh fa-spin js-playerLoad" title="loading players"></span>
                 </div>
             </div> 
             <div class="row" style="padding-top:3px">
                 <div id="playersContainer">
                     <div class="row" ng-repeat="p in players" style="padding-top:3px">
-                        <div class="col-md-6 col-xs-0 js-playerName">{{p.playerName}}</div>
-                        <div class="col-md-6 col-xs-11 js-PlayerPic"><button><img src="{{p.playerAvatar}}" /></button></div>
+                        <div class="col-md-8 col-xs-0 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
+                            <div class="row">
+                                <div class="col-xs-10 text-center"><label>{{p.playerName}}</label></div>
+                                <div class="col-xs-2 text-center"><i class="fa fa-circle-o-notch fa-spin green"></i></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4 text-center  "></div>
+                                <div class="col-xs-4">{{p.pointsForGame}}</div>
+                                <div class="col-xs-4 green"><small>{{p.isCreator?'admin':''}}</small></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-11 text-right js-PlayerPic">
+                            <div id="btnPlayer" style="border-radius:5px"><img src="{{p.playerAvatar}}" /></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-9 col-md-6">
             <form class="form-horizontal"  ng-submit="updateGame()" name="frmGame" novalidate>
-            <div class="row">
-                <div class="col-md-9 col-xs-9 text-center blueBg" >
+                    <input type="hidden" id="hidGameId" value="" />
+                    <input type="hidden" id="hidPlayerId" value="" />
+                    <input type="hidden" id="hidPlayerAv" value="" />
+            <div class="row blueBg">
+                <div class="col-md-9 col-xs-9 text-center " >
                     <div class="alphabet js-alphabet">{{alphabet}}</div>
                 </div>
-                <div class="col-md-3 col-xs-3 text-right bluebg">
-                    <i data-ng-class="gameStartedIndicatorClass()"></i>
+                <div class="col-md-3 col-xs-3 text-center">
+                    <div id="gameStartedIndicator" data-ng-class="gameStartedIndicatorClass()" style="font-size: 23px;padding: 8px;" title="waiting to get started..."></div>
                 </div>
-                <input type="hidden" id="hidGameId" value="" />
-                <input type="hidden" id="hidPlayerId" value="" />
             </div>
             <div class="row" style="padding-top:9px">
                 <div class="col-md-12">
@@ -108,7 +124,7 @@
             </div>
             <div class="row" style="padding-top:9px">
                     <div class="col-xs-9" style="text-align:right">
-                        <button class="btn btn-primary btn-lg" ng-disabled="!(nameVal && placeVal && animalVal && thingVal)">Submit</button>
+                        <button class="btn btn-primary btn-lg" ng-disabled="!(nameVal && placeVal && animalVal && thingVal && game.gameStarted)">Submit</button>
                     </div>
             </div>
             </form>
@@ -123,7 +139,7 @@
     </div>
 </div>
 <div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 2;opacity:1;width: 100%;min-height:419px; ">
-    <div class="container" style="border: 1px solid red;min-height:319px">
+    <div class="container" style="min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
             <div id="logoDiv" style="position:absolute;top:-43px;z-index:3"><img src="/images/logo_75X75.png" /></div>
@@ -138,7 +154,7 @@
                 <div class="col-md-12 col-xs-12">
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-6"><img src="images/avatars/1.png" /></div>
+                        <div class="col-md-6" id="avatarContainer2"><img src="" /></div>
                         <div class="col-md-3"></div>
                     </div>
                     <div class="row">
@@ -150,13 +166,15 @@
             </div>
             <div class="row js-playerStuff">
                 <div class="col-md-4 col-xs-1">&nbsp;</div>
-                <div class="col-md-1 col-xs-2 text-right" style="padding-right:0px;padding-top:19px;cursor:pointer">
+                <div class="col-md-1 col-xs-2 text-right js-avLeft" style="padding-right:0px;padding-top:19px;cursor:pointer">
                     <i class="fa fa-arrow-circle-o-left fa-lg"></i>
                 </div>
-                <div class="col-md-2 col-xs-5 text-center" style="padding-left:11px;box-shadow: inset 0 0 0 200px rgba(255,255,255,0.3);">
-                    <img src="/images/avatars/1.png"/>
+                <div class="col-md-2 col-xs-5 text-center" >
+                    <div style="box-shadow: inset 0 0 0 200px rgba(255,255,255,0.3);" id="avatarContainer" >
+                        <img src="/images/avatars/1.png"/>
+                    </div>
                 </div>
-                <div class="col-md-1 col-xs-2 text-left" style="padding-left:0px;padding-top:19px;cursor:pointer">
+                <div class="col-md-1 col-xs-2 text-left js-avRight" style="padding-left:0px;padding-top:19px;cursor:pointer">
                     <i class="fa fa-arrow-circle-o-right fa-lg"></i>
                 </div>
                 <div class="col-md-4 col-xs-1">&nbsp;</div>
