@@ -9,7 +9,7 @@ const gameSchema = new mongoose.Schema({
         gameTime:{type:Number,required:true,min:0,max:255},
         gameActive:{type:Boolean,default:true},
         gameStarted:{type:Boolean,default:false},
-        gameStatedAt:{type:Date},
+        gameStartedAt:{type:Date},
         gameEnded:{type:Boolean,default:false},
         gameEndedAt:{type:Date},
         gameAbandoned:{type:Boolean,default:false},

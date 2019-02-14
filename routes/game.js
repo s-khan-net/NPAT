@@ -23,7 +23,7 @@ router.post('/join',async (req,res)=>{
     let obj = req.body;
     console.log(obj);
     if(obj.gameId && obj.playerId){
-        let player = { //make the player ,,, thought I could user _
+        let player = { //make the player ,,, thought I could use _
             playerId: obj.playerId,
             playerName: obj.playerName,
             playerAvatar:obj.playerAvatar,
@@ -52,13 +52,14 @@ router.post('/',async (req,res)=>{
     let g = req.body; //not needed butt....
     const g1 = await Game.findOne({gameId:g.gameId},'gameId') //get the gameId
     if(g1) return res.status(400).send('Game already present!'); //oops!
+    console.log(g.gameStartedAt);
     var game = new Game({
         gameId:g.gameId,
         gameName:g.gameName,
         gameTime:g.gameTime,
-        gameActive:g.gameAvtive,
+        gameActive:g.gameActive,
         gameStarted:g.gameStarted,
-        gameStatedAt:g.gameStatedAt,
+        gameStartedAt:g.gameStartedAt,
         gameEnded:g.gameEnded,
         gameEndedAt:g.gameEndedAt,
         gameAbandoned:g.gameAbandoned,
