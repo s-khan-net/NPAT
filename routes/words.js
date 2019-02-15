@@ -39,7 +39,6 @@ router.get('/place/:word',async (req,res)=>{
     });
     if(!valid){
         var x = '';
-        
         req.params.word.toLowerCase().split(' ').forEach(e=>{
             x += capitalizeFirstLetter(e)+' ';
         });

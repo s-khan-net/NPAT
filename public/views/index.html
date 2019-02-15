@@ -18,34 +18,11 @@
         });
     </script>
 </head>
-<body>
-<nav class="navbar navbar-default">
-<div class="container-fluid">
-    <div class="navbar-header">
-   
-    <!-- <a class="navbar-brand" href="/">CCTV</a> -->
-    </div>
-    <!--<div class="collapse navbar-collapse" id="myNavbar">-->
-    <!-- <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="/products">Products</a></li>
-        <li><a href="/about">About us</a></li>
-        <li><a href="/contact">Contact us</a></li>
-    </ul> -->
-    <!--<a href="#"><span class="glyphicon glyphicon-user"></span></a>
-<a href="#"><span class="glyphicon glyphicon-log-in"></span></a>
-    <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span></a></li>
-          </ul>
-     </div>  -->
-     <div style="float:right;padding-top:13px"><i class="fa fa-user fa-lg"></i></div>
-     
-</div>
-</nav>
- <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
-<div style="width:300px;height:40px;background-color:lightpink;position:absolute;z-index: 5;top:20px;left:45%;" data-ng-show="wait" >{{loaderMsg}}</div>
+<body >
+<div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
+<div style="width:30px;height:20px;color:lightpink;position:absolute;z-index: 5;top:20px;left:45%;" data-ng-show="wait" >{{loaderMsg}}</div>
 <div class="container"  id="mainContainer">
+    <div class="row"><div class="col-xs-12 text-center">{{gameName}}</div></div>
     <div class="row">
         <div class="col-xs-3" style="border-right:1px solid #CCC;" id="playerList">
             <div class="row blueBg">
@@ -61,7 +38,7 @@
                     <div class="row" ng-repeat="p in players" style="padding: 2px;background-color: lavenderblush;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
                         <div class="col-md-8 col-xs-4 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
                             <div class="row">
-                                <div class="col-xs-10 text-center"><label>{{p.playerName}}</label><span class="badge">{{p.pointsForGame}}</span></div>
+                                <div class="col-xs-10 text-right"><label>{{p.playerName}}</label><span class="badge">{{p.pointsForGame}}</span></div>
                                 <div class="col-xs-2 text-center"><small>{{p.isCreator?'admin':''}}</small></div>
                             </div>
                         </div>
@@ -83,7 +60,8 @@
                     <div class="alphabet js-alphabet">{{alphabet}}</div>
                 </div>
                 <div class="col-md-3 col-xs-3 text-center">
-                    <div id="gameStartedIndicator" data-ng-class="gameStartedIndicatorClass()" style="font-size: 23px;padding: 8px;" title="waiting to get started..."></div>
+                    <div id="gameStartedIndicator" data-ng-class="gameStartedIndicatorClass()" ng-click="playStart()" style="font-size: 23px;padding: 8px;" title="waiting to get started..."></div>
+                    <div id="gameTimer" style="display:none;background-color:whitesmoke"><timer autostart="false" countdown="gameTime" interval="1000">{{mminutes}}:{{sseconds}}</timer></div>
                 </div>
             </div>
             <div class="row" style="padding-top:9px">
@@ -91,7 +69,7 @@
                     <label for="txtName" aria-label="txtName">Name</label>&nbsp;&nbsp;<i ng-class="nameValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtName" name="txtName" class="form-control" data-ng-model="playingGame.name" data-ng-change="ValName(this)" autocomplete="none" required/>
+                    <input type="text" id="txtName" name="txtName" class="form-control" data-ng-model="playingGame.name" data-ng-change="ValName(this)" autocomplete="none" />
                 </div>
             </div>
             <div class="row">
@@ -99,7 +77,7 @@
                     <label for="txtPlace" aria-label="txtPlace">Place</label>&nbsp;&nbsp;<i ng-class="placeValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtPlace" name="txtPlace" class="form-control" data-ng-model="playingGame.place" data-ng-change="ValPlace(this)"autocomplete="none" required/>
+                    <input type="text" id="txtPlace" name="txtPlace" class="form-control" data-ng-model="playingGame.place" data-ng-change="ValPlace(this)"autocomplete="none" />
                 </div>
             </div>
             <div class="row">
@@ -107,7 +85,7 @@
                     <label for="txtAnimal" aria-label="txtAnimal">Animal</label>&nbsp;&nbsp;<i ng-class="animalValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtAnimal" name="txtAnimal" class="form-control" data-ng-model="playingGame.animal" data-ng-change="ValAnimal(this)"autocomplete="none" required/>
+                    <input type="text" id="txtAnimal" name="txtAnimal" class="form-control" data-ng-model="playingGame.animal" data-ng-change="ValAnimal(this)"autocomplete="none" />
                 </div>
             </div>
             <div class="row">
@@ -115,7 +93,7 @@
                     <label for="txtThing" aria-label="txtThing">Thing</label>&nbsp;&nbsp;<i ng-class="thingValid()"></i>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtThing" name="txtThing" class="form-control" data-ng-model="playingGame.thing" data-ng-change="ValThing(this)"autocomplete="none" required/>
+                    <input type="text" id="txtThing" name="txtThing" class="form-control" data-ng-model="playingGame.thing" data-ng-change="ValThing(this)"autocomplete="none" />
                 </div>
             </div>
             <div class="row" style="padding-top:9px">
@@ -124,7 +102,7 @@
                     </div>
             </div>
             </form>
-            <div id="divStatus" style="display:none"></div>
+            <div id="divStatus" style="display:none;position: fixed;z-index:3"></div>
         </div>
         <div class="col-xs-3 col-md-3" id="chatSection">
             <div class="row">
@@ -132,6 +110,17 @@
                     <h4>Chat</h4>
                 </div>
             </div> 
+            <div class="row">
+                <div id="chatbox" style="border-radius:4px; border:1px solid lightblue;padding-left: 24px;user-select: none;background-color:#edf3f5;overflow-y:scroll"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-xs-10" style="padding-right:0px;">
+                    <textarea class="form-control" id="txtMsg" data-ng-model="txtMsg" rows="2"></textarea>
+                </div>
+                <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px">
+                    <button class="btn btn-primary btn-sm" id="btnMsg" data-ng-click="message()"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -183,7 +172,7 @@
             </div>
             <div class="row js-playerStuff">
                 <div class="col-md-10 col-xs-10" style="padding-right:0px">
-                    <input type="text" class="form-control" id="txtPlayerName" data-ng-model="playerName" placeholder="player1"/>
+                    <input type="text" class="form-control" id="txtPlayerName" data-ng-model="playerName" placeholder="player1" maxlength="6"/>
                 </div>
                 <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px">
                     <button class="btn btn-primary btn-sm" disabled id="btnPlayerOn"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
@@ -217,7 +206,7 @@
             </div>
             <div class="row formrowpadding js-gameStuff">
                 <div class="col-md-11 col-xs-11" style="padding-right:0px">
-                    <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1"/>
+                    <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1" maxlength="8" />
                 </div>
             </div>
             <div class="row formrowpadding js-gameStuff">
@@ -262,10 +251,14 @@
     </div>
     </div>
 </div>
-
+<div class="orientation" style="text-align: center;"></div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/angular/angular.min.js"></script>
+<script src="js/humanize-duration.js"></script>
+<script src="js/moment.js"></script>
+<script src="js/angular-timer.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.6/angular-sanitize.min.js"></script>
 <script src="js/game.js"></script>
 </body>

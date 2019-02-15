@@ -1,4 +1,4 @@
-var mainmodule = angular.module("app-npat",['ngSanitize'])
+var mainmodule = angular.module("app-npat",['timer'])
 mainmodule.factory('socket', function($rootScope) {
     var socket = io.connect();
     return {
@@ -29,8 +29,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.placeVal=false;
     $scope.animalVal=false;
     $scope.thingVal=false;
-    $scope.alphabet = '...'
+    $scope.alphabet = ''
     $scope.players =[];
+    $scope.gameName='';
     $scope.games =[];
     $scope.game={};
     $scope.coverMessage='';
@@ -47,7 +48,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.playerTime=0;
     $scope.gameTime=180;
     $scope.wait=false;
-    $scope.loaderMsg='loading...';
+    $scope.loaderMsg='...';
     $scope.gameStarted=false;
     //if no game is going on then show covering div
     
@@ -107,7 +108,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.createGame = function(){
         //create a new game
         let gameid = `G-${$scope.gameName.substring(0, 3)}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
-        let playerid = `P-${$scope.gameName.substring(0, 3)}-${$scope.playerName.substring(0, 3)}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
+        let playerid = `P-${$scope.gameName.substring(0, 3)}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
         let game = {
             gameId:gameid,
             gameName:$scope.gameName,
@@ -135,10 +136,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         //save to DB
         //call api to save
+        $scope.loaderMsg='creating new game...'
         $scope.wait=true;
         $http.post('/api/game',JSON.stringify(game))
         .then(function (result) {
             if(result.status=='201'){
+                //add to the game room 
+                socket.emit('createGame',game);
                 //game saved
                 //build player list
                 $scope.players=[];
@@ -149,9 +153,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 var styles = {
                     zIndex:2,
                     backgroundColor : "#ddd",
-                    width:$('#mainGameSection').css('width'),
+                    width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                     opacity:0.7,
-                    height:$('#mainGameSection').css('height'),
+                    height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
                     top:'43px',
                     position:'absolute',
                     paddingLeft:'57px',
@@ -162,9 +166,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                   };
                 $('#cover').css(styles);
                 $scope.coverMessage='The game is not started yet,<br> You need atleast 2 players to start the game<br>It is good to have more than 3.';
-                $('#gameContainer').fadeOut('fast',function(){
-                    $scope.wait=false;
-                });
+                $('#gameContainer').fadeOut(1000);
+                $scope.wait=false;
+                clearInterval(loadGamesTimer);
             }
             else{
                 alert('Sorry, couldnt create the game... ');
@@ -176,66 +180,126 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         });
         
     }
+
+    /*---- join game-----*/
     $scope.joinGame = function(gameId,gameName){
-        console.log(gameId);
+       // console.log(gameId);
+        $scope.gameName = gameName;
         $scope.wait=true;
-        $scope.loaderMsg='Joining game...'
-        var playerid = `P-${gameName.substring(0, 3)}-${$scope.playerName.substring(0, 3)}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
+        $scope.loaderMsg='Joining game...';
+        var playerId = `P-${gameName.substring(0, 3)}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
         var obj={
             gameId:gameId,
-            playerId:playerid,
+            playerId:playerId,
             playerName:$scope.playerName,
             playerAvatar:$('#hidPlayerAv').val()
         };
+        clearInterval(loadGamesTimer);
+        $('#hidPlayerId').val(playerId);
+        $('#hidGameId').val(gameId);
         socket.emit('joinGame', obj);
     }
     socket.on('joined',function(data) {
-        let p='';
-        data.gamePlayers.forEach(player => {
-          if($scope.players.indexOf(player)<0){
-            p=player.playerName;
-          }
-          player.pointsForGame = player.pointsForGame.reduce((a, b) => a + b, 0);
-          player.playerAvatar = `images/avatars/${player.playerAvatar}`;
-        });
-        $scope.gameStarted = data.gameStarted;
-        if(!$scope.gameStarted){
-            var styles = {
-                zIndex:2,
-                backgroundColor : "#ddd",
-                width:$('#mainGameSection').css('width'),
-                opacity:0.7,
-                height:$('#mainGameSection').css('height'),
-                top:'43px',
-                position:'absolute',
-                paddingLeft:'57px',
-                paddingTop: '90px',
-                fontSize: 'large',
-                paddingRight: '19px',
-                color:'darkred'
-              };
-            $('#cover').css(styles);
-            let p='admin';
-            data.gamePlayers.forEach(player=>{
-                if(player.isCreator)
-                    p=player.playerName;
-            })
-            $scope.coverMessage=`The game is not started yet, <br> waiting for ${p} to start the game`;
-
-        }
-        $('#gameContainer').fadeOut('fast',function(){
-            $scope.wait=false;
-        });
-        $('#divStatus').html(`${p} has joined`);
-        $scope.players=data.gamePlayers;
-      });
-
-    $scope.gameStartedIndicatorClass = function(){
-        if($('#hidPlayerId').val().split('~')[1]=='c'){
-            return $scope.game.gameStarted?'fa fa-play fa-lg green ':'fa fa-play btn btn-success';
+        if(data.err!=''){
+            console.log('game join err');
+            alert(`Some error occured while starting the game\n please try again :${err.message}`);
         }
         else{
-            return $scope.game.gameStarted?'fa fa-play fa-lg green ':'fa fa-clock-o fa-spin';
+            let p='';
+            data.gamePlayers.forEach(player => {
+            if($scope.players.indexOf(player)<0){
+                p=player.playerName;
+            }
+            player.pointsForGame = player.pointsForGame.reduce((a, b) => a + b, 0);
+            player.playerAvatar = `images/avatars/${player.playerAvatar}`;
+            });
+            $scope.gameStarted = data.gameStarted;
+            if(!$scope.gameStarted){
+                var styles = {
+                    zIndex:2,
+                    backgroundColor : "#ddd",
+                    width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                    opacity:0.7,
+                    height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                    top:'43px',
+                    position:'absolute',
+                    paddingLeft:'57px',
+                    paddingTop: '90px',
+                    fontSize: 'large',
+                    paddingRight: '19px',
+                    color:'darkred'
+                };
+                $('#cover').css(styles);
+                let p='admin';
+                data.gamePlayers.forEach(player=>{
+                    if(player.isCreator)
+                        p=player.playerName;
+                })
+                $scope.coverMessage=`The game is not started yet, waiting for ${p} to start the game`;
+
+            }
+            $('#gameContainer').fadeOut(1000);
+            $scope.wait=false;
+            $('#divStatus').html(`${p} has joined`).fadeIn('slow').fadeOut(5000);
+
+            $scope.players=data.gamePlayers;
+        }
+    });
+
+    /*----- chat ----*/
+    $scope.message = function(){
+        if($('#txtMsg').val().length>0){
+            var obj ={playerId:$('#hidPlayerId').val(),gameId:$('#hidGameId').val(),message:$('#txtMsg').val()};
+            $('#txtMsg').val('');
+            socket.emit('message', obj);
+        }
+    }
+    socket.on('onMessage',function(data){
+        $('#chatbox').append(`<div style='border:1px solid #ddd;padding:3px;margin-top: 7px;margin-left:-22px;margin-right: 2px;background-color: white;border-radius: 7px;'>${data.playerName}&nbsp;<img src="${data.playerAvatar}" width=30 />&nbsp;:&nbsp;${data.message}</div>`);
+    })
+
+    /*-----wait from socket----*/
+    socket.on('onWait',function(msg){
+        if(msg){$scope.loaderMsg=msg}
+        $scope.wait=true;
+    });
+    socket.on('onStopWait',function(data){
+        $scope.wait=false;
+    });
+
+    /*----------play start-------------- */
+    $scope.playStart = function(){
+        if($('#hidPlayerId').val().indexOf('~')>-1)
+            socket.emit('playStarted', `${$('#hidGameId').val()}`);
+    }
+    socket.on('onPlayStarted',function(data){
+        if(data.err!=''){
+            console.log('game start err');
+            alert('Some error occured while starting the game\n please try again');
+        }
+        else{
+            //change icon
+            if($('#hidGameId').val() == data.gameId){ //not needed to check
+                $scope.alphabet = data.alphabet;
+                $scope.gameStarted = data.gameStarted;
+                console.log('game start evt');
+                $('#gameStartedIndicator').hide();
+                $('#gameTimer').show();
+                $scope.$broadcast('timer-set-countdown',data.gameTime);
+                $scope.$broadcast('timer-start');
+                $('#cover').fadeOut();
+            }  
+        }
+    });
+    $scope.gameStartedIndicatorClass = function(){
+        if($('#hidPlayerId').val().split('~')[1]=='c'){
+            if($scope.players.length>=2)
+                return 'fa fa-play fa-lg';
+            else
+                return $scope.game.gameStarted?'fa fa-play fa-lg':'fa fa-clock-o fa-spin';
+        }
+        else{
+            return $scope.game.gameStarted?'fa fa-play fa-lg':'fa fa-clock-o fa-spin';
         }
     }
     /*----validate name-----*/
@@ -258,13 +322,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     let vc = vowel_count($scope.playingGame.name);
                     if(vc>0 && vc<$scope.playingGame.name.length ){
                         $scope.nameVal = true;
+                        $scope.namePoints=4;
                     }
                     else{
                         $scope.nameVal = false;
+                        $scope.namePoints=0;
                     }
                 }
                 else{
                     $scope.nameVal = false;
+                    $scope.namePoints=0;
                 }
             }
         }
@@ -298,7 +365,20 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                         $http.get('api/words/place/'+$scope.playingGame.place)
                         .then(function (result) {
                             $scope.wait = false;
-                            if(result.data) $scope.placeVal = true;
+                            if(result.data) {
+                                $scope.placeVal = true;
+                                if($scope.playingGame.place.length<=4)
+                                    $scope.playingGame.placePoints = 4;
+                                else if($scope.playingGame.place.length==5)
+                                    $scope.playingGame.placePoints = 5;
+                                else if($scope.playingGame.place.length==6)
+                                    $scope.playingGame.placePoints = 6;
+                                else if($scope.playingGame.place.length==7)
+                                    $scope.playingGame.placePoints = 7;
+                                else if($scope.playingGame.place.length>=8)
+                                    $scope.playingGame.placePoints = 9;
+                                    
+                            }
                             else $scope.placeVal = false;
                         },
                         function(error){

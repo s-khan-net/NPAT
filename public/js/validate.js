@@ -11,26 +11,52 @@ function validate(type){
 function initialize(){
     let w= $(window).width();
     if(w>412){
-        $('#logoDiv').css({left:200});
+        $('#gameContainer').css({left:'99px',width:'86%'});
+        $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
         $('#chatSection').show();
     }
     else{
-        $('#logoDiv').css({top:-63});
+        $('#gameContainer').css({left:'0px',width:'100%'});
         $('#chatSection').hide();
     }
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
         if(w>412){
             $('#logoDiv').css({left:200});
+            $('#gameContainer').css({left:'99px',width:'86%'});
+            $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
             $('#chatSection').show();
         }
         else{
             $('#logoDiv').css({top:-63});
+            $('#gameContainer').css({left:'0px',width:'100%'});
             $('#chatSection').hide();
         }
+        var styles = {
+            zIndex:2,
+            backgroundColor : "#ddd",
+            width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+            opacity:0.7,
+            height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+            top:'43px',
+            position:'absolute',
+            paddingLeft:'57px',
+            paddingTop: '90px',
+            fontSize: 'large',
+            paddingRight: '19px',
+            color:'darkred'
+          };
+        $('#cover').css(styles);
+    });
+    $('#playersContainer').slimScroll({
+        height: '100%', 
+        position: 'left',
+    });
+    $('#chatbox').slimScroll({
+        height: '100%', 
     });
     let pos = $('#mainContainer').position();
-    $('#gameContainer').css({top: pos.top, left:0});
+    $('#gameContainer').css({top: pos.top});
     //alet on refresh
     window.onbeforeunload = function() {
         return "Dude, are you sure you want to leave? Think of the kittens!";

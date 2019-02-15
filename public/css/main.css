@@ -1,5 +1,28 @@
 
-body {overflow:hidden;}
+body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jpg');background-repeat: repeat}
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+    .orientation{
+        display:block;
+        height:100%;
+        width:100%;
+        background-color: rgb(202, 213, 219);
+        position: absolute;
+        z-index: 5;
+        top:0px;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        letter-spacing: 2px;
+        font-weight: bold;
+        font-size:large;
+        margin:0 auto;
+        text-align: center;
+    }
+  }
+  @media  (orientation: portrait) {
+    .orientation{
+        display:none
+    }
+}
+
 .alphabet{
     font-size: 23px;
     font-weight:bolder;
@@ -60,6 +83,9 @@ body {overflow:hidden;}
   }
   .formrowpadding{
       padding-top:13px
+  }
+  .p-t{
+    padding-top: 10px;
   }
   h4{
       letter-spacing:2px;

@@ -41,9 +41,14 @@ if(!config.get('jwtKey')) {
 io.sockets.on('connection', function(socket) { //socket code
     console.log(`someone connected ${socket.id}`);
 
+    socket.on('createGame', function(obj) { //is whole game
+        socket.join(`game-${obj.gameId}`);
+    });
+
     socket.on('joinGame', function(obj) { // is game id
+        socket.join(`game-${obj.gameId}`);
         const p = new Promise((resolve,reject)=>{
-        console.log(obj);
+      //  console.log(obj);
         if(obj.gameId && obj.playerId){
             let player = { //make the player ,,, thought I could use _
                 playerId: obj.playerId,
@@ -54,24 +59,30 @@ io.sockets.on('connection', function(socket) { //socket code
                 wordsForGame:[],
                 joinedAt:Date.now()
             }
-             Game.findOne({gameId:obj.gameId},function(err,game){
-                console.log(game.gameId);
-                if(!game.gameEnded && game.gameActive){
-                    game.gamePlayers.push(player); //add player to the game
-                    game.save()
-                        .then(g=>{
-                            var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:''};
-                            socket.join(`game-${g.gameId}`);
-                            resolve(d);
-                        }) // save the game
-                        .catch(err=>{
-                            var d = {err:'could not join, please try again'}
-                            resolve(d);
-                        })
-                    
-                }else{
-                    var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'game ended, please choose another one'};
+            Game.findOne({gameId:obj.gameId},function(err,game){
+                if(err){
+                    var d = {err:'could not start, please try again'}
                     resolve(d);
+                }
+                else{
+                    if(!game.gameEnded && game.gameActive){
+                        game.gamePlayers.push(player); //add player to the game
+                        game.save()
+                            .then(g=>{
+                                console.log(g.gamePlayers)
+                                var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:''};
+                                
+                                resolve(d);
+                            }) // save the game
+                            .catch(err=>{
+                                var d = {err:'could not join, please try again'}
+                                resolve(d);
+                            })
+                        
+                    }else{
+                        var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'game ended, please choose another one'};
+                        resolve(d);
+                    }
                 }
             });
         }
@@ -88,6 +99,48 @@ io.sockets.on('connection', function(socket) { //socket code
         })
     });
 
+    socket.on('message',function(obj){
+        io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4]}.png`,message:obj.message});
+    });
+
+    socket.on('playStarted', function(gameId) { 
+		let msg='Starting game...';
+        io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
+        const p = new Promise((resolve,reject)=>{
+            //get the game
+            Game.findOne({gameId:gameId},function(err,game){
+                if(err){
+                    var d = {err:'could not start, please try again'}
+                    resolve(d);
+                }
+                else{
+                    if(game.gameAlphabetArray.length==0){
+                        game.gameAlphabetArray = alphabets;
+                    }
+                    //GENERATE RANDOM ALPHABET
+                    let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
+                    //remove a
+                    game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
+                    game.gameStarted=true;
+                    game.gameStartedAt=Date.now();
+                    game.save()
+                        .then(g=>{
+                            var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,err:''};
+                            resolve(d);
+                        })
+                        .catch(err=>{
+                            var d = {err:'could not start, please try again'}
+                            resolve(d);
+                        });
+                }
+            });
+		});
+		
+		p.then((data)=>{
+			io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+			io.sockets.in(`game-${gameId}`).emit('onPlayStarted',data);
+		})
+	});
 });
 
 // Create a Node.js based http server on port 8080
