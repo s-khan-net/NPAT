@@ -38,12 +38,22 @@
                     <div class="row" ng-repeat="p in players" style="padding: 2px;background-color: lavenderblush;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
                         <div class="col-md-8 col-xs-4 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
                             <div class="row">
-                                <div class="col-xs-10 text-right"><label>{{p.playerName}}</label><span class="badge">{{p.pointsForGame}}</span></div>
-                                <div class="col-xs-2 text-center"><small>{{p.isCreator?'admin':''}}</small></div>
+                                <div class="col-md-12 col-xs-12 text-right">
+                                    <label>{{p.playerName}}</label><span class="badge">{{p.pointsForGame}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 text-right">
+                                    <i data-ng-class="typingClass(p.playerTyping)"></i>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
-                            <div id="btnPlayer" style="border-radius: 4px;background-color: gainsboro;padding: 3px;margin-left: 14px;"><img src="{{p.playerAvatar}}" /></div>
+                        <div class="col-md-4 col-xs-8 text-left js-PlayerPic">
+                            <div id="btnPlayer" style="border-radius: 5px;background-color:silver;padding: 5px;margin-left: 14px;">
+                                <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
+                                <img src="{{p.playerAvatar}}" />
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,7 +108,7 @@
             </div>
             <div class="row" style="padding-top:9px">
                     <div class="col-xs-9" style="text-align:right">
-                        <button class="btn btn-primary btn-lg" ng-disabled="!(nameVal && placeVal && animalVal && thingVal && game.gameStarted)">Submit</button>
+                        <button class="btn btn-primary btn-lg" ng-confirm="Do you want to submit??">Submit</button>
                     </div>
             </div>
             </form>
@@ -242,7 +252,7 @@
                 <div id="gamesContainer">
                 <div class="row" ng-repeat="g in games" style="padding-top:3px" >
                     <div class="col-xs-6 js-gameName text-center" >
-                        <button data-ng-class=gameStartedClass(g.gameStarted) title="join" ng-click="joinGame(g.gameId,g.gameName)" style="width: 40px;height: 39px;padding-left:3px;">{{g.gameName}}</button></div>
+                        <button data-ng-class=gameStartedClass(g.gameStarted) title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)" style="width: 40px;height: 39px;padding-left:3px;">{{g.gameName}}</button></div>
                     <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div>
                 </div>
                 </div>
@@ -255,11 +265,11 @@
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/angular/angular.min.js"></script>
+<script src="js/ng-confirm.min.js"></script>
 <script src="js/humanize-duration.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/angular-timer.js"></script>
 <script src="js/jquery.slimscroll.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.6/angular-sanitize.min.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

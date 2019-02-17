@@ -22,7 +22,17 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
         display:none
     }
 }
-
+.notify-badge{
+    position: absolute;
+    right:13px;
+    top:-1px;
+    background:#fff;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:green;
+    padding:1px 2px 1px 2px;
+    font-size:8px;
+}
 .alphabet{
     font-size: 23px;
     font-weight:bolder;

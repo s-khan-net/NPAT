@@ -38,6 +38,8 @@ if(!config.get('jwtKey')) {
     console.log('FATAL ERROR: jwt token key not set');
     process.exit(1);
 }
+let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
 io.sockets.on('connection', function(socket) { //socket code
     console.log(`someone connected ${socket.id}`);
 
@@ -46,7 +48,6 @@ io.sockets.on('connection', function(socket) { //socket code
     });
 
     socket.on('joinGame', function(obj) { // is game id
-        socket.join(`game-${obj.gameId}`);
         const p = new Promise((resolve,reject)=>{
       //  console.log(obj);
         if(obj.gameId && obj.playerId){
@@ -69,9 +70,8 @@ io.sockets.on('connection', function(socket) { //socket code
                         game.gamePlayers.push(player); //add player to the game
                         game.save()
                             .then(g=>{
-                                console.log(g.gamePlayers)
-                                var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:''};
-                                
+                                 var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,gameAlphabetArray:g.gameAlphabetArray,err:''};
+                                socket.join(`game-${g.gameId}`);
                                 resolve(d);
                             }) // save the game
                             .catch(err=>{
@@ -103,6 +103,11 @@ io.sockets.on('connection', function(socket) { //socket code
         io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4]}.png`,message:obj.message});
     });
 
+    socket.on('typing', function(val) { 
+		val = val.split('~');
+		socket.broadcast.to(`game-${val[0]}`).emit('onTyping', val);
+    });
+    
     socket.on('playStarted', function(gameId) { 
 		let msg='Starting game...';
         io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
@@ -111,6 +116,7 @@ io.sockets.on('connection', function(socket) { //socket code
             Game.findOne({gameId:gameId},function(err,game){
                 if(err){
                     var d = {err:'could not start, please try again'}
+                    io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                     resolve(d);
                 }
                 else{
@@ -130,6 +136,7 @@ io.sockets.on('connection', function(socket) { //socket code
                         })
                         .catch(err=>{
                             var d = {err:'could not start, please try again'}
+                            io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                             resolve(d);
                         });
                 }

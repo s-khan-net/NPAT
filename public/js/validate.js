@@ -52,14 +52,13 @@ function initialize(){
         height: '100%', 
         position: 'left',
     });
-    $('#chatbox').slimScroll({
-        height: '100%', 
-    });
+    $('#chatbox').slimScroll();
     let pos = $('#mainContainer').position();
     $('#gameContainer').css({top: pos.top});
-    //alet on refresh
+    
+    //alert on refresh
     window.onbeforeunload = function() {
-        return "Dude, are you sure you want to leave? Think of the kittens!";
+        return "Dude, are you sure you want to leave?";
     }
     //disable back
     history.pushState(null, null, document.URL);
