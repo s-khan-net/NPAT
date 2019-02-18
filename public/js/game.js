@@ -304,17 +304,46 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     socket.on('onTyping',function(data){
     //if($('#hidGameId').val() == data[0]){
         $.each($scope.players,function(i,v){
-        if(v.playerId == data[1]){
-            v.playerTyping = `${data[2]}`
-        }
+            if(v.playerId == data[1]){
+                v.playerTyping = `${data[2]}`
+            }
         });
     //}
+    });
+
+    /*-------------points change--------------- */
+    socket.on('onPoints',function(data){
+    //if($('#hidGameId').val() == data[0]){
+        $.each($scope.players,function(i,v){
+            if(v.playerId == data[1]){
+                switch (data[3]) {
+                    case 'N':
+                        $scope.playingGame.namePoints = data[2]
+                        break;
+                    case 'P':
+                        $scope.playingGame.placePoints = data[2]
+                        break;
+                    case 'A':
+                        $scope.playingGame.animalPoints = data[2]
+                        break;
+                    case 'T':
+                        $scope.playingGame.thingPoints = data[2]
+                        break;
+                    default:
+        
+                        break;
+                }
+                v.pointsForGame = Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints);
+            }
+        });
+    //}
+        
     });
 
     $scope.gameStartedIndicatorClass = function(){
         if($('#hidPlayerId').val().split('~')[1]=='c'){
             if($scope.players.length>=2)
-                return 'fa fa-play fa-lg';
+                return 'fa fa-play fa-lg btn btn-default';
             else
                 return $scope.game.gameStarted?'fa fa-play fa-lg':'fa fa-clock-o fa-spin';
         }
@@ -325,16 +354,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.typingClass = function(v){
         switch (v) {
             case 'N':
-                return 'fa fa-commenting-o';
+                return 'fa fa-commenting-o blinker orange';
                 break;
             case 'P':
-                return 'fa fa-commenting-o';
+                return 'fa fa-commenting-o blinker green';
                 break;
             case 'A':
-                return 'fa fa-commenting-o';
+                return 'fa fa-commenting-o blinker brown';
                 break;
             case 'T':
-                return 'fa fa-commenting-o';
+                return 'fa fa-commenting-o blinker blue';
                 break;
             default:
                 return '';
@@ -343,12 +372,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     }
     /*----validate name-----*/
     $scope.ValName = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~N`);
+        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~N`);
         let s='';
         if($scope.playingGame.name) {
             s = $scope.playingGame.name.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.name = '';
+                $scope.playingGame.namePoints=0;
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -362,19 +392,21 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     let vc = vowel_count($scope.playingGame.name);
                     if(vc>0 && vc<$scope.playingGame.name.length ){
                         $scope.nameVal = true;
-                        $scope.namePoints=4;
+                        $scope.playingGame.namePoints=4;
                     }
                     else{
                         $scope.nameVal = false;
-                        $scope.namePoints=0;
+                        $scope.playingGame.namePoints=0;
                     }
                 }
                 else{
                     $scope.nameVal = false;
-                    $scope.namePoints=0;
+                    $scope.playingGame.namePoints=0;
                 }
+                
             }
         }
+        socket.emit('points', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~${$scope.playingGame.namePoints}~N`);
     }
     $scope.nameValid = function () {
         if($('#txtName').val().length>=1)
@@ -383,12 +415,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*-----validate place-------------*/
     $scope.ValPlace = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~P`);
+        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~P`);
         let s='';
         if($scope.playingGame.place) {
             s = $scope.playingGame.place.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.place = '';
+                $scope.playingGame.placePoints=0;
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -420,10 +453,14 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                                     $scope.playingGame.placePoints = 9;
                                     
                             }
-                            else $scope.placeVal = false;
+                            else {
+                                $scope.placeVal = false;
+                                $scope.playingGame.placePoints = 0;
+                            }
+                            
                         },
                         function(error){
-                            alert(error.statusText);
+                            alert(error.statusText+'Error connecting to server');
                             $scope.wait = false;
                         });
                     }
@@ -436,6 +473,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 }
             }
         }
+        socket.emit('points', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~${$scope.playingGame.placePoints}~P`);
     }
     $scope.placeValid = function () {
         let c=''
@@ -449,12 +487,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*-----validate animal----*/
     $scope.ValAnimal = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~A`);
+        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~A`);
         let s='';
         if($scope.playingGame.animal) {
             s = $scope.playingGame.animal.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.animal = '';
+                $scope.playingGame.animalPoints =0;
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -472,8 +511,24 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                         $http.get('api/words/animal/'+$scope.playingGame.animal)
                         .then(function (result) {
                             $scope.wait = false;
-                            if(result.data) $scope.animalVal = true;
-                            else $scope.animalVal = false;
+                            if(result.data) {
+                                $scope.animalVal = true;
+                                if($scope.playingGame.animal.length<=4)
+                                    $scope.playingGame.animalPoints = 4;
+                                else if($scope.playingGame.animal.length==5)
+                                    $scope.playingGame.animalPoints = 5;
+                                else if($scope.playingGame.animal.length==6)
+                                    $scope.playingGame.animalPoints = 6;
+                                else if($scope.playingGame.animal.length==7)
+                                    $scope.playingGame.animalPoints = 7;
+                                else if($scope.playingGame.animal.length>=8)
+                                    $scope.playingGame.animalPoints = 9;
+                            }
+                            else {
+                                $scope.playingGame.animalPoints = 0;
+                                $scope.animalVal = false;
+                            }
+                            
                         },
                         function(error){
                             alert(error.statusText);
@@ -489,6 +544,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 }
             }
         }
+        socket.emit('points', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~${$scope.playingGame.animalPoints}~A`);
     }
     $scope.animalValid = function () {
         let c=''
@@ -502,12 +558,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*------validate thing-----*/
     $scope.ValThing = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~T`);
+        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~T`);
         let s='';
         if($scope.playingGame.thing) {
             s = $scope.playingGame.thing.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.thing = '';
+                $scope.playingGame.animalPoints=0;
                 $('.js-alphabet').css('color','red');
                 $('.js-alphabet').addClass('vibrate');
                 setTimeout(()=>{
@@ -525,8 +582,15 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                         $http.get('api/words/thing/'+$scope.playingGame.thing)
                         .then(function (result) {
                             $scope.wait = false;
-                            if(result.data) $scope.thingVal = true;
-                            else $scope.thingVal = false;
+                            if(result.data) {
+                                $scope.thingVal = true;
+                                $scope.playingGame.thingPoints=4;
+                            }
+                            else {
+                                $scope.thingVal = false;
+                                $scope.playingGame.thingPoints=0;
+                            }
+                            
                         },
                         function(error){
                             alert(error.statusText);
@@ -542,6 +606,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 }
             }
         }
+        socket.emit('points', `${$('#hidGameId').val()}~${$('#hidPlayerId').val()}~${$scope.playingGame.animalPoints}~T`);
     }
     $scope.thingValid = function () {
         let c=''

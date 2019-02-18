@@ -107,6 +107,11 @@ io.sockets.on('connection', function(socket) { //socket code
 		val = val.split('~');
 		socket.broadcast.to(`game-${val[0]}`).emit('onTyping', val);
     });
+
+    socket.on('points', function(val) { 
+		val = val.split('~');
+		io.sockets.in(`game-${val[0]}`).emit('onPoints', val);
+    });
     
     socket.on('playStarted', function(gameId) { 
 		let msg='Starting game...';

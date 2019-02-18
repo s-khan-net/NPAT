@@ -138,6 +138,20 @@ function initialize(){
             v = v==1?12:v-1;
             $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         });
+        $('#modalAvatars').on('shown.bs.modal', function() {
+            var html = '<div class="row">';
+            for (let i = 1; i <= 12; i++) {
+                html +=`<div class="col-md-2 col-xs-4" style="text-align:center;margin-bottom:2px"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
+            }
+            html +='</div>';
+            $('#modalAvatarsBody').html(html);
+        });
+        $('#avatarContainer').click(function(){
+            $("#modalAvatars").modal({
+                backdrop: "static"
+            });
+        });
+        
     }
     
 }

@@ -44,15 +44,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-xs-12 text-right">
-                                    <i data-ng-class="typingClass(p.playerTyping)"></i>
+                                    <i data-ng-class="typingClass(p.playerTyping)">&nbsp;<span style="font-size:smaller;font-family: sans-serif">{{p.playerTyping}}</span></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-xs-8 text-left js-PlayerPic">
-                            <div id="btnPlayer" style="border-radius: 5px;background-color:silver;padding: 5px;margin-left: 14px;">
+                        <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
+                            <div id="btnPlayer">
                                 <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
-                                <img src="{{p.playerAvatar}}" />
-                                
+                                <img style="border:2px solid silver;border-radius:4px" src="{{p.playerAvatar}}" />
                             </div>
                         </div>
                     </div>
@@ -76,7 +75,7 @@
             </div>
             <div class="row" style="padding-top:9px">
                 <div class="col-md-12">
-                    <label for="txtName" aria-label="txtName">Name</label>&nbsp;&nbsp;<i ng-class="nameValid()"></i>
+                    <label for="txtName" aria-label="txtName">Name</label>&nbsp;&nbsp;<i ng-class="nameValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.namePoints}}</span>
                 </div>
                 <div class="col-md-12">
                     <input type="text" id="txtName" name="txtName" class="form-control" data-ng-model="playingGame.name" data-ng-change="ValName(this)" autocomplete="none" />
@@ -84,7 +83,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label for="txtPlace" aria-label="txtPlace">Place</label>&nbsp;&nbsp;<i ng-class="placeValid()"></i>
+                    <label for="txtPlace" aria-label="txtPlace">Place</label>&nbsp;&nbsp;<i ng-class="placeValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.placePoints}}</span>
                 </div>
                 <div class="col-md-12">
                     <input type="text" id="txtPlace" name="txtPlace" class="form-control" data-ng-model="playingGame.place" data-ng-change="ValPlace(this)"autocomplete="none" />
@@ -92,7 +91,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label for="txtAnimal" aria-label="txtAnimal">Animal</label>&nbsp;&nbsp;<i ng-class="animalValid()"></i>
+                    <label for="txtAnimal" aria-label="txtAnimal">Animal</label>&nbsp;&nbsp;<i ng-class="animalValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.animalPoints}}</span>
                 </div>
                 <div class="col-md-12">
                     <input type="text" id="txtAnimal" name="txtAnimal" class="form-control" data-ng-model="playingGame.animal" data-ng-change="ValAnimal(this)"autocomplete="none" />
@@ -100,7 +99,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <label for="txtThing" aria-label="txtThing">Thing</label>&nbsp;&nbsp;<i ng-class="thingValid()"></i>
+                    <label for="txtThing" aria-label="txtThing">Thing</label>&nbsp;&nbsp;<i ng-class="thingValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.thingPoints}}</span>
                 </div>
                 <div class="col-md-12">
                     <input type="text" id="txtThing" name="txtThing" class="form-control" data-ng-model="playingGame.thing" data-ng-change="ValThing(this)"autocomplete="none" />
@@ -262,7 +261,31 @@
     </div>
 </div>
 <div class="orientation" style="text-align: center;"></div>
+
+<div class="modal fade" id="modalAvatars" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+     <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" >Choose...</h4>
+        </div>
+            
+        <div class="modal-body" id="modalAvatarsBody">
+          
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+          <div class="col-xs-8"></div>
+          <div class="col-xs-4">
+            <button type="button" class="btn- btn-sm btn-default" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> 
 </div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/angular/angular.min.js"></script>
 <script src="js/ng-confirm.min.js"></script>

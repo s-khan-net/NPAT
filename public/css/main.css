@@ -17,7 +17,7 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
         text-align: center;
     }
   }
-  @media  (orientation: portrait) {
+  @media (orientation: portrait) {
     .orientation{
         display:none
     }
@@ -32,6 +32,10 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     color:green;
     padding:1px 2px 1px 2px;
     font-size:8px;
+}
+.badge{
+    background-color: #ccc;
+    font-size: 11px;
 }
 .alphabet{
     font-size: 23px;
@@ -63,7 +67,15 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     90% { transform: translate(1px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
   }
-
+  .blinker {
+    animation: blinker 2s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
   #playersContainer{
     overflow-y:scroll;
     overflow-x:hidden;
@@ -81,6 +93,15 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
   }
   .red{
       color:red;
+  }
+  .orange{
+      color:orange;
+  }
+  .brown{
+      color: brown;
+  }
+  .blue{
+      color:blue
   }
   .grey{
       color: darkgrey;
