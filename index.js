@@ -62,7 +62,7 @@ io.sockets.on('connection', function(socket) { //socket code
             }
             Game.findOne({gameId:obj.gameId},function(err,game){
                 if(err){
-                    var d = {err:'could not start, please try again'}
+                    var d = {err:'could not join, please try again'}
                     resolve(d);
                 }
                 else{
@@ -152,7 +152,52 @@ io.sockets.on('connection', function(socket) { //socket code
 			io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
 			io.sockets.in(`game-${gameId}`).emit('onPlayStarted',data);
 		})
-	});
+    });
+    
+    socket.on('submit', function(obj) { 
+        const p = new Promise((resolve,reject)=>{
+            if(obj.gameId && obj.playerId){
+                Game.findOne({gameId:obj.gameId},function(err,game){
+                    if(err){
+                        var d = {err:'could not submit, please try again'}
+                        resolve(d);
+                    }
+                    else{
+                        if(!game.gameEnded && game.gameActive){
+                            game.gamePlayers.forEach(player => {
+                                if(player.playerId == obj.playerId){
+                                    player.wordsForGame.push(obj.words);
+                                    player.pointsForGame.push(obj.pointsForGame);
+                                }
+                            });
+                            game.save()
+                            .then(g=>{
+                                var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,err:''};
+                                resolve(d);
+                            }) // update the player
+                            .catch(err=>{
+                                var d = {err:'could not submit, please try again'}
+                                resolve(d);
+                            })
+                        }
+                        else{
+                            var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'cannot submit, the game seems to have ended, oops!'};
+                            resolve(d);
+                        }
+                    }
+                });  
+            }
+            else{
+
+            }
+        });
+        p.then(data=>{
+            io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
+        }).catch(err=>{
+            var data = {err:'could not submit, please try again'}
+            io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
+        })
+    });
 });
 
 // Create a Node.js based http server on port 8080

@@ -44,7 +44,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-xs-12 text-right">
-                                    <i data-ng-class="typingClass(p.playerTyping)">&nbsp;<span style="font-size:smaller;font-family: sans-serif">{{p.playerTyping}}</span></i>
+                                    <i ng-class="meClass(p.me)" aria-hidden="true"></i>&nbsp;
+                                    <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true">&nbsp;<span style="font-size:smaller;font-family: sans-serif">{{p.playerTyping}}</span></i>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
         </div>
         <div class="col-xs-9 col-md-6" id="mainGameSection">
             <div id="cover" style="width:0px" class="text-center">{{coverMessage}}</div>
-            <form class="form-horizontal"  ng-submit="updateGame()" name="frmGame" novalidate>
+            <form class="form-horizontal"  ng-submit="submitGame()" name="frmGame" novalidate>
                     <input type="hidden" id="hidGameId" value="" />
                     <input type="hidden" id="hidPlayerId" value="" />
                     <input type="hidden" id="hidPlayerAv" value="" />
@@ -107,7 +108,7 @@
             </div>
             <div class="row" style="padding-top:9px">
                     <div class="col-xs-9" style="text-align:right">
-                        <button class="btn btn-primary btn-lg" ng-confirm="Do you want to submit??">Submit</button>
+                        <button class="btn btn-primary btn-lg" >Submit</button>
                     </div>
             </div>
             </form>
