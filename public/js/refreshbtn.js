@@ -10,14 +10,20 @@
         if (Number(window.innerWidth) < 768) {
             w = w - 8;
             h = h - 8;
-            $(this).html('<div id="btnReset" style="width:' + w + 'px;height:' + h + 'px;margin-bottom:52px" data-toggle="tooltip" data-placement="top" title="Refresh" data-original-title="Refresh"><div id="blRing" ><div id="wRing" class="plus" ></div></div></div>');
         }
-        else {
-            $(this).html('<div id="btnReset" style="width:' + w + 'px;height:' + h + 'px" data-toggle="tooltip" data-placement="top" title="Refresh" data-original-title="Refresh"><div id="blRing" ><div id="wRing" class="plus" ></div></div></div>');
-        }
+        $(this).html('<div id="btnReset" style="width:' + w + 'px;height:' + h + 'px;margin-bottom:52px" data-toggle="tooltip" data-placement="top" title="Chat" data-original-title="Chat"><i class="fa fa-comments-o fa-3x "></i></div>');
         
         $('#btnReset').click(function () {
-            console.log('TCL: initialize -> btnChat');
+            if($('#chatcontainer').css('position')=='absolute'){
+                $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
+                $('#chatSection').hide();
+                $('#chatsectionhead').hide();
+            }
+            else{
+                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'79px',top:'13px'});
+                $('#chatSection').show();
+                $('#chatsectionhead').hide();
+            }
         });
     }
 }(jQuery));

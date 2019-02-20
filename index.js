@@ -165,7 +165,7 @@ io.sockets.on('connection', function(socket) { //socket code
                     else{
                         if(!game.gameEnded && game.gameActive){
                             game.gamePlayers.forEach(player => {
-                                if(player.playerId == obj.playerId.split('~')[0]){
+                                if(player.playerId == obj.playerId){
                                     player.wordsForGame.push(obj.words);
                                     player.pointsForGame.push(obj.pointsForGame);
                                 }

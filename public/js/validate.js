@@ -14,6 +14,7 @@ function initialize(){
         $('#gameContainer').css({left:'99px',width:'86%'});
         $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
         $('#chatSection').show();
+        $('#chatsectionhead').show();
     }
     else{
         $('#gameContainer').css({left:'0px',width:'100%'});

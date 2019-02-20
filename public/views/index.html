@@ -114,12 +114,13 @@
             </form>
             <div id="divStatus" style="display:none;position: fixed;z-index:3"></div>
         </div>
-        <div class="col-xs-3 col-md-3" id="chatSection">
-            <div class="row">
+        <div class="col-md-3" id="chatSection">
+            <div class="row" id="chatsectionhead">
                 <div class="col-xs-12 text-center blueBg" >
                     <h4>Chat</h4>
                 </div>
             </div> 
+            <div id="chatcontainer">
             <div class="row">
                 <div id="chatbox" style="border-radius:4px; border:1px solid lightblue;padding-left: 24px;user-select: none;background-color:#edf3f5;overflow-y:scroll"></div>
             </div>
@@ -131,10 +132,11 @@
                     <button class="btn btn-primary btn-sm" id="btnMsg" data-ng-click="message()"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </div>
-<div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 2;opacity:1;width: 100%;min-height:419px; ">
+<div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 4;opacity:1;width: 100%;min-height:419px; ">
     <div class="container" style="min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
@@ -261,7 +263,7 @@
     </div>
     </div>
 </div>
-<div class="orientation" style="text-align: center;"></div>
+<!-- <div class="orientation" style="text-align: center;"></div> -->
 <div id="btnChat"></div>
 <div class="modal fade" id="modalAvatars" role="dialog">
     <div class="modal-dialog">

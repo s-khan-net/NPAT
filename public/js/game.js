@@ -370,7 +370,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
       }
       let submitObj={
         gameId:$('#hidGameId').val(),
-        playerId:$('#hidPlayerId').val(),
+        playerId:$('#hidPlayerId').val().split('~')[0],
         words:wordsArray,
         pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
       }
