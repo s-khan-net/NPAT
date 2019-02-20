@@ -122,4 +122,34 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
       letter-spacing:2px;
       font-family:"Verdana, Geneva, Tahoma, sans-serif" 
   }
- 
+ /******reset button... to change color, change css*/
+#btnReset{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index:1;
+    /*width: 28px;
+    height: 28px;*/
+    border-radius: 50%;
+    background: darkgreen;
+    position: absolute;
+    cursor: pointer;
+    box-shadow: 0px 1px 3px #666;
+}
+#btnReset #blRing{
+	top: 15%; left:15%;
+	width:72%;
+	height:72%;
+	position: relative;
+	border-radius: 50%;
+	background-color:#fff;
+}
+#btnReset #blRing #wRing{
+	top: 18%; left:18%;
+	width:64%;
+	height:64%;
+	position: relative;
+	border-radius: 50%;
+	background-color:darkgreen;
+
+}

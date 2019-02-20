@@ -219,7 +219,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 if($scope.players.indexOf(player)<0){
                     p=player.playerName;
                 }
-                player.pointsForGame = player.pointsForGame.reduce((a, b) => a + b, 0);
+                let a = player.pointsForGame.reduce((a, b) => a + b, 0)
+                player.pointsForGame = a==0?'':a;
                 player.playerAvatar = `images/avatars/${player.playerAvatar}`;
                 player.playerTyping='';
                 player.me = $('#hidPlayerId').val().split('~')[0] == player.playerId?true:false
@@ -298,9 +299,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 console.log('game start evt');
                 $('#gameStartedIndicator').hide();
                 $('#gameTimer').show();
+                $('#cover').fadeOut();
                 $scope.$broadcast('timer-set-countdown',data.gameTime);
                 $scope.$broadcast('timer-start');
-                $('#cover').fadeOut();
+                
             }  
         }
     });
@@ -320,8 +322,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     socket.on('onPoints',function(data){
     //if($('#hidGameId').val() == data[0]){
         $.each($scope.players,function(i,v){
-            if(v.playerId == data[1]){
-                v.pointsForGame =  data[2];
+            if(v.playerId == data.playerId){
+                v.pointsForGame =  data.pointsForGame;
                 //switch (data[3]) {
                 //     case 'N':
                 //         $scope.playingGame.namePoints = data[2]
@@ -348,23 +350,23 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*--------------submit play--------------- */
     $scope.$on('timer-stopped', function (event, data){
-        //console.log('Timer Stopped - data = ', data);
+        console.log('Timer Stopped - data = ', data);
         $scope.playerTime =data.seconds;
-        // if(data.seconds==0) //update only if not submitted
-        //     updateWOstop();
+        if(data.seconds==0) //update only if not submitted
+            submitGameWOStop();
     });
 
     $scope.submitGame = function(){
       $scope.$broadcast('timer-stop');
       $scope.loaderMsg='submitting...'
       $scope.wait=true;
-      let bonus=(($scope.playerTime/$scope.gameTime) * 100).toFixed(2) + '%'
+      
       let wordsArray={
         name:$scope.playingGame.name,namePoints:$scope.playingGame.namePoints,
         place:$scope.playingGame.place,placePoints:$scope.playingGame.placePoints,
         animal:$scope.playingGame.animal,animalPoints:$scope.playingGame.animalPoints,
         thing:$scope.playingGame.thing,thingPoints:$scope.playingGame.thingPoints,
-        bonusPoints:bonus,playTime:$scope.playerTime,
+        bonusPoints:getBonus(),playTime:$scope.playerTime,
       }
       let submitObj={
         gameId:$('#hidGameId').val(),
@@ -373,6 +375,27 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
       }
       socket.emit('submit', submitObj);
+    }
+    submitGameWOStop = function(){
+        //$scope.$broadcast('timer-stop');
+		console.log('submitting as timer is 0');
+        
+        $scope.loaderMsg='Time is up! submitting...'
+        $scope.wait=true;
+        let wordsArray={
+          name:$scope.playingGame.name,namePoints:$scope.playingGame.namePoints,
+          place:$scope.playingGame.place,placePoints:$scope.playingGame.placePoints,
+          animal:$scope.playingGame.animal,animalPoints:$scope.playingGame.animalPoints,
+          thing:$scope.playingGame.thing,thingPoints:$scope.playingGame.thingPoints,
+          bonusPoints:getBonus(),playTime:$scope.playerTime,
+        }
+        let submitObj={
+          gameId:$('#hidGameId').val(),
+          playerId:$('#hidPlayerId').val(),
+          words:wordsArray,
+          pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
+        }
+        socket.emit('submit', submitObj);
     }
     socket.on('onSubmit',function(data){
         $scope.coverMessage='';
@@ -385,6 +408,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $.each($scope.players,function(i,v){
                 if(v.playerId == data.playerId.split('~')[0]){
                     v.playerTyping = 'S';
+                    v.pointsForGame = data.pointsForGame==0?'':data.pointsForGame;
                 }
                 if(v.playerTyping=='S')
                 c++;
@@ -408,18 +432,23 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 $('#cover').css(styles);
                 if($scope.players.length==c){
                     //everyone has submitted so 
-                    $scope.coverMessage='Everyone submitted';
-                // $scope.wait=true;
-                    setTimeout(function() {
-                        if(data.gameAlphabetArray.length<26){
-                            $scope.coverMessage='Everyone submitted, starting new play...';
-                            //socket.emit('newPlay', data.gameId);  
-                        }
-                        else
+                    if(data.gameAlphabetArray.length<26){
+                        $scope.coverMessage='Everyone submitted, starting new play...';
+                        setTimeout(() => {
+                            if($('#hidPlayerId').val().indexOf('~')>-1){
+                                socket.emit('newPlay', data.gameId);  
+                            }    
+                        }, 3300);
+                    }
+                    else{
                         $scope.coverMessage='Everyone submitted, game over... Wait for the leaderboard...';
-                        $scope.wait=false;
-                        
-                    }, 1300);
+                        setTimeout(() => {
+                            if($('#hidPlayerId').val().indexOf('~')>-1){
+                                socket.emit('endPlay', data.gameId);  
+                            }    
+                        }, 3300);
+                    }
+                    //$scope.wait=false;
                 }
                 else{
                     $scope.coverMessage='Waiting for everyone to submit';
@@ -430,18 +459,15 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     //everyone has submitted so 
                     $scope.coverMessage='Everyone submitted';
                 // $scope.wait=true;
-                    setTimeout(function() {
+                   // setTimeout(function() {
                         if(data.gameAlphabetArray.length<26){
                             $scope.coverMessage='Everyone submitted, starting new play...';
                             //socket.emit('newPlay', data.gameId);  
                         }
                         else
                         $scope.coverMessage='Everyone submitted, game over... Wait for the leaderboard...';
-                        $scope.wait=false;
-						console.log('new play start!')
-                        
-                        
-                    }, 1300);
+                        //$scope.wait=false;
+                    //}, 1300);
                 }
                 else{
                     $scope.coverMessage='Waiting for everyone to submit';
@@ -450,6 +476,42 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         $scope.wait=false;
         $scope.loaderMsg='loading...';
+    });
+
+    getBonus = function(){
+        return (($scope.playerTime/$scope.gameTime) * 100).toFixed(1) + '%'
+    }
+
+    /*-----------new play------------------ */
+    socket.on('onNewPlay',function(data){
+        $.each($scope.players,function(i,v){
+          v.playerTyping='';
+        });
+        if(data.err!=''){
+          console.log('game start err');
+          alert('Some error occured while starting the game\n please try again');
+        }
+        else{
+          //change icon
+          if($('#hidGameId').val() == data.gameId){
+            $scope.playingGame.name='',
+            $scope.playingGame.place='',
+            $scope.playingGame.animal='',
+            $scope.playingGame.thing='',
+            $scope.playingGame.namePoints=0,
+            $scope.playingGame.placePoints=0,
+            $scope.playingGame.animalPoints=0,
+            $scope.playingGame.thingPoints=0,
+            $scope.alphabet = data.alphabet;
+            $('#gameStartedIndicator').hide();
+            $('#gameTimer').show();
+            $('#cover').fadeOut();
+            $scope.$broadcast('timer-set-countdown',data.gameTime);
+            $scope.$broadcast('timer-start');
+            $scope.wait=false;
+            $scope.loaderMsg='loading...';
+          }  
+        }
     });
 
     /**------ng-classes---------------------*/
@@ -490,6 +552,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         if(me)
             return 'fa fa-user-o green'
     }
+
     /*----validate name-----*/
     $scope.ValName = function(v){
         socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~N`);

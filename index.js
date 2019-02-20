@@ -100,13 +100,13 @@ io.sockets.on('connection', function(socket) { //socket code
     });
 
     socket.on('message',function(obj){
-        io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4]}.png`,message:obj.message});
+        io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message});
     });
 
     socket.on('typing', function(val) { 
 		val = val.split('~');
 		socket.broadcast.to(`game-${val[0]}`).emit('onTyping', val);
-    });
+    });  
 
     socket.on('points', function(val) { 
 		val = val.split('~');
@@ -165,14 +165,14 @@ io.sockets.on('connection', function(socket) { //socket code
                     else{
                         if(!game.gameEnded && game.gameActive){
                             game.gamePlayers.forEach(player => {
-                                if(player.playerId == obj.playerId){
+                                if(player.playerId == obj.playerId.split('~')[0]){
                                     player.wordsForGame.push(obj.words);
                                     player.pointsForGame.push(obj.pointsForGame);
                                 }
                             });
                             game.save()
                             .then(g=>{
-                                var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,err:''};
+                                var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,pointsForGame:g.pointsForGame,err:''};
                                 resolve(d);
                             }) // update the player
                             .catch(err=>{
@@ -192,12 +192,56 @@ io.sockets.on('connection', function(socket) { //socket code
             }
         });
         p.then(data=>{
-            io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
+            io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data);
+            // io.sockets.in(`game-${data.gameId}`).emit('onPoints', {gameId:data.gameId,playerId:data.playerId,pointsForGame:g.pointsForGame});
         }).catch(err=>{
             var data = {err:'could not submit, please try again'}
             io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
         })
     });
+
+    socket.on('newPlay',function(gameId){
+		let msg='next letter...';
+		io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
+		const p = new Promise((resolve,reject)=>{
+            //get the game
+            Game.findOne({gameId:gameId},function(err,game){
+                if(err){
+                    var d = {err:'could not start new play'}
+                    io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
+                    resolve(d);
+                }
+                else if(!game.gameStarted){
+                    var d = {err:'The game is not started! oops we dont figure how you got here. Sorry, you\'ll have to restart the game.'}
+                }
+                else if(game.gameAlphabetArray.length==0 && game.gameStarted==true){
+                    //end the game
+
+                }
+                else{
+                    //GENERATE RANDOM ALPHABET
+                    let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
+                    //remove a
+                    game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
+                    game.save()
+                        .then(g=>{
+                            var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,err:''};
+                            resolve(d);
+                        })
+                        .catch(err=>{
+                            var d = {err:'could not start, please try again'}
+                            io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
+                            resolve(d);
+                        });
+                }
+            });
+		});
+		
+		p.then((data)=>{
+			//io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+			io.sockets.in(`game-${gameId}`).emit('onNewPlay',data);
+		})
+	})
 });
 
 // Create a Node.js based http server on port 8080

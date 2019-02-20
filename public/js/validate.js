@@ -18,6 +18,11 @@ function initialize(){
     else{
         $('#gameContainer').css({left:'0px',width:'100%'});
         $('#chatSection').hide();
+        //add the chat button to the bottom right
+        $('#btnChat').refreshbtn({
+            width: 32,
+            height: 32
+        });
     }
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
@@ -55,7 +60,7 @@ function initialize(){
     $('#chatbox').slimScroll();
     let pos = $('#mainContainer').position();
     $('#gameContainer').css({top: pos.top});
-    
+  
     //alert on refresh
     window.onbeforeunload = function() {
         return "Dude, are you sure you want to leave?";
@@ -65,7 +70,7 @@ function initialize(){
         window.addEventListener('popstate', function () {
         history.pushState(null, null, document.URL);
     });
-
+    
     $('#box').focus(function()
     {
         $(this).animate({ width: '+=50' }, 'slow');
