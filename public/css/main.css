@@ -1,6 +1,6 @@
 
 body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jpg');background-repeat: repeat}
-@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+/* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
     .orientation{
         display:block;
         height:100%;
@@ -21,7 +21,8 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     .orientation{
         display:none
     }
-}
+} */
+
 .notify-badge{
     position: absolute;
     right:17px;
@@ -88,6 +89,17 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     overflow-x:hidden;
     min-height: 319px;
     max-height: 319px;
+  }
+  #gameContainer{
+    background:rgb(225,255,255);
+    background:-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%);
+    background:-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%);
+    background:linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 );
+    z-index: 4;
+    opacity:1;
+    width: 100%;
+    min-height:419px;
   }
   .green{
       color:green;

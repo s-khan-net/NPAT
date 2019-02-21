@@ -11,7 +11,7 @@
             w = w - 8;
             h = h - 8;
         }
-        $(this).html('<div id="btnChat" style="width:' + w + 'px;height:' + h + 'px;margin-bottom:52px" data-toggle="tooltip" data-placement="top" title="Chat" data-original-title="Chat"><i class="fa fa-comments-o fa-3x "></i></div>');
+        $(this).html('<div id="btnChat" style="width:' + w + 'px;height:' + h + 'px;display:none"><i class="fa fa-comments-o fa-3x "></i></div>');
         
         $('#btnChat').click(function () {
             if($('#chatcontainer').css('position')=='absolute'){

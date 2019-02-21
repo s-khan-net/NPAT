@@ -116,7 +116,13 @@ io.sockets.on('connection', function(socket) { //socket code
     });
 
     socket.on('message',function(obj){
-        io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message});
+        winston.info(`send chat message from player ${obj.playerId}`);
+        try{
+            io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message});
+        }
+        catch(ex){
+            winston.error(`error while sending chat message from player ${obj.playerId} error:${ex.message}`);
+        }
     });
 
     socket.on('typing', function(val) { 

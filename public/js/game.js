@@ -161,9 +161,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                    width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                    width:"95%",//(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                     opacity:0.7,
-                    height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                    height:"319px",//(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
                     top:'43px',
                     position:'absolute',
                     paddingLeft:'57px',
@@ -175,6 +175,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                   };
                 $('#cover').css(styles);
                 $scope.coverMessage='The game is not started yet, you need atleast 2 players to start the game. It is good to have 3 or more.';
+                $('#mainContainer').fadeIn(1000);
                 $('#gameContainer').fadeOut(1000);
                 $scope.wait=false;
                 clearInterval(loadGamesTimer);
@@ -239,9 +240,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                 background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                 filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                width:"95%",//(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                 opacity:0.7,
-                height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                height:"319px",//(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
                 top:'43px',
                 position:'absolute',
                 paddingLeft:'57px',
@@ -263,9 +264,11 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             else{
                 $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
             }
-            $('#gameContainer').fadeOut(1000);
+            $('#mainContainer').fadeIn(1000);
+            $('#gameContainer').fadeOut(500);
+              
             $scope.wait=false;
-            $('#divStatus').html(`${p} has joined`).fadeIn('slow').fadeOut(5000);
+            $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
         }
     });
 

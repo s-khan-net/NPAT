@@ -24,8 +24,8 @@
 <body >
 <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
 <div style="width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:43%;background-color: beige" data-ng-show="wait" >{{loaderMsg}}</div>
-<div class="container"  id="mainContainer" style="margin-top:32px">
-    <div class="row"><div class="col-xs-12 text-center">{{gameName}}</div></div>
+<div class="container"  id="mainContainer" style="margin-top:32px;display: none">
+    <div class="row"><div class="col-xs-12 text-center" style="font-family:monospace;letter-spacing:2px;font-size:larger;user-select: none;font-weight: bolder;">{{gameName}}</div></div>
     <div class="row">
         <div class="col-xs-2" style="border-right:1px solid #CCC;" id="playerList">
             <div class="row blueBg">
@@ -47,11 +47,11 @@
                             </div>
                             <div id="btnPlayer">
                                 <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
-                                <img  style="border:2px solid silver;border-radius:4px" src="{{p.playerAvatar}}" />
+                                <img  style="border:2px solid silver;border-radius:4px"  src="{{p.playerAvatar}}" />
                             </div>
                             <div>
                                 <div class="col-md-12 col-xs-12 text-right">
-                                    <i ng-class="meClass(p.me)" aria-hidden="true"></i>&nbsp;
+                                    <i ng-class="meClass(p.me)" aria-hidden="true" title="Me"></i>&nbsp;
                                     <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true">&nbsp;<span style="font-size:smaller;font-family: sans-serif">{{p.playerTyping}}</span></i>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                     </div>
             </div>
             </form>
-            <div id="divStatus" style="display:none;position: fixed;z-index:3"></div>
+            <div id="divStatus" style="display:none;position: fixed;z-index:3;font-family: monospace;letter-spacing: 2px;color:darkblue"></div>
         </div>
         <div class="col-md-3" id="chatSection">
             <div class="row" id="chatsectionhead">
@@ -126,7 +126,7 @@
             </div> 
             <div id="chatcontainer">
             <div class="row">
-                <div id="chatbox" style="border-radius:4px; border:1px solid lightblue;padding-left: 24px;user-select: none;background-color:#edf3f5;overflow-y:scroll"></div>
+                <div id="chatbox" style="border-radius:4px; border:1px solid lightblue;padding-left: 24px;user-select: none;background-color:#edf3f5;overflow-y:scroll;height: 250px"></div>
             </div>
             <div class="row">
                 <div class="col-md-10 col-xs-10" style="padding-right:0px;">
@@ -140,7 +140,7 @@
         </div>
     </div>
 </div>
-<div  id="gameContainer" style="margin-top:32px;background-color:rgb(198, 223, 234);position: fixed;z-index: 4;opacity:1;width: 100%;min-height:419px; ">
+<div  id="gameContainer" style="margin-top:32px; ">
     <div class="container" style="min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
@@ -156,12 +156,12 @@
                 <div class="col-md-12 col-xs-12">
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-6" id="avatarContainer2"><img src="" /></div>
+                        <div class="col-md-6 text-center" id="avatarContainer2"><img src="" /></div>
                         <div class="col-md-3"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-6">{{playerName}}</div>
+                        <div class="col-md-6 text-center" style="font-family:monospace;letter-spacing:2px;">{{playerName}}</div>
                         <div class="col-md-3"></div>
                     </div>
                 </div>

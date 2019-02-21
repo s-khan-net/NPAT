@@ -5,58 +5,59 @@ function initialize(){
         position: 'left',
     });
     $('#chatbox').slimScroll();
+    $('#btnChat').refreshbtn({
+        width: 32,
+        height: 32
+    });
     if(w>412){
-        $('#gameContainer').css({left:'99px',width:'86%'});
-        $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
+        //$('#gameContainer').css({left:'99px',width:'86%'});
+        //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
         $('#chatSection').show();
         $('#chatsectionhead').show();
     }
     else{
-        $('#gameContainer').css({left:'0px',width:'100%'});
-        $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
+        //$('#gameContainer').css({left:'0px',width:'100%'});
+        //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
         $('#chatSection').hide();
-        //add the chat button to the bottom right
-        $('#btnChat').refreshbtn({
-            width: 32,
-            height: 32
-        });
+        $('#btnChat #btnChat').show();
     }
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
         if(w>412){
-            $('#gameContainer').css({left:'99px',width:'86%'});
-            $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
+            //$('#gameContainer').css({left:'99px',width:'86%'});
+            //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
             $('#chatSection').show();
         }
         else{
-            $('#gameContainer').css({left:'0px',width:'100%'});
-            $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
+            //$('#gameContainer').css({left:'0px',width:'100%'});
+            //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
             $('#chatSection').hide();
+            $('#btnChat #btnChat').show();
         }
-        var styles = {
-            zIndex:2,
-            background:"rgb(225,255,255)",
-            background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
-            background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
-            background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
-            filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-            width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
-            opacity:0.7,
-            height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
-            top:'43px',
-            position:'absolute',
-            paddingLeft:'57px',
-            paddingTop: '90px',
-            fontSize: 'large',
-            paddingRight: '19px',
-            color:'#00588b',
-            display:'block'
-          };
-        $('#cover').css(styles);
+        // var styles = {
+        //     zIndex:2,
+        //     background:"rgb(225,255,255)",
+        //     background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+        //     background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+        //     background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+        //     filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
+        //     width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+        //     opacity:0.7,
+        //     height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+        //     top:'43px',
+        //     position:'absolute',
+        //     paddingLeft:'57px',
+        //     paddingTop: '90px',
+        //     fontSize: 'large',
+        //     paddingRight: '19px',
+        //     color:'#00588b',
+        //     display:'block'
+        //   };
+        // $('#cover').css(styles);
     });
     
-    let pos = $('#mainContainer').position();
-    $('#gameContainer').css({top: pos.top});
+    // let pos = $('#mainContainer').position();
+    // $('#gameContainer').css({top: pos.top});
   
     //alert on refresh
     window.onbeforeunload = function() {
