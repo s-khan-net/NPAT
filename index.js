@@ -1,5 +1,6 @@
 const express = require('express');
 const config = require('config');
+const winston = require('winston');
 const users =require('./routes/users');
 const words =require('./routes/words');
 const game =require('./routes/game');
@@ -13,6 +14,12 @@ var io = require('socket.io')(server);
 mongoose.connect('mongodb://localhost/NPAT')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
+
+winston.add(winston.transports.File,{filename:'logfile.log'});
+
+process.on('unhandledRejection',function(e){
+	console.log('rejection!!!: e', e)
+})
 
 app.use(express.json());
 //routes
@@ -47,10 +54,10 @@ io.sockets.on('connection', function(socket) { //socket code
         socket.join(`game-${obj.gameId}`);
     });
 
-    socket.on('joinGame', function(obj) { // is game id
+    socket.on('joinGame', function(obj) {
         const p = new Promise((resolve,reject)=>{
-      //  console.log(obj);
         if(obj.gameId && obj.playerId){
+            winston.info(`player ${obj.playerId.split('-')[2]} joining ${obj.gameId}`);
             let player = { //make the player ,,, thought I could use _
                 playerId: obj.playerId,
                 playerName: obj.playerName,
@@ -62,24 +69,30 @@ io.sockets.on('connection', function(socket) { //socket code
             }
             Game.findOne({gameId:obj.gameId},function(err,game){
                 if(err){
+                    winston.error(`Failed to get game from DB : ${err.message}`);
                     var d = {err:'could not join, please try again'}
                     resolve(d);
                 }
                 else{
+                    winston.info(`got the game from DB`);
                     if(!game.gameEnded && game.gameActive){
                         game.gamePlayers.push(player); //add player to the game
+                        winston.info('pushed the player to the game');
                         game.save()
                             .then(g=>{
+                                winston.info(`saved the game with player ${obj.playerId.split('-')[2]}`);
                                  var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,gameAlphabetArray:g.gameAlphabetArray,err:''};
                                 socket.join(`game-${g.gameId}`);
                                 resolve(d);
                             }) // save the game
                             .catch(err=>{
+                                winston.error(`Error while saving the player to the game ${err.message}`);
                                 var d = {err:'could not join, please try again'}
                                 resolve(d);
                             })
                         
                     }else{
+                        winston.info('the game has ended, should\'nt be in the list');
                         var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'game ended, please choose another one'};
                         resolve(d);
                     }
@@ -87,13 +100,16 @@ io.sockets.on('connection', function(socket) { //socket code
             });
         }
         else{
+                winston.error('Data to join not obtained');
                 var d = {err:'game id or player id not obtained'};
                 resolve(d);
             }
 		});
 		p.then(data=>{
+            winston.info('emitting socket joined method to the UI');
             io.sockets.in(`game-${data.gameId}`).emit('joined', data)
         }).catch(err=>{
+            winston.error(`Fatal Error occured while joining ${err}`)
             var data = {err:'could not join, please try again'}
             io.sockets.in(`game-${data.gameId}`).emit('joined', data)
         })
@@ -248,7 +264,7 @@ io.sockets.on('connection', function(socket) { //socket code
 //var server = require('http').createServer(app).listen(process.env.PORT || 3000);
 server.listen(9000, function() {
     console.log('localhost:9000');
-  });
+});
 // app.listen(3000,() => {
 //     // console.log(__dirname+'\\logs\\access.log');
 //      console.log('listening to 3000');

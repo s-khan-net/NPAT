@@ -11,16 +11,16 @@
             w = w - 8;
             h = h - 8;
         }
-        $(this).html('<div id="btnReset" style="width:' + w + 'px;height:' + h + 'px;margin-bottom:52px" data-toggle="tooltip" data-placement="top" title="Chat" data-original-title="Chat"><i class="fa fa-comments-o fa-3x "></i></div>');
+        $(this).html('<div id="btnChat" style="width:' + w + 'px;height:' + h + 'px;margin-bottom:52px" data-toggle="tooltip" data-placement="top" title="Chat" data-original-title="Chat"><i class="fa fa-comments-o fa-3x "></i></div>');
         
-        $('#btnReset').click(function () {
+        $('#btnChat').click(function () {
             if($('#chatcontainer').css('position')=='absolute'){
                 $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
                 $('#chatSection').hide();
                 $('#chatsectionhead').hide();
             }
             else{
-                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'79px',top:'13px'});
+                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'25%',top:'13px'});
                 $('#chatSection').show();
                 $('#chatsectionhead').hide();
             }

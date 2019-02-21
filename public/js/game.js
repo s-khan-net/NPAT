@@ -156,7 +156,11 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 $scope.gameStarted = false;
                 var styles = {
                     zIndex:2,
-                    backgroundColor : "#ddd",
+                    background:"rgb(225,255,255)",
+                    background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+                    background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                    background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                    filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
                     width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                     opacity:0.7,
                     height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
@@ -166,7 +170,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     paddingTop: '90px',
                     fontSize: 'large',
                     paddingRight: '19px',
-                    color:'darkred'
+                    color:'#00588b',
+                    display:'block'
                   };
                 $('#cover').css(styles);
                 $scope.coverMessage='The game is not started yet, you need atleast 2 players to start the game. It is good to have 3 or more.';
@@ -229,7 +234,11 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $scope.gameStarted = data.gameStarted;
             var styles = {
                 zIndex:2,
-                backgroundColor : "#ddd",
+                background:"rgb(225,255,255)",
+                background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+                background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
                 width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                 opacity:0.7,
                 height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
@@ -239,7 +248,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 paddingTop: '90px',
                 fontSize: 'large',
                 paddingRight: '19px',
-                color:'darkred'
+                color:'#00588b',
+                display:'block'
             };
             $('#cover').css(styles);
             let x='admin';
@@ -268,7 +278,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
     }
     socket.on('onMessage',function(data){
-        $('#chatbox').append(`<div style='border:1px solid #ddd;padding:3px;margin-top: 7px;margin-left:-22px;margin-right: 2px;background-color: white;border-radius: 7px;'>${data.playerName}&nbsp;<img src="${data.playerAvatar}" width=30 />&nbsp;:&nbsp;${data.message}</div>`);
+        $('#chatbox').append(`<div style='border:1px solid #ddd;padding:3px;margin-top: 2px;margin-left:-22px;margin-right: 2px;background-color: white;border-radius: 7px;'>${data.playerName}&nbsp;<img src="${data.playerAvatar}" width=30 />&nbsp;:&nbsp;${data.message}</div>`);
     })
 
     /*-----wait from socket----*/
@@ -416,7 +426,11 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             if($('#hidPlayerId').val()==data.playerId){
                 var styles = {
                     zIndex:2,
-                    backgroundColor : "#ddd",
+                    background:"rgb(225,255,255)",
+                    background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+                    background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                    background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                    filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
                     width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                     opacity:0.7,
                     height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
@@ -426,7 +440,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     paddingTop: '90px',
                     fontSize: 'large',
                     paddingRight: '19px',
-                    color:'darkred',
+                    color:'#00588b',
                     display:'block'
                 };
                 $('#cover').css(styles);

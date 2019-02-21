@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css" />
     <script src="js/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/validate.js"></script> 
+    <script src="js/refreshbtn.js"></script>
+    <script src="js/jquery.slimscroll.min.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <script>
         $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
             initialize();
         });
     </script>
@@ -21,7 +24,7 @@
 <body >
 <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
 <div style="width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:43%;background-color: beige" data-ng-show="wait" >{{loaderMsg}}</div>
-<div class="container"  id="mainContainer">
+<div class="container"  id="mainContainer" style="margin-top:32px">
     <div class="row"><div class="col-xs-12 text-center">{{gameName}}</div></div>
     <div class="row">
         <div class="col-xs-2" style="border-right:1px solid #CCC;" id="playerList">
@@ -33,28 +36,29 @@
                     <span class="fa fa-refresh fa-spin js-playerLoad" style="display:none" title="loading players"></span>
                 </div>
             </div> 
-            <div class="row" style="padding-top:3px;direction: ltr">
+            <div class="row" style="padding-top:3px;direction: rtl">
                 <div id="playersContainer">
-                    <div class="row" ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
-                        <div class="col-md-8 col-xs-4 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
-                            <div class="row">
-                                <div class="col-md-12 col-xs-12 text-right">
-                                    <label>{{p.playerName}}</label><span class="badge">{{p.pointsForGame}}</span>
+                    <div class="row " ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
+                        <div class="col-md-offset-4 col-md-8 col-xs-12 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
+                            <div>
+                                <div class="col-md-12 col-xs-12 text-center" >
+                                    <span style="user-select: none;font-family:monospace;letter-spacing:2px" >{{p.playerName}}</span><span class="badge">{{p.pointsForGame}}</span>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div id="btnPlayer">
+                                <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
+                                <img  style="border:2px solid silver;border-radius:4px" src="{{p.playerAvatar}}" />
+                            </div>
+                            <div>
                                 <div class="col-md-12 col-xs-12 text-right">
                                     <i ng-class="meClass(p.me)" aria-hidden="true"></i>&nbsp;
                                     <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true">&nbsp;<span style="font-size:smaller;font-family: sans-serif">{{p.playerTyping}}</span></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
-                            <div id="btnPlayer">
-                                <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
-                                <img style="border:2px solid silver;border-radius:4px" src="{{p.playerAvatar}}" />
-                            </div>
-                        </div>
+                        <!-- <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
+                            
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -65,7 +69,7 @@
                     <input type="hidden" id="hidGameId" value="" />
                     <input type="hidden" id="hidPlayerId" value="" />
                     <input type="hidden" id="hidPlayerAv" value="" />
-            <div class="row blueBg">
+            <div class="row blueBg"  >
                 <div class="col-md-9 col-xs-9 text-center " >
                     <div class="alphabet js-alphabet">{{alphabet}}</div>
                 </div>
@@ -136,11 +140,11 @@
         </div>
     </div>
 </div>
-<div  id="gameContainer" style="background-color:rgb(198, 223, 234);position: fixed;z-index: 4;opacity:1;width: 100%;min-height:419px; ">
+<div  id="gameContainer" style="margin-top:32px;background-color:rgb(198, 223, 234);position: fixed;z-index: 4;opacity:1;width: 100%;min-height:419px; ">
     <div class="container" style="min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
-            <div id="logoDiv" style="position:absolute;top:-43px;z-index:3"><img src="/images/logo_75X75.png" /></div>
+            <div id="logoDiv" style="position:absolute;top:-33px;z-index:3;right:125px;"><img src="/images/logo_75X75.png" /></div>
         </div>
         <div class="col-md-6 col-xs-9" style="padding-top:21px;">
             <div class="row">
@@ -212,29 +216,27 @@
                     </div>
             </div>
             <div class="row formrowpadding js-gameStuff">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-md-6 col-xs-6 text-right">
                     <label for="txtGameName">Name your game</label>
                 </div>
-            </div>
-            <div class="row formrowpadding js-gameStuff">
-                <div class="col-md-11 col-xs-11" style="padding-right:0px">
-                    <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1" maxlength="8" />
+                <div class="col-md-5 col-xs-6">
+                        <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1" maxlength="8" />
                 </div>
             </div>
             <div class="row formrowpadding js-gameStuff">
-                <div class="col-md-3 col-xs-4 text-right">
-                    <label for="gameTime">timed?</label>
+                <div class="col-md-6 col-xs-6 text-right">
+                    <label for="gameTime">Each play has a time of </label>
                 </div>
-                <div class="col-md-8 col-xs-8">
-                    <select id="gameTime" data-ng-model="gameTime">
-                        <option value="180" selected>180 Seconds</option>
-                        <option value="30">30 Seconds</option>
-                        <option value="60">60 Seconds</option>
+                <div class="col-md-5 col-xs-6">
+                    <select class="form-control" id="gameTime" data-ng-model="gameTime">
                         <option value="120">120 Seconds</option>
-                        
+                        <option value="100">100 Seconds</option>
+                        <option value="90">90 Seconds</option>
+                        <option value="60">60 Seconds</option>
+                        <option value="30">30 Seconds</option>
                     </select>
                 </div>
-                <div class="col-md-3 col-xs-4">
+                <div class="col-md-2">
                     
                 </div>
             </div>
@@ -290,13 +292,11 @@
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="js/refreshbtn.js"></script>
 <script src="js/angular/angular.min.js"></script>
 <script src="js/ng-confirm.min.js"></script>
 <script src="js/humanize-duration.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/angular-timer.js"></script>
-<script src="js/jquery.slimscroll.min.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

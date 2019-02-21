@@ -1,15 +1,10 @@
-function validate(type){
-    // let u = '';
-    // $.ajax({
-    //     url: "assets/animals.txt",
-    //     async: false,
-    //     success: function (data){
-    //         pageExecute.fileContents = data;
-    //     }
-    // });
-}
 function initialize(){
     let w= $(window).width();
+    $('#playersContainer').slimScroll({
+        height: '100%', 
+        position: 'left',
+    });
+    $('#chatbox').slimScroll();
     if(w>412){
         $('#gameContainer').css({left:'99px',width:'86%'});
         $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
@@ -18,6 +13,7 @@ function initialize(){
     }
     else{
         $('#gameContainer').css({left:'0px',width:'100%'});
+        $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
         $('#chatSection').hide();
         //add the chat button to the bottom right
         $('#btnChat').refreshbtn({
@@ -28,19 +24,22 @@ function initialize(){
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
         if(w>412){
-            $('#logoDiv').css({left:200});
             $('#gameContainer').css({left:'99px',width:'86%'});
             $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
             $('#chatSection').show();
         }
         else{
-            $('#logoDiv').css({top:-63});
             $('#gameContainer').css({left:'0px',width:'100%'});
+            $('#chatbox').height($('#playersContainer').height() - $('#txtMsg').height());
             $('#chatSection').hide();
         }
         var styles = {
             zIndex:2,
-            backgroundColor : "#ddd",
+            background:"rgb(225,255,255)",
+            background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+            background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+            background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+            filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
             width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
             opacity:0.7,
             height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
@@ -50,15 +49,12 @@ function initialize(){
             paddingTop: '90px',
             fontSize: 'large',
             paddingRight: '19px',
-            color:'darkred'
+            color:'#00588b',
+            display:'block'
           };
         $('#cover').css(styles);
     });
-    $('#playersContainer').slimScroll({
-        height: '100%', 
-        position: 'left',
-    });
-    $('#chatbox').slimScroll();
+    
     let pos = $('#mainContainer').position();
     $('#gameContainer').css({top: pos.top});
   

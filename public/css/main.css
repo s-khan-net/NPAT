@@ -24,14 +24,15 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
 }
 .notify-badge{
     position: absolute;
-    right:13px;
-    top:-1px;
+    right:17px;
+    top:3px;
     background:#fff;
     text-align: center;
     border-radius: 30px 30px 30px 30px;
     color:green;
     padding:1px 2px 1px 2px;
     font-size:8px;
+    user-select: none;
 }
 .badge{
     background-color: #ccc;
@@ -107,7 +108,12 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
       color: darkgrey;
   }
   .blueBg{
-      background-color: rgb(198, 223, 234);
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b8e1fc+0,a9d2f3+10,90bae4+25,90bcea+37,90bff0+50,a2daf5+83,bdf3fd+100 */
+background: rgb(184,225,252); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(184,225,252,1) 0%, rgba(169,210,243,1) 10%, rgba(144,186,228,1) 25%, rgba(144,188,234,1) 37%, rgba(144,191,240,1) 50%, rgba(162,218,245,1) 83%, rgba(189,243,253,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(184,225,252,1) 0%,rgba(169,210,243,1) 10%,rgba(144,186,228,1) 25%,rgba(144,188,234,1) 37%,rgba(144,191,240,1) 50%,rgba(162,218,245,1) 83%,rgba(189,243,253,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(184,225,252,1) 0%,rgba(169,210,243,1) 10%,rgba(144,186,228,1) 25%,rgba(144,188,234,1) 37%,rgba(144,191,240,1) 50%,rgba(162,218,245,1) 83%,rgba(189,243,253,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', endColorstr='#bdf3fd',GradientType=0 ); /* IE6-9 */
   }
   label{
       letter-spacing: 3px
@@ -123,7 +129,7 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
       font-family:"Verdana, Geneva, Tahoma, sans-serif" 
   }
  /******reset button... to change color, change css*/
-#btnReset{
+#btnChat{
     position: fixed;
     bottom: 30px;
     right: 30px;
