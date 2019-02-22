@@ -54,9 +54,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.wait=false;
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
-    //if no game is going on then show covering div
-    
-    const interval = 10000;
+    $scope.gameTimes = {
+        availableTimes: [
+            {id: '120', name: '120 seconds'},
+            {id: '90', name: '90 seconds'},
+            {id: '60', name: '60 seconds'},
+            {id: '30', name: '30 seconds'},
+        ],
+        selectedOption: {id: '120', name: '120 seconds'} //This sets the default value of the select in the ui
+    };
+    const interval = 1000000;
     //get current games if any...
     refreshGameList();
     let loadGamesTimer = setInterval(() => {
@@ -107,7 +114,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     }
 
     $scope.gameStartedClass = function(v){
-        return v?'green':'red';
+        return v?'fa fa-circle green':' fa fa-circle red';
     }
     $scope.createGame = function(){
         //create a new game
@@ -181,6 +188,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 clearInterval(loadGamesTimer);
             }
             else{
+                $scope.wait = false;
                 alert('Sorry, couldnt create the game... ');
             }
         },

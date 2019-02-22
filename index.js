@@ -48,9 +48,10 @@ if(!config.get('jwtKey')) {
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
 io.sockets.on('connection', function(socket) { //socket code
-    console.log(`someone connected ${socket.id}`);
+    winston.info(`someone connected ${socket.id}`);
 
     socket.on('createGame', function(obj) { //is whole game
+        winston.info(`creating, joining game: ${obj.gameId}`);
         socket.join(`game-${obj.gameId}`);
     });
 
@@ -126,8 +127,13 @@ io.sockets.on('connection', function(socket) { //socket code
     });
 
     socket.on('typing', function(val) { 
-		val = val.split('~');
-		socket.broadcast.to(`game-${val[0]}`).emit('onTyping', val);
+        try{
+            val = val.split('~');
+            socket.broadcast.to(`game-${val[0]}`).emit('onTyping', val);
+        }
+        catch(ex){
+            winston.error(`error while sending typing message from player ${val[1]} error:${ex.message}`);
+        }
     });  
 
     socket.on('points', function(val) { 
@@ -136,17 +142,20 @@ io.sockets.on('connection', function(socket) { //socket code
     });
     
     socket.on('playStarted', function(gameId) { 
+        winston.info(`starting ${gameId}`);
 		let msg='Starting game...';
         io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
         const p = new Promise((resolve,reject)=>{
             //get the game
             Game.findOne({gameId:gameId},function(err,game){
                 if(err){
+                    winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
                     var d = {err:'could not start, please try again'}
                     io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                     resolve(d);
                 }
                 else{
+                    winston.info(`got the game details from DB`);
                     if(game.gameAlphabetArray.length==0){
                         game.gameAlphabetArray = alphabets;
                     }
@@ -158,10 +167,12 @@ io.sockets.on('connection', function(socket) { //socket code
                     game.gameStartedAt=Date.now();
                     game.save()
                         .then(g=>{
+                            winston.info(`updated the game with start info and alphabet:${a}`);
                             var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,err:''};
                             resolve(d);
                         })
                         .catch(err=>{
+                            winston.error(`Could not save updated ${gameId} to the database, erred out: ${err.message}`);
                             var d = {err:'could not start, please try again'}
                             io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                             resolve(d);
@@ -171,20 +182,29 @@ io.sockets.on('connection', function(socket) { //socket code
 		});
 		
 		p.then((data)=>{
+            winston.info(`Emitting onPlayStart event to game : ${gameId}`)
 			io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
 			io.sockets.in(`game-${gameId}`).emit('onPlayStarted',data);
-		})
+		}).catch(err=>{
+            winston.error(`Fatal Error occured while starting ${err}`)
+            var data = {err:'could not start dame, please try again'}
+            io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+            io.sockets.in(`game-${data.gameId}`).emit('onPlayStarted', data)
+        })
     });
     
     socket.on('submit', function(obj) { 
+        winston.info(`submitting for ${obj.playerId} in game ${obj.gameId}`)
         const p = new Promise((resolve,reject)=>{
             if(obj.gameId && obj.playerId){
                 Game.findOne({gameId:obj.gameId},function(err,game){
                     if(err){
+                        winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
                         var d = {err:'could not submit, please try again'}
                         resolve(d);
                     }
                     else{
+                        winston.info(`got the game details from DB`);
                         if(!game.gameEnded && game.gameActive){
                             game.gamePlayers.forEach(player => {
                                 if(player.playerId == obj.playerId){
@@ -194,10 +214,12 @@ io.sockets.on('connection', function(socket) { //socket code
                             });
                             game.save()
                             .then(g=>{
+                                winston.info(`updated the game with submitted info for:${obj.playerId}`);
                                 var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,pointsForGame:g.pointsForGame,err:''};
                                 resolve(d);
                             }) // update the player
                             .catch(err=>{
+                                winston.error(`Could not save updated ${obj.gameId} to the database, erred out: ${err.message}`);
                                 var d = {err:'could not submit, please try again'}
                                 resolve(d);
                             })
@@ -214,43 +236,52 @@ io.sockets.on('connection', function(socket) { //socket code
             }
         });
         p.then(data=>{
+            winston.info(`Emitting onSubmit event for player: ${data.playerId}to game : ${data.gameId}`)
             io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data);
             // io.sockets.in(`game-${data.gameId}`).emit('onPoints', {gameId:data.gameId,playerId:data.playerId,pointsForGame:g.pointsForGame});
         }).catch(err=>{
+            winston.error(`Fatal Error occured while submitting ${err}`);
             var data = {err:'could not submit, please try again'}
             io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
         })
     });
 
     socket.on('newPlay',function(gameId){
+        winston.info(`New play for game ${gameId}`)
 		let msg='next letter...';
 		io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
 		const p = new Promise((resolve,reject)=>{
             //get the game
             Game.findOne({gameId:gameId},function(err,game){
                 if(err){
+                    winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
                     var d = {err:'could not start new play'}
                     io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                     resolve(d);
                 }
                 else if(!game.gameStarted){
+                    winston.warn(`the game is not started! this should not happen!`);
                     var d = {err:'The game is not started! oops we dont figure how you got here. Sorry, you\'ll have to restart the game.'}
                 }
                 else if(game.gameAlphabetArray.length==0 && game.gameStarted==true){
                     //end the game
+                    winston.info('All the alphabets are complete, end the game');
 
                 }
                 else{
+                    winston.info('generating data for ne play...');
                     //GENERATE RANDOM ALPHABET
                     let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
                     //remove a
                     game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
                     game.save()
                         .then(g=>{
+                            winston.info(`updated the game with next info and alphabet:${a}`);
                             var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,err:''};
                             resolve(d);
                         })
                         .catch(err=>{
+                            winston.error(`Could not save updated ${gameId} to the database, erred out: ${err.message}`);
                             var d = {err:'could not start, please try again'}
                             io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                             resolve(d);
@@ -260,9 +291,16 @@ io.sockets.on('connection', function(socket) { //socket code
 		});
 		
 		p.then((data)=>{
+            winston.info(`Emitting onNewPlay for ${data.gameId} with alphabet ${data.alphabet}`);
 			//io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
 			io.sockets.in(`game-${gameId}`).emit('onNewPlay',data);
-		})
+        })
+        .catch(err=>{
+            winston.error(`Fatal Error occured while starting ${err}`)
+            var data = {err:'could not start dame, please try again'}
+            //io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+            io.sockets.in(`game-${data.gameId}`).emit('onNewPlay', data)
+        })
 	})
 });
 

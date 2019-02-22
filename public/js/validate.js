@@ -5,6 +5,7 @@ function initialize(){
         position: 'left',
     });
     $('#chatbox').slimScroll();
+    $('#allgames').slimScroll();
     $('#btnChat').refreshbtn({
         width: 32,
         height: 32
@@ -14,12 +15,14 @@ function initialize(){
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
         $('#chatSection').show();
         $('#chatsectionhead').show();
+        $('.js-PlayerPic').css('margin-left','-7px');
     }
     else{
         //$('#gameContainer').css({left:'0px',width:'100%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
         $('#chatSection').hide();
         $('#btnChat #btnChat').show();
+        $('.js-PlayerPic').css('margin-left','7px');
     }
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
@@ -27,12 +30,14 @@ function initialize(){
             //$('#gameContainer').css({left:'99px',width:'86%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
             $('#chatSection').show();
+            $('.js-PlayerPic').css('margin-left','-7px');
         }
         else{
             //$('#gameContainer').css({left:'0px',width:'100%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
             $('#chatSection').hide();
             $('#btnChat #btnChat').show();
+            $('.js-PlayerPic').css('margin-left','7px');
         }
         // var styles = {
         //     zIndex:2,
@@ -107,6 +112,8 @@ function initialize(){
         var items = ['Truman', 'SidTheSloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean'];
         var item = jQuery.rand(items);
         $('#txtPlayerName').attr('placeholder',item);
+        var i = Math.floor(Math.random() * 12) + 1;
+        $('#avatarContainer > img').prop('src','images/avatars/'+i+'.png');
 
         $('#txtPlayerName').on('keyup',function(){
             if($('#txtPlayerName').val().length>3){

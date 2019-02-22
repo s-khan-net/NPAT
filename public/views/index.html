@@ -36,18 +36,14 @@
                     <span class="fa fa-refresh fa-spin js-playerLoad" style="display:none" title="loading players"></span>
                 </div>
             </div> 
-            <div class="row" style="padding-top:3px;direction: rtl">
+            <div class="row" style="padding-top:3px;direction: 'ltr'">
                 <div id="playersContainer">
                     <div class="row " ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
-                        <div class="col-md-offset-4 col-md-8 col-xs-12 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
+                        <div class=" col-md-8 col-xs-12 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
                             <div>
-                                <div class="col-md-12 col-xs-12 text-center" >
+                                <div class="col-md-12 col-xs-12 text-right" >
                                     <span style="user-select: none;font-family:monospace;letter-spacing:2px" >{{p.playerName}}</span><span class="badge">{{p.pointsForGame}}</span>
                                 </div>
-                            </div>
-                            <div id="btnPlayer">
-                                <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
-                                <img  style="border:2px solid silver;border-radius:4px"  src="{{p.playerAvatar}}" />
                             </div>
                             <div>
                                 <div class="col-md-12 col-xs-12 text-right">
@@ -56,9 +52,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
-                            
-                        </div> -->
+                        <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
+                            <div id="btnPlayer">
+                                <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
+                                <img  style="border:2px solid silver;border-radius:4px;width:50px"  src="{{p.playerAvatar}}" />
+                            </div>    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,7 +172,7 @@
                 </div>
                 <div class="col-md-2 col-xs-5 text-center" >
                     <div style="box-shadow: inset 0 0 0 200px rgba(255,255,255,0.3);" id="avatarContainer" >
-                        <img src="/images/avatars/1.png"/>
+                        <img src="" alt="avatar"/>
                     </div>
                 </div>
                 <div class="col-md-1 col-xs-2 text-left js-avRight" style="padding-left:0px;padding-top:19px;cursor:pointer">
@@ -228,12 +227,7 @@
                     <label for="gameTime">Each play has a time of </label>
                 </div>
                 <div class="col-md-5 col-xs-6">
-                    <select class="form-control" id="gameTime" data-ng-model="gameTime">
-                        <option value="120">120 Seconds</option>
-                        <option value="100">100 Seconds</option>
-                        <option value="90">90 Seconds</option>
-                        <option value="60">60 Seconds</option>
-                        <option value="30">30 Seconds</option>
+                    <select class="form-control" id="gameTime" ng-model="gameTime" ng-options="option.name for option in gameTimes.availableTimes track by option.id">
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -254,10 +248,16 @@
             </div>
             <div class="row" style="padding-top:3px">
                 <div id="gamesContainer">
-                <div class="row" ng-repeat="g in games" style="padding-top:3px" >
-                    <div class="col-xs-6 js-gameName text-center" >
-                        <button data-ng-class=gameStartedClass(g.gameStarted) title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)" style="width: 40px;height: 39px;padding-left:3px;">{{g.gameName}}</button></div>
-                    <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 text-center">
+                                <input type="text" id="txtGameSearch" class="form-control" placeholder="search"/>    
+                        </div>
+                    </div>
+                <div class="row" ng-repeat="g in games" style="padding-top:3px">
+                    <div class="col-md-10 col-xs-12 js-gameName text-center" style="user-select:none">
+                        <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)"><i style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>&nbsp{{g.gameName}},&nbsp;&nbsp;{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i>,&nbsp;{{g.gameAlphabetArray.length}}&nbsp;<small>complete</small></div>
+                    </div>
+                    <!-- <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div> -->
                 </div>
                 </div>
             </div>
