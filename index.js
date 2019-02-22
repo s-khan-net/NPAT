@@ -11,7 +11,7 @@ const app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-mongoose.connect('mongodb://localhost/NPAT')
+mongoose.connect('mongodb://localhost/NPAT')//mongodb://npatuser:npat!1234@ds060749.mlab.com:60749/npat_db')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
@@ -82,7 +82,7 @@ io.sockets.on('connection', function(socket) { //socket code
                         game.save()
                             .then(g=>{
                                 winston.info(`saved the game with player ${obj.playerId.split('-')[2]}`);
-                                 var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,gameAlphabetArray:g.gameAlphabetArray,err:''};
+                                 var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,playerId:obj.playerId,gameAlphabetArray:g.gameAlphabetArray,err:''};
                                 socket.join(`game-${g.gameId}`);
                                 resolve(d);
                             }) // save the game
@@ -301,7 +301,13 @@ io.sockets.on('connection', function(socket) { //socket code
             //io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
             io.sockets.in(`game-${data.gameId}`).emit('onNewPlay', data)
         })
-	})
+    })
+    
+    socket.on('leave',function(obj){
+        winston.info(`${obj.playerId} is leaving ${obj.gameId}`);
+        socket.leave(`game-${obj.gameId}`);
+        io.sockets.in(`game-${obj.gameId}`).emit('onLeave', obj)
+    })
 });
 
 // Create a Node.js based http server on port 8080

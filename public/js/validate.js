@@ -10,11 +10,12 @@ function initialize(){
         width: 32,
         height: 32
     });
-    if(w>412){
+    if(w>1000){
         //$('#gameContainer').css({left:'99px',width:'86%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
         $('#chatSection').show();
         $('#chatsectionhead').show();
+        $('#btnChat #btnChat').hide();
         $('.js-PlayerPic').css('margin-left','-7px');
     }
     else{
@@ -26,10 +27,12 @@ function initialize(){
     }
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
-        if(w>412){
+        if(w>1000){
             //$('#gameContainer').css({left:'99px',width:'86%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
             $('#chatSection').show();
+            $('#chatsectionhead').show();
+            $('#btnChat #btnChat').hide();
             $('.js-PlayerPic').css('margin-left','-7px');
         }
         else{
@@ -65,9 +68,12 @@ function initialize(){
     // $('#gameContainer').css({top: pos.top});
   
     //alert on refresh
-    window.onbeforeunload = function() {
-        return "Dude, are you sure you want to leave?";
-    }
+    // window.onbeforeunload = function() {
+    //     return "Dude, are you sure you want to leave?";
+    // }
+    // $( window ).unload(function() {
+    //     alert("Bye now!");
+    //   });
     //disable back
     history.pushState(null, null, document.URL);
         window.addEventListener('popstate', function () {

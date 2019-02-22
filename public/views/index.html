@@ -227,7 +227,11 @@
                     <label for="gameTime">Each play has a time of </label>
                 </div>
                 <div class="col-md-5 col-xs-6">
-                    <select class="form-control" id="gameTime" ng-model="gameTime" ng-options="option.name for option in gameTimes.availableTimes track by option.id">
+                    <select class="form-control" id="gameTime" ng-model="gameTime" >
+                        <option value="120">120 Seconds</option>
+                        <option value="90">90 Seconds</option>
+                        <option value="60">60 Seconds</option>
+                        <option value="30">30 Seconds</option>
                     </select>
                 </div>
                 <div class="col-md-2">

@@ -1,4 +1,24 @@
 var mainmodule = angular.module("app-npat",['timer','ngConfirm'])
+mainmodule.factory('beforeUnload', function ($rootScope, $window) {
+    // Events are broadcast outside the Scope Lifecycle
+    
+    $window.onbeforeunload = function (e) {
+        var confirmation = {};
+        var event = $rootScope.$broadcast('onBeforeUnload', confirmation);
+        if (event.defaultPrevented) {
+            return confirmation.message;
+        }
+    };
+    
+    $window.onunload = function () {
+        $rootScope.$broadcast('onUnload');
+    };
+    return {};
+})
+.run(function (beforeUnload) {
+    // Must invoke the service at least once
+});
+
 mainmodule.factory('socket', function($rootScope) {
     var socket = io.connect();
     return {
@@ -61,9 +81,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             {id: '60', name: '60 seconds'},
             {id: '30', name: '30 seconds'},
         ],
-        selectedOption: {id: '120', name: '120 seconds'} //This sets the default value of the select in the ui
     };
-    const interval = 1000000;
+    const interval = 10000;
     //get current games if any...
     refreshGameList();
     let loadGamesTimer = setInterval(() => {
@@ -260,17 +279,21 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 color:'#00588b',
                 display:'block'
             };
-            $('#cover').css(styles);
+            
             let x='admin';
             data.gamePlayers.forEach(player=>{
                 if(player.isCreator)
                     x=player.playerName;
             })
             if(!$scope.gameStarted){
+                $('#cover').css(styles);
                 $scope.coverMessage=`The game is not started yet, waiting for ${x} to start the game`;
             }
             else{
-                $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
+                if($('#hidPlayerId').val().split('~')[0] == data.playerId){
+                    $('#cover').css(styles);
+                    $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
+                }
             }
             $('#mainContainer').fadeIn(1000);
             $('#gameContainer').fadeOut(500);
@@ -427,14 +450,14 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         else{
             let c=0;
             $.each($scope.players,function(i,v){
-                if(v.playerId == data.playerId.split('~')[0]){
+                if(v.playerId == data.playerId){
                     v.playerTyping = 'S';
                     v.pointsForGame = data.pointsForGame==0?'':data.pointsForGame;
                 }
                 if(v.playerTyping=='S')
                 c++;
             });
-            if($('#hidPlayerId').val()==data.playerId){
+            if($('#hidPlayerId').val().split('~')[0]==data.playerId){
                 var styles = {
                     zIndex:2,
                     background:"rgb(225,255,255)",
@@ -460,17 +483,17 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     if(data.gameAlphabetArray.length<26){
                         $scope.coverMessage='Everyone submitted, starting new play...';
                         setTimeout(() => {
-                            if($('#hidPlayerId').val().indexOf('~')>-1){
+                            //if($('#hidPlayerId').val().indexOf('~')>-1){ BIG BUGGY CODE! cost me a day!!!
                                 socket.emit('newPlay', data.gameId);  
-                            }    
+                           // }    
                         }, 3300);
                     }
                     else{
                         $scope.coverMessage='Everyone submitted, game over... Wait for the leaderboard...';
                         setTimeout(() => {
-                            if($('#hidPlayerId').val().indexOf('~')>-1){
+                            //if($('#hidPlayerId').val().indexOf('~')>-1){
                                 socket.emit('endPlay', data.gameId);  
-                            }    
+                            //}    
                         }, 3300);
                     }
                     //$scope.wait=false;
@@ -538,6 +561,24 @@ mainmodule.controller("game", function ($scope, $http,socket) {
           }  
         }
     });
+
+    /*----------------leave game------------ */
+    socket.on('onLeave',function(data){
+        if(data.err!=''){
+            console.log('game leave err');
+            //alert(`Some error occured while leavi the game\n please try again :${data.err}`);
+        }
+        else{
+            let p='';
+            $scope.gamePlayers.forEach((player,i)=>{
+                if(player.playerId == data.playerId){
+                    p = player.playerName;
+                    $scope.gamePlayers.splice(i,1);
+                }
+            });
+            $('#divStatus').text(`${p} has left`).fadeIn('slow').fadeOut(5000);
+        }
+    })
 
     /**------ng-classes---------------------*/
     $scope.gameStartedIndicatorClass = function(){
@@ -839,4 +880,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         return vcount;
     }
+
+    $scope.$on('onBeforeUnload', function (e, confirmation) {
+        confirmation.message = "All data willl be lost.";
+        e.preventDefault();
+    });
+    $scope.$on('onUnload', function (e) {
+        console.log('leaving page'); // Use 'Preserve Log' option in Console
+        socket.emit('leave',{gameId:$('#hidGameId').val(),playerId:$('#hidPlayrId').val().split('~')[0]});
+    });
 });
