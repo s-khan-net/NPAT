@@ -72,9 +72,18 @@
                 <div class="col-md-9 col-xs-9 text-center " >
                     <div class="alphabet js-alphabet">{{alphabet}}</div>
                 </div>
-                <div class="col-md-3 col-xs-3 text-center">
+                <div class="col-md-2 col-xs-2 text-center">
                     <div id="gameStartedIndicator" data-ng-class="gameStartedIndicatorClass()" ng-click="playStart()" style="font-size: 23px;padding: 8px;" title="waiting to get started..."></div>
                     <div id="gameTimer" style="display:none;background-color:whitesmoke"><timer autostart="false" countdown="gameTime" interval="1000">{{mminutes}}:{{sseconds}}</timer></div>
+                </div>
+                <div class="col-md-1 col-xs-0 text-right" >
+                    <i class="fa fa-ellipsis-v fa-2x"  role="button" data-toggle="dropdown" aria-hidden="true" style="padding-top: 7px;cursor: pointer;" id="mnu"></i>
+                    <ul class="dropdown-menu " role="menu" aria-labelledby="dropdownMenu">
+                        <li><a href="#">Some action</a></li>
+                        <li><a href="#">Some other action</a></li>
+                        <li class="divider"></li>
+                        <li style="background-color:darkred;color:#fff;padding-left:7px;cursor:crosshair" ng-confirm="really??" ng-click="leaveGame()">Leave game</li>
+                    </ul>
                 </div>
             </div>
             <div class="row" style="padding-top:9px">
@@ -228,6 +237,7 @@
                 </div>
                 <div class="col-md-5 col-xs-6">
                     <select class="form-control" id="gameTime" ng-model="gameTime" >
+                        <option value="" disabled="" selected="" class="ng-binding">Select time</option>
                         <option value="120">120 Seconds</option>
                         <option value="90">90 Seconds</option>
                         <option value="60">60 Seconds</option>
@@ -239,8 +249,8 @@
                 </div>
             </div>
             <div class="row formrowpadding js-gameStuff">
-                <div class="col-md-offset-3 col-md-6 col-xs-6 text-left" >
-                    <button class="btn btn-primary btn-sm" disabled id="btnGameOn" ng-click="createGame()">Go &nbsp;<i style="padding-top:6px" class="fa fa-play fa-lg"></i></button>
+                <div class="col-md-9 col-xs-9 text-right" >
+                    <button class="btn btn-primary btn-sm" disabled id="btnGameOn" ng-click="createGame()">Create game &nbsp;<i style="padding-top:6px" class="fa fa-play fa-lg"></i></button>
                 </div>
             </div>
         </div>
@@ -254,12 +264,12 @@
                 <div id="gamesContainer">
                     <div class="row">
                         <div class="col-md-12 col-xs-12 text-center">
-                                <input type="text" id="txtGameSearch" class="form-control" placeholder="search"/>    
+                            <input type="text" id="txtGameSearch" class="form-control" placeholder="search"/>    
                         </div>
                     </div>
                 <div class="row" ng-repeat="g in games" style="padding-top:3px">
                     <div class="col-md-10 col-xs-12 js-gameName text-center" style="user-select:none">
-                        <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)"><i style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>&nbsp{{g.gameName}},&nbsp;&nbsp;{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i>,&nbsp;{{g.gameAlphabetArray.length}}&nbsp;<small>complete</small></div>
+                        <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)"><i style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>&nbsp{{g.gameName}},&nbsp;&nbsp;{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user" style="color:lightcyan"></i>,&nbsp;{{26-g.gameAlphabetArray.length}}&nbsp;<span style="font-size:x-small">done</span></div>
                     </div>
                     <!-- <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div> -->
                 </div>

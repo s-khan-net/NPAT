@@ -195,55 +195,62 @@ io.sockets.on('connection', function(socket) { //socket code
     
     socket.on('submit', function(obj) { 
         winston.info(`submitting for ${obj.playerId} in game ${obj.gameId}`)
-        const p = new Promise((resolve,reject)=>{
-            if(obj.gameId && obj.playerId){
-                Game.findOne({gameId:obj.gameId},function(err,game){
-                    if(err){
-                        winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
-                        var d = {err:'could not submit, please try again'}
-                        resolve(d);
-                    }
-                    else{
-                        winston.info(`got the game details from DB`);
-                        if(!game.gameEnded && game.gameActive){
-                            game.gamePlayers.forEach(player => {
-                                if(player.playerId == obj.playerId){
-                                    player.wordsForGame.push(obj.words);
-                                    player.pointsForGame.push(obj.pointsForGame);
-                                }
-                            });
-                            game.save()
-                            .then(g=>{
-                                winston.info(`updated the game with submitted info for:${obj.playerId}`);
-                                var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,pointsForGame:g.pointsForGame,err:''};
-                                resolve(d);
-                            }) // update the player
-                            .catch(err=>{
-                                winston.error(`Could not save updated ${obj.gameId} to the database, erred out: ${err.message}`);
-                                var d = {err:'could not submit, please try again'}
-                                resolve(d);
-                            })
-                        }
-                        else{
-                            var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'cannot submit, the game seems to have ended, oops!'};
+        if(obj.words.length == 0 && obj.pointsForGame == 0){ //means new layer
+            winston.info(`Emitting onSubmit event game started for player: ${obj.playerId}to game : ${obj.gameId} `);
+            var d = {gameId:obj.gameId,playerId:obj.playerId,err:''};
+            io.sockets.in(`game-${obj.gameId}`).emit('onSubmit', d);
+        }
+        else{
+            const p = new Promise((resolve,reject)=>{
+                if(obj.gameId && obj.playerId){
+                    Game.findOne({gameId:obj.gameId},function(err,game){
+                        if(err){
+                            winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
+                            var d = {err:'could not submit, please try again'}
                             resolve(d);
                         }
-                    }
-                });  
-            }
-            else{
+                        else{
+                            winston.info(`got the game details from DB`);
+                            if(!game.gameEnded && game.gameActive){
+                                game.gamePlayers.forEach(player => {
+                                    if(player.playerId == obj.playerId){
+                                        player.wordsForGame.push(obj.words);
+                                        player.pointsForGame.push(obj.pointsForGame);
+                                    }
+                                });
+                                game.save()
+                                .then(g=>{
+                                    winston.info(`updated the game with submitted info for:${obj.playerId}`);
+                                    var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,pointsForGame:g.pointsForGame,err:''};
+                                    resolve(d);
+                                }) // update the player
+                                .catch(err=>{
+                                    winston.error(`Could not save updated ${obj.gameId} to the database, erred out: ${err.message}`);
+                                    var d = {err:'could not submit, please try again'}
+                                    resolve(d);
+                                })
+                            }
+                            else{
+                                var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'cannot submit, the game seems to have ended, oops!'};
+                                resolve(d);
+                            }
+                        }
+                    });  
+                }
+                else{
 
-            }
-        });
-        p.then(data=>{
-            winston.info(`Emitting onSubmit event for player: ${data.playerId}to game : ${data.gameId}`)
-            io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data);
-            // io.sockets.in(`game-${data.gameId}`).emit('onPoints', {gameId:data.gameId,playerId:data.playerId,pointsForGame:g.pointsForGame});
-        }).catch(err=>{
-            winston.error(`Fatal Error occured while submitting ${err}`);
-            var data = {err:'could not submit, please try again'}
-            io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
-        })
+                }
+            });
+            p.then(data=>{
+                winston.info(`Emitting onSubmit event for player: ${data.playerId}to game : ${data.gameId}`)
+                io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data);
+                // io.sockets.in(`game-${data.gameId}`).emit('onPoints', {gameId:data.gameId,playerId:data.playerId,pointsForGame:g.pointsForGame});
+            }).catch(err=>{
+                winston.error(`Fatal Error occured while submitting ${err}`);
+                var data = {err:'could not submit, please try again'}
+                io.sockets.in(`game-${data.gameId}`).emit('onSubmit', data)
+            })
+        }
     });
 
     socket.on('newPlay',function(gameId){

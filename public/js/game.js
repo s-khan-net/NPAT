@@ -44,7 +44,7 @@ mainmodule.factory('socket', function($rootScope) {
   });
 
 mainmodule.controller("game", function ($scope, $http,socket) {
-    $scope.wait = true;
+    $scope.wait = false;
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
     $scope.waitThing = false;
@@ -53,12 +53,6 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.placeVal=false;
     $scope.animalVal=false;
     $scope.thingVal=false;
-    $scope.alphabet = ''
-    $scope.players =[];
-    $scope.gameName='';
-    $scope.games =[];
-    $scope.game={};
-    $scope.coverMessage='';
     $scope.playingGame = {
         name:'',
         place:'',
@@ -71,17 +65,19 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     }
     $scope.playerTime=0;
     $scope.gameTime=0;
-    $scope.wait=false;
+    $scope.alphabet = ''
+
+    $scope.players =[];
+    $scope.gameName='';
+    $scope.games =[];
+    $scope.game={};
+    $scope.currentGameId='';
+    $scope.currentPlayerId='';
+
+    $scope.coverMessage='';
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
-    $scope.gameTimes = {
-        availableTimes: [
-            {id: '120', name: '120 seconds'},
-            {id: '90', name: '90 seconds'},
-            {id: '60', name: '60 seconds'},
-            {id: '30', name: '30 seconds'},
-        ],
-    };
+
     const interval = 10000;
     //get current games if any...
     refreshGameList();
@@ -110,7 +106,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     
     function refreshPlayerList(){
         $('.js-playerLoad').show();
-        let gameId=$('#hidGameId').val();
+        let gameId=$scope.currentGameId;//$('#hidGameId').val();
         $http.get('/api/game/'+gameId)
         .then(function (result) {
             if(result.status==200){
@@ -177,8 +173,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 //build player list
                 $scope.players=[];
                 $scope.players.push({playerId:game.gamePlayers[0].playerId,playerName:game.gamePlayers[0].playerName,pointsForGame:0,isCreator:true,playerAvatar:`images/avatars/${game.gamePlayers[0].playerAvatar}`,me:true});
-                $('#hidPlayerId').val(`${playerid}~c`); //to indicate the creator
-                $('#hidGameId').val(gameid);
+                $scope.currentPlayerId = `${playerid}~c`; //to indicate the creator
+                $scope.currentGameId = gameid
+                // $('#hidPlayerId').val(`${playerid}~c`); //to indicate the creator
+                // $('#hidGameId').val(gameid);
                 $scope.gameStarted = false;
                 var styles = {
                     zIndex:2,
@@ -233,8 +231,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 playerAvatar:$('#hidPlayerAv').val()
             };
             clearInterval(loadGamesTimer);
-            $('#hidPlayerId').val(playerId);
-            $('#hidGameId').val(gameId);
+            $scope.currentPlayerId = playerId;
+            $scope.currentGameId = gameId;
+            // $('#hidPlayerId').val(playerId);
+            // $('#hidGameId').val(gameId);
             socket.emit('joinGame', obj);
         }
         else{
@@ -256,7 +256,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 player.pointsForGame = a==0?'':a;
                 player.playerAvatar = `images/avatars/${player.playerAvatar}`;
                 player.playerTyping='';
-                player.me = $('#hidPlayerId').val().split('~')[0] == player.playerId?true:false
+                player.me=$scope.currentPlayerId.split('~')[0] == player.playerId?true:false
+                //player.me = $('#hidPlayerId').val().split('~')[0] == player.playerId?true:false
             });
             $scope.players=data.gamePlayers;
             $scope.gameStarted = data.gameStarted;
@@ -290,9 +291,19 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 $scope.coverMessage=`The game is not started yet, waiting for ${x} to start the game`;
             }
             else{
-                if($('#hidPlayerId').val().split('~')[0] == data.playerId){
+                //if($('#hidPlayerId').val().split('~')[0] == data.playerId){
+                if($scope.currentPlayerId.split('~')[0] == data.playerId){
                     $('#cover').css(styles);
                     $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
+                    setTimeout(() => {
+                        let submitObj={
+                            gameId:$scope.currentGameId,//$('#hidGameId').val(),
+                            playerId:$scope.currentPlayerId.split('~')[0],// $('#hidPlayerId').val().split('~')[0],
+                            words:[],
+                            pointsForGame:0
+                          }
+                        socket.emit('submit', submitObj);
+                    }, 900);
                 }
             }
             $('#mainContainer').fadeIn(1000);
@@ -306,7 +317,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     /*----- chat ----*/
     $scope.message = function(){
         if($('#txtMsg').val().length>0){
-            var obj ={playerId:$('#hidPlayerId').val(),gameId:$('#hidGameId').val(),message:$('#txtMsg').val()};
+            var obj={playerId:$scope.currentPlayerId,gameId:$scope.currentGameId,message:$('#txtMsg').val()};
+            //var obj ={playerId:$('#hidPlayerId').val(),gameId:$('#hidGameId').val(),message:$('#txtMsg').val()};
             $('#txtMsg').val('');
             socket.emit('message', obj);
         }
@@ -326,8 +338,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*----------play start-------------- */
     $scope.playStart = function(){
-        if($('#hidPlayerId').val().indexOf('~')>-1)
-            socket.emit('playStarted', `${$('#hidGameId').val()}`);
+        //if($('#hidPlayerId').val().indexOf('~')>-1)
+        if($scope.currentPlayerId.indexOf('~')>-1)
+            socket.emit('playStarted', $scope.currentGameId);
+            //socket.emit('playStarted', `${$('#hidGameId').val()}`);
     }
     socket.on('onPlayStarted',function(data){
         if(data.err!=''){
@@ -336,7 +350,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         else{
             //change icon
-            if($('#hidGameId').val() == data.gameId){ //not needed to check
+            //if($('#hidGameId').val() == data.gameId){
+            if($scope.currentGameId == data.gameId){ //not needed to check
                 $scope.alphabet = data.alphabet;
                 $scope.gameStarted = data.gameStarted;
                 $scope.gameTime = data.gameTime;
@@ -413,8 +428,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         bonusPoints:getBonus(),playTime:$scope.playerTime,
       }
       let submitObj={
-        gameId:$('#hidGameId').val(),
-        playerId:$('#hidPlayerId').val().split('~')[0],
+        gameId:$scope.currentGameId,//$('#hidGameId').val(),
+        playerId:scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
         words:wordsArray,
         pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
       }
@@ -434,8 +449,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
           bonusPoints:getBonus(),playTime:$scope.playerTime,
         }
         let submitObj={
-          gameId:$('#hidGameId').val(),
-          playerId:$('#hidPlayerId').val(),
+          gameId:$scope.currentGameId,//$('#hidGameId').val(),
+          playerId:scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
           words:wordsArray,
           pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
         }
@@ -457,7 +472,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 if(v.playerTyping=='S')
                 c++;
             });
-            if($('#hidPlayerId').val().split('~')[0]==data.playerId){
+            //if($('#hidPlayerId').val().split('~')[0]==data.playerId){
+            if($scope.currentPlayerId.split('~')[0]==data.playerId){
                 var styles = {
                     zIndex:2,
                     background:"rgb(225,255,255)",
@@ -499,7 +515,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     //$scope.wait=false;
                 }
                 else{
-                    $scope.coverMessage='Waiting for everyone to submit';
+                    if($scope.coverMessage.indexOf('missed')>-1)
+                        $scope.coverMessage +=' Waiting for everyone to submit';
+                    else
+                        'Waiting for everyone to submit';
                 }
             }
             if($('#cover').css('display')=='block'){
@@ -541,7 +560,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         else{
           //change icon
-          if($('#hidGameId').val() == data.gameId){
+          //if($('#hidGameId').val() == data.gameId){
+          if($scope.currentGameId == data.gameId){
             $scope.playingGame.name='',
             $scope.playingGame.place='',
             $scope.playingGame.animal='',
@@ -563,6 +583,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     });
 
     /*----------------leave game------------ */
+    $scope.leaveGame = function(){
+        console.log('leavin');
+    }
     socket.on('onLeave',function(data){
         if(data.err!=''){
             console.log('game leave err');
@@ -582,7 +605,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /**------ng-classes---------------------*/
     $scope.gameStartedIndicatorClass = function(){
-        if($('#hidPlayerId').val().split('~')[1]=='c'){
+        //if($('#hidPlayerId').val().split('~')[1]=='c'){
+        if($scope.currentPlayerId.split('~')[1]=='c'){
             if($scope.players.length>=2)
                 return 'fa fa-play fa-lg btn btn-default';
             else
@@ -621,7 +645,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*----validate name-----*/
     $scope.ValName = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~N`);
+        socket.emit('typing', `${$scope.currentGameId}~${$scope.currentPlayerId.split('~')[0]}~N`);
+        //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~N`);
         let s='';
         if($scope.playingGame.name) {
             s = $scope.playingGame.name.substring(0,1).toUpperCase();
@@ -663,7 +688,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*-----validate place-------------*/
     $scope.ValPlace = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~P`);
+        socket.emit('typing', `${$scope.currentGameId}~${$scope.currentPlayerId.split('~')[0]}~P`);
+        //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~P`);
         let s='';
         if($scope.playingGame.place) {
             s = $scope.playingGame.place.substring(0,1).toUpperCase();
@@ -734,7 +760,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*-----validate animal----*/
     $scope.ValAnimal = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~A`);
+        socket.emit('typing', `${$scope.currentGameId}~${$scope.currentPlayerId.split('~')[0]}~A`);
+        //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~A`);
         let s='';
         if($scope.playingGame.animal) {
             s = $scope.playingGame.animal.substring(0,1).toUpperCase();
@@ -804,7 +831,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
     /*------validate thing-----*/
     $scope.ValThing = function(v){
-        socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~T`);
+        socket.emit('typing', `${$scope.currentGameId}~${$scope.currentPlayerId.split('~')[0]}~T`);
+        //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~T`);
         let s='';
         if($scope.playingGame.thing) {
             s = $scope.playingGame.thing.substring(0,1).toUpperCase();
@@ -887,6 +915,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     });
     $scope.$on('onUnload', function (e) {
         console.log('leaving page'); // Use 'Preserve Log' option in Console
-        socket.emit('leave',{gameId:$('#hidGameId').val(),playerId:$('#hidPlayrId').val().split('~')[0]});
+        socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
+        //socket.emit('leave',{gameId:$('#hidGameId').val(),playerId:$('#hidPlayrId').val().split('~')[0]});
     });
 });

@@ -10,6 +10,16 @@ function initialize(){
         width: 32,
         height: 32
     });
+    // var times= [
+    //     {id: '120', name: '120 seconds'},
+    //     {id: '90', name: '90 seconds'},
+    //     {id: '60', name: '60 seconds'},
+    //     {id: '30', name: '30 seconds'},
+    // ];
+    // $.each(times,function(i,v){
+    //     $('#gameTime').append(new Option(v.name,v.id));
+    // });
+    
     if(w>1000){
         //$('#gameContainer').css({left:'99px',width:'86%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
@@ -113,12 +123,13 @@ function initialize(){
         $('#gameContainer').hide();
     }
     else{
+        var pics=30;
         $('.js-playerStuff').show();
         $('.js-gameStuff').hide();
-        var items = ['Truman', 'SidTheSloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean'];
+        var items = ['Truman', 'SidTheSloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Cercie','Gilfoyle','Master'];
         var item = jQuery.rand(items);
         $('#txtPlayerName').attr('placeholder',item);
-        var i = Math.floor(Math.random() * 12) + 1;
+        var i = Math.floor(Math.random() * pics) + 1;
         $('#avatarContainer > img').prop('src','images/avatars/'+i+'.png');
 
         $('#txtPlayerName').on('keyup',function(){
@@ -130,6 +141,7 @@ function initialize(){
             }
         });
         $('#btnPlayerOn').click(function(){
+            //$('#gameTime option[value="? number:0 ?"]').remove();
             $('.js-playerStuff').hide();
             $('#gamesList').show();
             $('.js-gameStuff').show();
@@ -137,7 +149,15 @@ function initialize(){
             $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
         });
         $('#txtGameName').on('keyup',function(){
-            if($('#txtGameName').val().length>3){
+            if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
+                $('#btnGameOn').removeAttr('disabled');
+            }
+            else{
+                $('#btnGameOn').attr('disabled','disabled');
+            }
+        });
+        $('#gameTime').on('change',function(){
+            if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
                 $('#btnGameOn').removeAttr('disabled');
             }
             else{
@@ -146,21 +166,24 @@ function initialize(){
         });
         $('.js-avRight').click(function(){
             var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
-            v = v==12?1:v+1;
+            v = v==pics?1:v+1;
             $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         });
         $('.js-avLeft').click(function(){
             var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
-            v = v==1?12:v-1;
+            v = v==1?pics:v-1;
             $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         });
         $('#modalAvatars').on('shown.bs.modal', function() {
             var html = '<div class="row">';
-            for (let i = 1; i <= 12; i++) {
-                html +=`<div class="col-md-2 col-xs-4" style="text-align:center;margin-bottom:2px"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
+            for (let i = 1; i <= pics; i++) {
+                html +=`<div class="col-md-2 col-xs-4" id="selectAvatar" style="text-align:center;margin-bottom:2px;cursor:pointer"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
             }
             html +='</div>';
             $('#modalAvatarsBody').html(html);
+        });
+        $('#selectAvatar').click(function (v){
+            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         });
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({
