@@ -126,7 +126,7 @@ function initialize(){
         var pics=30;
         $('.js-playerStuff').show();
         $('.js-gameStuff').hide();
-        var items = ['Truman', 'SidTheSloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Cercie','Gilfoyle','Master'];
+        var items = ['Truman', 'SidTheSloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Cercie','Gilfoyle','Master','Alcázar'];
         var item = jQuery.rand(items);
         $('#txtPlayerName').attr('placeholder',item);
         var i = Math.floor(Math.random() * pics) + 1;

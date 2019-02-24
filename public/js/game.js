@@ -156,7 +156,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     isCreator:true,
                     pointsForGame:[],
                     wordsForGame:[],
-                    joinedAt:Date.now()
+                    joinedAt:Date.now(),
+                    isActive:true
                 }
             ]
         }
@@ -195,12 +196,14 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     fontSize: 'large',
                     paddingRight: '19px',
                     color:'#00588b',
-                    display:'block'
+                    display:'block',
+                    borderRadius: '5px',
+                    border:'1px ridge #8ebfe3'  
                   };
                 $('#cover').css(styles);
                 $scope.coverMessage='The game is not started yet, you need atleast 2 players to start the game. It is good to have 3 or more.';
                 $('#mainContainer').fadeIn(1000);
-                $('#gameContainer').fadeOut(1000);
+                $('#gameContainer').fadeOut(100);
                 $scope.wait=false;
                 clearInterval(loadGamesTimer);
             }
@@ -249,13 +252,15 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         else{
             let p='';
             data.gamePlayers.forEach(player => {
+                if(player.wordsForGame.length==0)
+                    player.playerTyping=''; 
                 if($scope.players.indexOf(player)<0){
                     p=player.playerName;
                 }
                 let a = player.pointsForGame.reduce((a, b) => a + b, 0)
                 player.pointsForGame = a==0?'':a;
                 player.playerAvatar = `images/avatars/${player.playerAvatar}`;
-                player.playerTyping='';
+                
                 player.me=$scope.currentPlayerId.split('~')[0] == player.playerId?true:false
                 //player.me = $('#hidPlayerId').val().split('~')[0] == player.playerId?true:false
             });
@@ -278,7 +283,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 fontSize: 'large',
                 paddingRight: '19px',
                 color:'#00588b',
-                display:'block'
+                display:'block',
+                borderRadius: '5px',
+                border:'1px ridge #8ebfe3'
             };
             
             let x='admin';
@@ -293,6 +300,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             else{
                 //if($('#hidPlayerId').val().split('~')[0] == data.playerId){
                 if($scope.currentPlayerId.split('~')[0] == data.playerId){
+                    // data.pushedPlayer.pointsForGame = '';
+                    // data.pushedPlayer.playerAvatar = `images/avatars/${data.pushedPlayer.playerAvatar}`;
+                    // playerTyping=''; 
+                    // me=$scope.currentPlayerId.split('~')[0] == player.playerId?true:false
                     $('#cover').css(styles);
                     $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
                     setTimeout(() => {
@@ -307,7 +318,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 }
             }
             $('#mainContainer').fadeIn(1000);
-            $('#gameContainer').fadeOut(500);
+            $('#gameContainer').fadeOut(100);
               
             $scope.wait=false;
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
@@ -429,7 +440,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
       }
       let submitObj={
         gameId:$scope.currentGameId,//$('#hidGameId').val(),
-        playerId:scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
+        playerId:$scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
         words:wordsArray,
         pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
       }
@@ -450,14 +461,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         let submitObj={
           gameId:$scope.currentGameId,//$('#hidGameId').val(),
-          playerId:scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
+          playerId:$scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
           words:wordsArray,
           pointsForGame:Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints)
         }
         socket.emit('submit', submitObj);
     }
     socket.on('onSubmit',function(data){
-        $scope.coverMessage='';
+        //$scope.coverMessage=$scope.coverMessage.indexOf('missed')==-1?'':$scope.coverMessage;
+        if($scope.coverMessage.indexOf('missed')==-1)
+            $scope.coverMessage=''
         if(data.err!=''){
             console.log('game submit err');
             alert(`Some error occured while submitting\n please try again :${data.err}`);
@@ -491,7 +504,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     fontSize: 'large',
                     paddingRight: '19px',
                     color:'#00588b',
-                    display:'block'
+                    display:'block',
+                    borderRadius: '5px',
+                    border:'1px ridge #8ebfe3'
                 };
                 $('#cover').css(styles);
                 if($scope.players.length==c){
@@ -508,7 +523,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                         $scope.coverMessage='Everyone submitted, game over... Wait for the leaderboard...';
                         setTimeout(() => {
                             //if($('#hidPlayerId').val().indexOf('~')>-1){
-                                socket.emit('endPlay', data.gameId);  
+                                socket.emit('endGame', data.gameId);  
                             //}    
                         }, 3300);
                     }
@@ -516,9 +531,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 }
                 else{
                     if($scope.coverMessage.indexOf('missed')>-1)
-                        $scope.coverMessage +=' Waiting for everyone to submit';
+                        $scope.coverMessage +=', waiting for everyone to submit';
                     else
-                        'Waiting for everyone to submit';
+                        $scope.coverMessage='Waiting for everyone to submit';
                 }
             }
             if($('#cover').css('display')=='block'){
@@ -537,7 +552,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     //}, 1300);
                 }
                 else{
-                    $scope.coverMessage='Waiting for everyone to submit';
+                    if($scope.coverMessage.indexOf('waiting for everyone to submit')==-1)
+                        $scope.coverMessage +='Waiting for everyone to submit';
                 }
             }
         }
@@ -562,14 +578,15 @@ mainmodule.controller("game", function ($scope, $http,socket) {
           //change icon
           //if($('#hidGameId').val() == data.gameId){
           if($scope.currentGameId == data.gameId){
-            $scope.playingGame.name='',
-            $scope.playingGame.place='',
-            $scope.playingGame.animal='',
-            $scope.playingGame.thing='',
-            $scope.playingGame.namePoints=0,
-            $scope.playingGame.placePoints=0,
-            $scope.playingGame.animalPoints=0,
-            $scope.playingGame.thingPoints=0,
+            $scope.gameTime = data.gameTime;
+            $scope.playingGame.name='';
+            $scope.playingGame.place='';
+            $scope.playingGame.animal='';
+            $scope.playingGame.thing='';
+            $scope.playingGame.namePoints=0;
+            $scope.playingGame.placePoints=0;
+            $scope.playingGame.animalPoints=0;
+            $scope.playingGame.thingPoints=0;
             $scope.alphabet = data.alphabet;
             $('#gameStartedIndicator').hide();
             $('#gameTimer').show();
@@ -585,24 +602,88 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     /*----------------leave game------------ */
     $scope.leaveGame = function(){
         console.log('leavin');
+        socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
+        // $scope.playingGame.name='';
+        // $scope.playingGame.place='';
+        // $scope.playingGame.animal='';
+        // $scope.playingGame.thing='';
+        // $scope.playingGame.namePoints=0;
+        // $scope.playingGame.placePoints=0;
+        // $scope.playingGame.animalPoints=0;
+        // $scope.playingGame.thingPoints=0;
+        $('#mainContainer').fadeOut(100);
+        $('#gameContainer').fadeIn(1000);
+        $scope.wait=false;
+        $scope.loaderMsg='Loading...';
     }
     socket.on('onLeave',function(data){
-        if(data.err!=''){
-            console.log('game leave err');
-            //alert(`Some error occured while leavi the game\n please try again :${data.err}`);
-        }
-        else{
+        // if(data.err!=''){
+        //     console.log('game leave err');
+        //     //alert(`Some error occured while leavi the game\n please try again :${data.err}`);
+        // }
+        // else{
             let p='';
-            $scope.gamePlayers.forEach((player,i)=>{
-                if(player.playerId == data.playerId){
-                    p = player.playerName;
-                    $scope.gamePlayers.splice(i,1);
+            $.each($scope.players,function(i,v){
+                if(v.playerId == data.playerId){
+                    p = v.playerName;
+                    $scope.players.splice(i,1);
                 }
             });
             $('#divStatus').text(`${p} has left`).fadeIn('slow').fadeOut(5000);
-        }
+        //}
     })
 
+    /*------------end game------------------ */
+    socket.on('onEndGame',function(data){
+        $scope.$broadcast('timer-stop');
+        $.each($scope.players,function(i,v){
+            v.playerTyping='';
+        });
+        if(data.err!=''){
+        console.log('game end err');
+        alert('Some error occured while ending the game\n please try again');
+        }
+        else{
+            let coverMsg='';
+            $.each(data.gamePlayers,function(i,v){
+                let p=0;
+                $.each(v.wordsForGame,function(j,w){
+                    p = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
+                    p += (p/100) * Number(w.bonusPoints.split('%')[0]); 
+                });
+                coverMsg +=`${v.playerName}: ${p} points,`;
+                coverMsg = coverMsg.substr(0,coverMsg.lenght-1);
+            });
+            if($('#cover').css('display')=='block'){
+                $scope.coverMessage =coverMsg;
+            }
+            else{
+                var styles = {
+                    zIndex:2,
+                    background:"rgb(225,255,255)",
+                    background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+                    background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                    background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                    filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
+                    width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                    opacity:0.7,
+                    height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                    top:'43px',
+                    position:'absolute',
+                    paddingLeft:'57px',
+                    paddingTop: '90px',
+                    fontSize: 'large',
+                    paddingRight: '19px',
+                    color:'#00588b',
+                    display:'block',
+                    borderRadius: '5px',
+                    border:'1px ridge #8ebfe3'
+                };
+                $('#cover').css(styles);
+                $scope.coverMessage =coverMsg;
+            }
+        }
+    });
     /**------ng-classes---------------------*/
     $scope.gameStartedIndicatorClass = function(){
         //if($('#hidPlayerId').val().split('~')[1]=='c'){

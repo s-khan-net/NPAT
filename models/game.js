@@ -24,7 +24,8 @@ const gameSchema = new mongoose.Schema({
                 isCreator:{type:Boolean,default:true},
                 pointsForGame:[Number],
                 wordsForGame:[],
-                joinedAt:{type:Date}
+                joinedAt:{type:Date},
+                isActive:{type:Boolean,default:true}
             }
         ]
     });
@@ -55,7 +56,8 @@ function validateGame(game){
             isCreator:Joi.boolean().required(),
             pointsForGame:Joi.array().items(Joi.number()),
             wordsForGame:Joi.array().items(Joi.any()),
-            joinedAt:Joi.date()
+            joinedAt:Joi.date(),
+            isActive:Joi.boolean().required(),
         }))
     };
     return Joi.validate(game,schema);

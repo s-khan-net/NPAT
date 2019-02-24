@@ -66,7 +66,8 @@ io.sockets.on('connection', function(socket) { //socket code
                 isCreator:false,
                 pointsForGame:[],
                 wordsForGame:[],
-                joinedAt:Date.now()
+                joinedAt:Date.now(),
+                isActive:true
             }
             Game.findOne({gameId:obj.gameId},function(err,game){
                 if(err){
@@ -82,7 +83,13 @@ io.sockets.on('connection', function(socket) { //socket code
                         game.save()
                             .then(g=>{
                                 winston.info(`saved the game with player ${obj.playerId.split('-')[2]}`);
-                                 var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,playerId:obj.playerId,gameAlphabetArray:g.gameAlphabetArray,err:''};
+                                var players=[];
+                                g.gamePlayers.forEach((player,i)=>{
+                                    if(player.isActive) {
+                                        players.push(player);
+                                    }
+                                });
+                                var d = {gameId:g.gameId,gamePlayers:players,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,playerId:obj.playerId,pushedPlayer:player,gameAlphabetArray:g.gameAlphabetArray,err:''};
                                 socket.join(`game-${g.gameId}`);
                                 resolve(d);
                             }) // save the game
@@ -221,7 +228,7 @@ io.sockets.on('connection', function(socket) { //socket code
                                 game.save()
                                 .then(g=>{
                                     winston.info(`updated the game with submitted info for:${obj.playerId}`);
-                                    var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,pointsForGame:g.pointsForGame,err:''};
+                                    var d = {gameId:g.gameId,playerId:obj.playerId,gameTime:g.gameTime,gameAlphabetArray:g.gameAlphabetArray,pointsForGame:obj.pointsForGame,err:''};
                                     resolve(d);
                                 }) // update the player
                                 .catch(err=>{
@@ -276,7 +283,7 @@ io.sockets.on('connection', function(socket) { //socket code
 
                 }
                 else{
-                    winston.info('generating data for ne play...');
+                    winston.info('generating data for new play...');
                     //GENERATE RANDOM ALPHABET
                     let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
                     //remove a
@@ -307,14 +314,102 @@ io.sockets.on('connection', function(socket) { //socket code
             var data = {err:'could not start dame, please try again'}
             //io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
             io.sockets.in(`game-${data.gameId}`).emit('onNewPlay', data)
-        })
-    })
+        });
+    });
     
+    socket.on('endGame',function(gameId){
+        winston.info(`End game ${gameId}`)
+		let msg='Game over...';
+        io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
+        const p = new Promise((resolve,reject)=>{
+            //get the game
+            Game.findOne({gameId:gameId},function(err,game){
+                if(err){
+                    winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
+                    var d = {err:'could not start new play'}
+                    io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
+                    resolve(d);
+                }
+                else if(!game.gameStarted){
+                    winston.warn(`the game is not started! this should not happen!`);
+                    var d = {err:'The game is not started! oops we dont figure how you got here. Sorry, you\'ll have to restart the game.'}
+                }
+                else{
+                    winston.info('updating game...');
+                    game.gameEnded = true;
+                    game.gameActive=false;
+                    game.save()
+                        .then(g=>{
+                            winston.info(`updated the game with end status`);
+                            var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameStarted:g.gameStarted,err:''};
+                            resolve(d);
+                        })
+                        .catch(err=>{
+                            winston.error(`Could not save updated ${gameId} to the database, erred out: ${err.message}`);
+                            var d = {err:'could not End, please try again'}
+                            io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
+                            resolve(d);
+                        });
+                }
+            });
+        });
+
+        p.then((data)=>{
+            winston.info(`Emitting onEndGame for ${data.gameId}`);
+			//io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+			io.sockets.in(`game-${gameId}`).emit('onEndGame',data);
+        })
+        .catch(err=>{
+            winston.error(`Fatal Error occured while ending ${err}`)
+            var data = {err:'could not end game, please try again'}
+            //io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+            io.sockets.in(`game-${data.gameId}`).emit('onEndGame', data)
+        });
+    });
+
     socket.on('leave',function(obj){
         winston.info(`${obj.playerId} is leaving ${obj.gameId}`);
-        socket.leave(`game-${obj.gameId}`);
-        io.sockets.in(`game-${obj.gameId}`).emit('onLeave', obj)
-    })
+            winston.info(`Emitting onLeave`);
+            const p = new Promise((resolve,reject)=>{
+                //get the game
+                Game.findOne({gameId:gameId},function(err,game){
+                    if(err){
+                        winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
+                        var d = {err:'could not leave'}
+                        resolve(d);
+                    }
+                    else{
+                        game.gamePlayers.forEach(player => {
+                            if(player.playerId == obj.playerId){
+                                player.isActive = false;
+                            }
+                        });
+                        game.save()
+                        .then(g=>{
+                            winston.info(`updated the game with next info and alphabet:${a}`);
+                            var d = {gameId:obj.gameId,playerId:obj.playerId,err:''};
+                            resolve(d);
+                        })
+                        .catch(err=>{
+                            var d = {err:'could not leave'}
+                            resolve(d);
+                        });
+                        
+                    }
+                });
+            });
+            p.then(data=>{
+                winston.info(`Emitting onSubmit event for player: ${data.playerId}to game : ${data.gameId}`)
+                io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+                socket.leave(`game-${data.gameId}`);
+            }).catch(ex=>{
+                winston.error(`Fatal error while leaving the game! ${ex.message}`);
+                var data = {err:'could not leave'}
+                io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+                socket.leave(`game-${data.gameId}`);
+            })
+            
+    });
 });
 
 // Create a Node.js based http server on port 8080

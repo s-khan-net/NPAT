@@ -52,7 +52,7 @@ router.post('/',async (req,res)=>{
     let g = req.body; //not needed butt....
     const g1 = await Game.findOne({gameId:g.gameId},'gameId') //get the gameId
     if(g1) return res.status(400).send('Game already present!'); //oops!
-    console.log(g.gameStartedAt);
+    //console.log(g.gameStartedAt);
     var game = new Game({
         gameId:g.gameId,
         gameName:g.gameName,
