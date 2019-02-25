@@ -26,7 +26,8 @@
 <div style="width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:43%;background-color: beige" data-ng-show="wait" >{{loaderMsg}}</div>
 <div class="container"  id="mainContainer" style="margin-top:32px;display: none">
     <div class="row">
-            <div class="col-xs-12 text-center" style="font-family:monospace;letter-spacing:2px;font-size:larger;user-select: none;font-weight: bolder;">{{gameName}}&nbsp;&nbsp;<div id="gameTimer" style="display:none;background-color:whitesmoke"><timer autostart="false" countdown="gameTime" interval="1000">{{mminutes}}:{{sseconds}}</timer></div></div>
+        <div class="col-xs-2 text-center" id="npat" style="font-family:Verdana, Geneva, Tahoma, sans-serif;user-select: none;background-color:whitesmoke"><span style="color:darkred;user-select: none">N</span><span style="color:darkolivegreen;user-select: none">P</span><span style="color:darkgoldenrod;user-select: none">A</span><span style="color:darkslateblue;user-select: none">T</span></div>
+        <div class="col-xs-10 col-md-6 text-center" style="font-family:monospace;letter-spacing:2px;font-size:larger;user-select: none;font-weight: bolder;">{{gameName}}&nbsp;&nbsp;<div id="gameTimer" style="display:none;background-color:whitesmoke"><timer autostart="false" countdown="gameTime" interval="1000">{{mminutes}}:{{sseconds}}</timer></div></div>
     </div>
     <div class="row">
         <div class="col-xs-2" style="border-right:1px solid #CCC;" id="playerList">
@@ -43,22 +44,27 @@
                     <div class="row " ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
                         <div class=" col-md-8 col-xs-12 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
                             <div>
-                                <div class="col-md-12 col-xs-12 text-right" >
-                                    <span style="user-select: none;font-family:monospace;letter-spacing:2px" >{{p.playerName}}</span><span class="badge">{{p.pointsForGame}}</span>
+                                <div class="col-md-12 col-xs-12 text-right js-PlayerName" >
+                                    <span style="user-select: none;font-family:monospace;letter-spacing:2px" >{{p.playerName}}</span><span class="badge" style="background-color: cornflowerblue;">{{p.pointsForGame}}</span>
                                 </div>
                             </div>
                             <div>
-                                <div class="col-md-12 col-xs-12 text-right">
+                                <div class="col-md-12 col-xs-12 text-right js-PlayerStatus">
                                     <i ng-class="meClass(p.me)" aria-hidden="true" title="Me"></i>&nbsp;
                                     <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true">&nbsp;<span style="font-size:smaller;font-family: sans-serif">{{p.playerTyping}}</span></i>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-8 text-right js-PlayerPic">
+                            <div class="nameForSmall">
+                                <i ng-class="meClass(p.me)" aria-hidden="true" title="Me"></i>&nbsp;
+                                <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true"></i>
+                            </div>
                             <div id="btnPlayer">
                                 <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
                                 <img  style="border:2px solid silver;border-radius:4px;width:50px"  src="{{p.playerAvatar}}" />
                             </div>    
+                            <div class="nameForSmall" style="display:none"><span style="font-size:11px;user-select:none;font-family:monospace">{{p.playerName}}</span><span class="badge" style="position:absolute;z-index: 2;top: -5px;background-color: cornflowerblue;">{{p.pointsForGame}}</span></div>
                         </div>
                     </div>
                 </div>

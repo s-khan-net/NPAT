@@ -251,21 +251,46 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         else{
             let p='';
-            data.gamePlayers.forEach(player => {
-                if(player.wordsForGame.length==0)
-                    player.playerTyping=''; 
-                if($scope.players.indexOf(player)<0){
-                    p=player.playerName;
-                }
-                let a = player.pointsForGame.reduce((a, b) => a + b, 0)
-                player.pointsForGame = a==0?'':a;
-                player.playerAvatar = `images/avatars/${player.playerAvatar}`;
-                
-                player.me=$scope.currentPlayerId.split('~')[0] == player.playerId?true:false
-                //player.me = $('#hidPlayerId').val().split('~')[0] == player.playerId?true:false
-            });
-            $scope.players=data.gamePlayers;
+            let x='admin';
             $scope.gameStarted = data.gameStarted;
+            if($scope.players.length==0){
+                data.gamePlayers.forEach(player => {
+                    if(player.isCreator)
+                        x=player.playerName;
+                    if($scope.currentPlayerId.split('~')[0] == player.playerId){
+                        p=player.playerName;
+                    }
+                    let a = player.pointsForGame.reduce((a, b) => a + b, 0)
+                    player.pointsForGame = a==0?'':a;
+                    player.playerAvatar = `images/avatars/${player.playerAvatar}`;
+                    if(!data.gameStarted)
+                        player.playerTyping=''; 
+                    else{
+                        if(player.wordsForGame.length==data.gameAlphabetArray.length)
+                            player.playerTyping='';     
+                        else 
+                            player.playerTyping='S'; 
+                    }
+                    player.me=$scope.currentPlayerId.split('~')[0] == player.playerId?true:false
+                });
+                $scope.players=data.gamePlayers;
+            }
+            else{
+                var player;
+                $.each(data.gamePlayers,function(i,v){
+                    if($scope.players.indexOf(v)==-1){
+                        player = {
+                           playerId:v.playerId,
+                           playerName:v.playerName,
+                           playerPoints:'',
+                           playerAvatar:`images/avatars/${v.playerAvatar}`,
+                           playerTyping:'',
+                           me:$scope.currentPlayerId.split('~')[0] == v.playerId?true:false
+                        }
+                    }
+                });
+                $scope.players.push(player);
+            }
             var styles = {
                 zIndex:2,
                 background:"rgb(225,255,255)",
@@ -287,12 +312,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 borderRadius: '5px',
                 border:'1px ridge #8ebfe3'
             };
-            
-            let x='admin';
-            data.gamePlayers.forEach(player=>{
-                if(player.isCreator)
-                    x=player.playerName;
-            })
+
             if(!$scope.gameStarted){
                 $('#cover').css(styles);
                 $scope.coverMessage=`The game is not started yet, waiting for ${x} to start the game`;
@@ -300,10 +320,6 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             else{
                 //if($('#hidPlayerId').val().split('~')[0] == data.playerId){
                 if($scope.currentPlayerId.split('~')[0] == data.playerId){
-                    // data.pushedPlayer.pointsForGame = '';
-                    // data.pushedPlayer.playerAvatar = `images/avatars/${data.pushedPlayer.playerAvatar}`;
-                    // playerTyping=''; 
-                    // me=$scope.currentPlayerId.split('~')[0] == player.playerId?true:false
                     $('#cover').css(styles);
                     $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
                     setTimeout(() => {
@@ -700,7 +716,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.typingClass = function(v){
         switch (v) {
             case 'N':
-                return 'fa fa-commenting-o blinker orange';
+                return 'fa fa-commenting-o blinker red';
                 break;
             case 'P':
                 return 'fa fa-commenting-o blinker green';

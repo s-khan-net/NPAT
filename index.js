@@ -89,7 +89,7 @@ io.sockets.on('connection', function(socket) { //socket code
                                         players.push(player);
                                     }
                                 });
-                                var d = {gameId:g.gameId,gamePlayers:players,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,playerId:obj.playerId,pushedPlayer:player,gameAlphabetArray:g.gameAlphabetArray,err:''};
+                                var d = {gameId:g.gameId,gamePlayers:players,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,playerId:obj.playerId,pushedPlayer:player,gameAlphabet:g.gameAlphabet,gameAlphabetArray:g.gameAlphabetArray,err:''};
                                 socket.join(`game-${g.gameId}`);
                                 resolve(d);
                             }) // save the game
@@ -369,46 +369,43 @@ io.sockets.on('connection', function(socket) { //socket code
 
     socket.on('leave',function(obj){
         winston.info(`${obj.playerId} is leaving ${obj.gameId}`);
-            winston.info(`Emitting onLeave`);
-            const p = new Promise((resolve,reject)=>{
-                //get the game
-                Game.findOne({gameId:gameId},function(err,game){
-                    if(err){
-                        winston.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
+        const p = new Promise((resolve,reject)=>{
+            //get the game
+            Game.findOne({gameId:obj.gameId},function(err,game){
+                if(err){
+                    winston.error(`Could not retrieve ${obj.gameId} from the database, erred out: ${err.message}`);
+                    var d = {err:'could not leave'}
+                    resolve(d);
+                }
+                else{
+                    game.gamePlayers.forEach(player => {
+                        if(player.playerId == obj.playerId){
+                            player.isActive = false;
+                        }
+                    });
+                    game.save()
+                    .then(g=>{
+                        var d = {gameId:g.gameId,playerId:obj.playerId,err:''};
+                        resolve(d);
+                    })
+                    .catch(err=>{
                         var d = {err:'could not leave'}
                         resolve(d);
-                    }
-                    else{
-                        game.gamePlayers.forEach(player => {
-                            if(player.playerId == obj.playerId){
-                                player.isActive = false;
-                            }
-                        });
-                        game.save()
-                        .then(g=>{
-                            winston.info(`updated the game with next info and alphabet:${a}`);
-                            var d = {gameId:obj.gameId,playerId:obj.playerId,err:''};
-                            resolve(d);
-                        })
-                        .catch(err=>{
-                            var d = {err:'could not leave'}
-                            resolve(d);
-                        });
-                        
-                    }
-                });
+                    });
+                    
+                }
             });
-            p.then(data=>{
-                winston.info(`Emitting onSubmit event for player: ${data.playerId}to game : ${data.gameId}`)
-                io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
-                socket.leave(`game-${data.gameId}`);
-            }).catch(ex=>{
-                winston.error(`Fatal error while leaving the game! ${ex.message}`);
-                var data = {err:'could not leave'}
-                io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
-                socket.leave(`game-${data.gameId}`);
-            })
-            
+        });
+        p.then(data=>{
+            winston.info(`Emitting onLeave event for player: ${data.playerId} to game : ${data.gameId}`)
+            io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+            socket.leave(`game-${data.gameId}`);
+        }).catch(ex=>{
+            winston.error(`Fatal error while leaving the game! ${ex.message}`);
+            // var data = {err:'could not leave'}
+            // io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+            // socket.leave(`game-${data.gameId}`);
+        })
     });
 });
 

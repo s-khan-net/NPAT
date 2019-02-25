@@ -23,6 +23,9 @@ function initialize(){
     if(w>1000){
         //$('#gameContainer').css({left:'99px',width:'86%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+        $('.js-PlayerName').show();
+        $('.js-PlayerStatus').show();
+        $('#nameForSmall').hide();
         $('#chatSection').show();
         $('#chatsectionhead').show();
         $('#btnChat #btnChat').hide();
@@ -31,6 +34,9 @@ function initialize(){
     else{
         //$('#gameContainer').css({left:'0px',width:'100%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+        $('.js-PlayerName').hide();
+        $('.js-PlayerStatus').hide();
+        $('#nameForSmall').show();
         $('#chatSection').hide();
         $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');
@@ -40,6 +46,9 @@ function initialize(){
         if(w>1000){
             //$('#gameContainer').css({left:'99px',width:'86%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+            $('.js-PlayerName').show();
+            $('.js-PlayerStatus').show();
+            $('.nameForSmall').hide();
             $('#chatSection').show();
             $('#chatsectionhead').show();
             $('#btnChat #btnChat').hide();
@@ -48,6 +57,9 @@ function initialize(){
         else{
             //$('#gameContainer').css({left:'0px',width:'100%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+            $('.js-PlayerName').hide();
+            $('.js-PlayerStatus').hide();
+            $('.nameForSmall').show();
             $('#chatSection').hide();
             $('#btnChat #btnChat').show();
             $('.js-PlayerPic').css('margin-left','7px');

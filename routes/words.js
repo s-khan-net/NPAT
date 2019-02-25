@@ -9,7 +9,7 @@ router.get('/thing/:word',async (req,res)=>{
     //console.log(filename+'  '+req.params.word);
     var data = fs.readFileSync(`assets/thing/${filename}`,'UTF-8');
     data.split(/\n/).forEach(element => {
-        if(element.toLowerCase()==req.params.word.toLowerCase()){
+        if(element.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
             console.log(`found thingy ${element}`);
             valid=true;
         }
