@@ -4,17 +4,19 @@
   "description": "multiplyer game with nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node index.js"
+  },
+  "engines": {
+    "node":"8.9.3"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/s-khan-net/NPAT.git"
   },
   "keywords": [
-    "name",
-    "place",
-    "animal",
-    "thing"
+    "name-place-animal-thing",
+    "NPAT"
   ],
   "author": "Saud Khan",
   "license": "ISC",
