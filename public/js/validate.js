@@ -23,6 +23,7 @@ function initialize(){
     if(w>1000){
         //$('#gameContainer').css({left:'99px',width:'86%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+        $('#logoDiv > img').prop('src','/images/logo_150X150.png');
         $('.js-PlayerName').show();
         $('.js-PlayerStatus').show();
         $('#nameForSmall').hide();
@@ -34,6 +35,7 @@ function initialize(){
     else{
         //$('#gameContainer').css({left:'0px',width:'100%'});
         //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+        $('#logoDiv > img').prop('src','/images/logo_75X75.png');
         $('.js-PlayerName').hide();
         $('.js-PlayerStatus').hide();
         $('#nameForSmall').show();
@@ -46,6 +48,7 @@ function initialize(){
         if(w>1000){
             //$('#gameContainer').css({left:'99px',width:'86%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+            $('#logoDiv > img').prop('src','/images/logo_150X150.png');
             $('.js-PlayerName').show();
             $('.js-PlayerStatus').show();
             $('.nameForSmall').hide();
@@ -57,6 +60,7 @@ function initialize(){
         else{
             //$('#gameContainer').css({left:'0px',width:'100%'});
             //$('#chatbox').height($('#cover').height() - $('#txtMsg').height());
+            $('#logoDiv > img').prop('src','/images/logo_75X75.png');
             $('.js-PlayerName').hide();
             $('.js-PlayerStatus').hide();
             $('.nameForSmall').show();
@@ -138,7 +142,7 @@ function initialize(){
         var pics=30;
         $('.js-playerStuff').show();
         $('.js-gameStuff').hide();
-        var items = ['Truman', 'SidTheSloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Cercie','Gilfoyle','Master','Alcázar'];
+        var items = ['Truman', 'Sloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Ralph','Monoke','Shrek','Alcázar','sharkBait'];
         var item = jQuery.rand(items);
         $('#txtPlayerName').attr('placeholder',item);
         var i = Math.floor(Math.random() * pics) + 1;
@@ -186,6 +190,9 @@ function initialize(){
             v = v==1?pics:v-1;
             $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         });
+        $('#selectAvatar').click(function (v){
+            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+        });
         $('#modalAvatars').on('shown.bs.modal', function() {
             var html = '<div class="row">';
             for (let i = 1; i <= pics; i++) {
@@ -194,17 +201,13 @@ function initialize(){
             html +='</div>';
             $('#modalAvatarsBody').html(html);
         });
-        $('#selectAvatar').click(function (v){
-            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
-        });
+        
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({
                 backdrop: "static"
             });
         });
-        
     }
-    
 }
 
 (function($) {
