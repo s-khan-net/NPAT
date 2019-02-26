@@ -4,6 +4,8 @@ function initialize(){
         height: '100%', 
         position: 'left',
     });
+    $('.gamesScroller').slimScroll({
+    });
     $('#chatbox').slimScroll();
     $('#allgames').slimScroll();
     $('#btnChat').refreshbtn({
@@ -113,6 +115,9 @@ function initialize(){
     {
         $(this).animate({ width: '-=50' }, 'slow');
     });
+    function selectAvatar(v){
+        $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+    }
     if(window.location.href.indexOf('Join')>-1){ 
         var url = new URL(window.location.href);
         var gid = url.searchParams.get("id");
@@ -190,18 +195,16 @@ function initialize(){
             v = v==1?pics:v-1;
             $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         });
-        $('#selectAvatar').click(function (v){
-            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
-        });
+        
         $('#modalAvatars').on('shown.bs.modal', function() {
             var html = '<div class="row">';
             for (let i = 1; i <= pics; i++) {
-                html +=`<div class="col-md-2 col-xs-4" id="selectAvatar" style="text-align:center;margin-bottom:2px;cursor:pointer"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
+                html +=`<div class="col-md-2 col-xs-4" id="selectAvatar" onclick="$('#avatarContainer > img').prop('src','/images/avatars/${i}.png');$('#modalAvatars').modal('hide');" style="text-align:center;margin-bottom:2px;cursor:pointer"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
             }
             html +='</div>';
             $('#modalAvatarsBody').html(html);
         });
-        
+
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({
                 backdrop: "static"
