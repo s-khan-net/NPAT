@@ -45,7 +45,7 @@
                         <div class=" col-md-8 col-xs-12 js-playerName" style="padding-left:17px" data-playerid="p.playerid">
                             <div>
                                 <div class="col-md-12 col-xs-12 text-right js-PlayerName" >
-                                    <span style="user-select: none;font-family:monospace;letter-spacing:2px" >{{p.playerName}}</span><span class="badge" style="background-color: cornflowerblue;">{{p.pointsForGame}}</span>
+                                    <span style="user-select: none;font-family:monospace;letter-spacing:2px" >{{p.playerName}}</span><span class="badge" style="background-color: #6495edcc;">{{p.pointsForGame}}</span>
                                 </div>
                             </div>
                             <div>
@@ -99,7 +99,7 @@
                     <label for="txtName" aria-label="txtName">Name</label>&nbsp;&nbsp;<i ng-class="nameValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.namePoints}}</span>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtName" name="txtName" class="form-control" data-ng-model="playingGame.name" data-ng-change="ValName(this)" autocomplete="none" />
+                    <input type="text" id="txtName" name="txtName" class="form-control box" data-ng-model="playingGame.name" data-ng-change="ValName(this)" autocomplete="none" />
                 </div>
             </div>
             <div class="row">
@@ -107,7 +107,7 @@
                     <label for="txtPlace" aria-label="txtPlace">Place</label>&nbsp;&nbsp;<i ng-class="placeValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.placePoints}}</span>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtPlace" name="txtPlace" class="form-control" data-ng-model="playingGame.place" data-ng-change="ValPlace(this)"autocomplete="none" />
+                    <input type="text" id="txtPlace" name="txtPlace" class="form-control box" data-ng-model="playingGame.place" data-ng-change="ValPlace(this)"autocomplete="none" />
                 </div>
             </div>
             <div class="row">
@@ -115,7 +115,7 @@
                     <label for="txtAnimal" aria-label="txtAnimal">Animal</label>&nbsp;&nbsp;<i ng-class="animalValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.animalPoints}}</span>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtAnimal" name="txtAnimal" class="form-control" data-ng-model="playingGame.animal" data-ng-change="ValAnimal(this)"autocomplete="none" />
+                    <input type="text" id="txtAnimal" name="txtAnimal" class="form-control box" data-ng-model="playingGame.animal" data-ng-change="ValAnimal(this)"autocomplete="none" />
                 </div>
             </div>
             <div class="row">
@@ -123,7 +123,7 @@
                     <label for="txtThing" aria-label="txtThing">Thing</label>&nbsp;&nbsp;<i ng-class="thingValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.thingPoints}}</span>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="txtThing" name="txtThing" class="form-control" data-ng-model="playingGame.thing" data-ng-change="ValThing(this)"autocomplete="none" />
+                    <input type="text" id="txtThing" name="txtThing" class="form-control box" data-ng-model="playingGame.thing" data-ng-change="ValThing(this)"autocomplete="none" />
                 </div>
             </div>
             <div class="row" style="padding-top:9px">
@@ -141,6 +141,7 @@
                 </div>
             </div> 
             <div id="chatcontainer">
+                    <!-- <div style="position: absolute;z-index: 5;top: -8px;right: -21px;background-color: black;opacity: 1;color: white;" class="close badge">X</div> -->
             <div class="row">
                 <div id="chatbox" style="border-radius:4px; border:1px solid lightblue;padding-left: 24px;user-select: none;background-color:#edf3f5;overflow-y:scroll;height: 250px"></div>
             </div>
@@ -172,7 +173,7 @@
                 <div class="col-md-12 col-xs-12">
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-6 text-center" id="avatarContainer2"><img src="" /></div>
+                        <div class="col-md-6 text-center" id="avatarContainer2"><img src="" style="border: 5px solid #EEE;" /></div>
                         <div class="col-md-3"></div>
                     </div>
                     <div class="row">
@@ -278,7 +279,7 @@
                     <div class="gamesScroller">
                     <div class="row" ng-repeat="g in games" style="padding-top:3px" >
                         <div class="col-md-10 col-xs-12 js-gameName text-center" style="user-select:none">
-                            <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)"><i style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>&nbsp{{g.gameName}},&nbsp;&nbsp;{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user" style="color:lightcyan"></i>,&nbsp;{{26-g.gameAlphabetArray.length}}&nbsp;<span style="font-size:x-small">done</span></div>
+                            <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)"><i style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>&nbsp{{g.gameName}},&nbsp;&nbsp;{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user" style="color:lightcyan"></i>,&nbsp;{{g.gameAlphabetArray.length}}&nbsp;<span style="font-size:x-small">done</span></div>
                         </div>
                         <!-- <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div> -->
                     </div>
@@ -296,6 +297,7 @@
       <!-- Modal content-->
      <div class="modal-content">
         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
             <h4 class="modal-title" >Choose...</h4>
         </div>
             
@@ -306,7 +308,7 @@
           <div class="row">
           <div class="col-xs-8"></div>
           <div class="col-xs-4">
-            <button type="button" class="btn- btn-sm btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
           </div>
         </div>

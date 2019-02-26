@@ -36,7 +36,7 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     user-select: none;
 }
 .badge{
-    background-color: #ccc;
+    background-color: #6495edcc;
     font-size: 11px;
 }
 .alphabet{
@@ -108,13 +108,13 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     border-bottom: 7px solid #DDD;
   }
   .green{
-      color:green;
+      color:darkolivegreen;
   }
   .red{
-      color:red;
+      color:#cb0a0a;
   }
   .orange{
-      color:orange;
+      color:#8b8603;
   }
   .brown{
       color: brown;

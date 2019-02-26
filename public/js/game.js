@@ -282,7 +282,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                         player = {
                            playerId:v.playerId,
                            playerName:v.playerName,
-                           playerPoints:'',
+                           pointsForGame:'',
                            playerAvatar:`images/avatars/${v.playerAvatar}`,
                            playerTyping:'',
                            me:$scope.currentPlayerId.split('~')[0] == v.playerId?true:false
@@ -751,6 +751,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~N`);
         let s='';
         if($scope.playingGame.name) {
+            $scope.playingGame.name = $scope.playingGame.name.replace(/[1234567890`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             s = $scope.playingGame.name.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.name = '';
@@ -794,6 +795,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~P`);
         let s='';
         if($scope.playingGame.place) {
+            $scope.playingGame.place = $scope.playingGame.place.replace(/[1234567890`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             s = $scope.playingGame.place.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.place = '';
@@ -866,6 +868,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~A`);
         let s='';
         if($scope.playingGame.animal) {
+            $scope.playingGame.animal = $scope.playingGame.animal.replace(/[1234567890`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             s = $scope.playingGame.animal.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.animal = '';
@@ -937,6 +940,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         //socket.emit('typing', `${$('#hidGameId').val()}~${$('#hidPlayerId').val().split('~')[0]}~T`);
         let s='';
         if($scope.playingGame.thing) {
+            $scope.playingGame.thing = $scope.playingGame.thing.replace(/[1234567890`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             s = $scope.playingGame.thing.substring(0,1).toUpperCase();
             if( s !=$scope.alphabet){
                 $scope.playingGame.thing = '';
