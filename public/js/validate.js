@@ -28,7 +28,7 @@ function initialize(){
         $('#logoDiv > img').prop('src','/images/logo_150X150.png');
         $('.js-PlayerName').show();
         $('.js-PlayerStatus').show();
-        $('#nameForSmall').hide();
+        $('.nameForSmall').hide();
         $('#chatSection').show();
         $('#chatsectionhead').show();
         $('#btnChat #btnChat').hide();
@@ -40,7 +40,7 @@ function initialize(){
         $('#logoDiv > img').prop('src','/images/logo_75X75.png');
         $('.js-PlayerName').hide();
         $('.js-PlayerStatus').hide();
-        $('#nameForSmall').show();
+        $('.nameForSmall').show();
         $('#chatSection').hide();
         $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');

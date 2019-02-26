@@ -173,7 +173,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 //game saved
                 //build player list
                 $scope.players=[];
-                $scope.players.push({playerId:game.gamePlayers[0].playerId,playerName:game.gamePlayers[0].playerName,pointsForGame:0,isCreator:true,playerAvatar:`images/avatars/${game.gamePlayers[0].playerAvatar}`,me:true});
+                $scope.players.push({playerId:game.gamePlayers[0].playerId,playerName:game.gamePlayers[0].playerName,pointsForGame:'',isCreator:true,playerAvatar:`images/avatars/${game.gamePlayers[0].playerAvatar}`,me:true});
                 $scope.currentPlayerId = `${playerid}~c`; //to indicate the creator
                 $scope.currentGameId = gameid
                 // $('#hidPlayerId').val(`${playerid}~c`); //to indicate the creator
@@ -496,7 +496,12 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $.each($scope.players,function(i,v){
                 if(v.playerId == data.playerId){
                     v.playerTyping = 'S';
-                    v.pointsForGame = data.pointsForGame==0?'':data.pointsForGame;
+                    if(isNaN(v.pointsForGame)){
+                        v.pointsForGame = data.pointsForGame==0?'':data.pointsForGame;
+                    }
+                    else{
+                        v.pointsForGame = Number(v.pointsForGame)+Number(data.pointsForGame);
+                    }
                 }
                 if(v.playerTyping=='S')
                 c++;
@@ -667,9 +672,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     p = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
                     p += (p/100) * Number(w.bonusPoints.split('%')[0]); 
                 });
-                coverMsg +=`${v.playerName}: ${p} points,`;
-                coverMsg = coverMsg.substr(0,coverMsg.lenght-1);
+                coverMsg +=` ${v.playerName}: ${p} points,`;
             });
+            coverMsg = coverMsg.substr(0,coverMsg.lenght-1);
             if($('#cover').css('display')=='block'){
                 $scope.coverMessage =coverMsg;
             }

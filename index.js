@@ -1,5 +1,4 @@
 const express = require('express');
-const config = require('config');
 const winston = require('winston');
 const users =require('./routes/users');
 const words =require('./routes/words');
@@ -10,8 +9,9 @@ const {Game, validate} = require('./models/game');
 const app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+require('dotenv').load();
 
-mongoose.connect('mongodb://localhost/NPAT')//mongodb://npatuser:npat!1234@ds060749.mlab.com:60749/npat_db')
+mongoose.connect(process.env.mongoConnection)
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
@@ -41,9 +41,12 @@ app.use('/images', express.static(__dirname + '/public/images'));
 //app.use(express.static(__dirname + '/public'));
 
 //check if jwtkey is present
-if(!config.get('jwtKey')) {
+if(!process.env.jwtKey) {
     console.log('FATAL ERROR: jwt token key not set');
     process.exit(1);
+}
+else{
+    console.log(process.env.jwtKey);
 }
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
@@ -338,6 +341,7 @@ io.sockets.on('connection', function(socket) { //socket code
                     winston.info('updating game...');
                     game.gameEnded = true;
                     game.gameActive=false;
+                    game.gameEndedAt = Date.now();
                     game.save()
                         .then(g=>{
                             winston.info(`updated the game with end status`);
@@ -357,7 +361,7 @@ io.sockets.on('connection', function(socket) { //socket code
         p.then((data)=>{
             winston.info(`Emitting onEndGame for ${data.gameId}`);
 			//io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
-			io.sockets.in(`game-${gameId}`).emit('onEndGame',data);
+			io.sockets.in(`game-${data.gameId}`).emit('onEndGame',data);
         })
         .catch(err=>{
             winston.error(`Fatal Error occured while ending ${err}`)
@@ -369,43 +373,46 @@ io.sockets.on('connection', function(socket) { //socket code
 
     socket.on('leave',function(obj){
         winston.info(`${obj.playerId} is leaving ${obj.gameId}`);
-        const p = new Promise((resolve,reject)=>{
-            //get the game
-            Game.findOne({gameId:obj.gameId},function(err,game){
-                if(err){
-                    winston.error(`Could not retrieve ${obj.gameId} from the database, erred out: ${err.message}`);
-                    var d = {err:'could not leave'}
-                    resolve(d);
-                }
-                else{
-                    game.gamePlayers.forEach(player => {
-                        if(player.playerId == obj.playerId){
-                            player.isActive = false;
-                        }
-                    });
-                    game.save()
-                    .then(g=>{
-                        var d = {gameId:g.gameId,playerId:obj.playerId,err:''};
-                        resolve(d);
-                    })
-                    .catch(err=>{
+        if(obj.playerId && obj.gameId){
+            const p = new Promise((resolve,reject)=>{
+                //get the game
+                Game.findOne({gameId:obj.gameId},function(err,game){
+                    if(err){
+                        winston.error(`Could not retrieve ${obj.gameId} from the database, erred out: ${err.message}`);
                         var d = {err:'could not leave'}
                         resolve(d);
-                    });
-                    
-                }
+                    }
+                    else{
+                        if(game){
+                            game.gamePlayers.forEach(player => {
+                                if(player.playerId == obj.playerId){
+                                    player.isActive = false;
+                                }
+                            });
+                            game.save()
+                            .then(g=>{
+                                var d = {gameId:g.gameId,playerId:obj.playerId,err:''};
+                                resolve(d);
+                            })
+                            .catch(err=>{
+                                var d = {err:'could not leave'}
+                                resolve(d);
+                            });
+                        }
+                    }
+                });
             });
-        });
-        p.then(data=>{
-            winston.info(`Emitting onLeave event for player: ${data.playerId} to game : ${data.gameId}`)
-            io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
-            socket.leave(`game-${data.gameId}`);
-        }).catch(ex=>{
-            winston.error(`Fatal error while leaving the game! ${ex.message}`);
-            // var data = {err:'could not leave'}
-            // io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
-            // socket.leave(`game-${data.gameId}`);
-        })
+            p.then(data=>{
+                winston.info(`Emitting onLeave event for player: ${data.playerId} to game : ${data.gameId}`)
+                io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+                socket.leave(`game-${data.gameId}`);
+            }).catch(ex=>{
+                winston.error(`Fatal error while leaving the game! ${ex.message}`);
+                // var data = {err:'could not leave'}
+                // io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+                // socket.leave(`game-${data.gameId}`);
+            });
+        }
     });
 });
 

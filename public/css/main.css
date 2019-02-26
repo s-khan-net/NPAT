@@ -99,6 +99,14 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     width: 100%;
     min-height:419px;
   }
+  #avatarContainer{
+    box-shadow: inset 0 0 0 200px rgba(200, 183, 183, 0.3);
+    border-bottom: 7px solid #CCC;
+  }
+  #avatarContainer:hover{
+    /* box-shadow: inset 0 0 0 200px rgba(200, 183, 183, 0.3); */
+    border-bottom: 7px solid #DDD;
+  }
   .green{
       color:green;
   }
