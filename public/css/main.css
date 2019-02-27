@@ -108,7 +108,7 @@ body {overflow:hidden;margin-top:11px;background-image:url('../images/paperbg.jp
     border-bottom: 7px solid #DDD;
   }
   .green{
-      color:darkolivegreen;
+      color:green;
   }
   .red{
       color:#cb0a0a;
@@ -188,5 +188,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
     border-radius: 5px;
     cursor: pointer;
     margin: 3px;
-    line-height: 1;
+    line-height: 15px;
 }

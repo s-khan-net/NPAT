@@ -273,13 +273,23 @@
                 <div id="gamesContainer">
                     <div class="row">
                         <div class="col-md-12 col-xs-12 text-center">
-                            <input type="text" id="txtGameSearch" class="form-control" placeholder="search"/>    
+                            <input type="text" id="txtGameSearch" class="form-control" placeholder="search" data-ng-model="searchGamesText" data-ng-change="gameSearchChanged()"/>    
                         </div>
                     </div>
                     <div class="gamesScroller">
                     <div class="row" ng-repeat="g in games" style="padding-top:3px" >
                         <div class="col-md-10 col-xs-12 js-gameName text-center" style="user-select:none">
-                            <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)"><i style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>&nbsp{{g.gameName}},&nbsp;&nbsp;{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user" style="color:lightcyan"></i>,&nbsp;{{g.gameAlphabetArray.length}}&nbsp;<span style="font-size:x-small">done</span></div>
+                            <div class="gameButton" title="join" ng-click="joinGame(g.gameId,g.gameName,g.gamePlayers.length)">
+                                <i title="{{g.gameStarted?'Started':'Not Started'}}" style="font-size: 8px;float:left"data-ng-class="gameStartedClass(g.gameStarted)"></i>
+                                <span style="    font-family: monospace;">{{g.gameName}}</span>,
+                                <span title="{{g.gamePlayers.length}} Players"><i class="fa fa-user" ></i></span>
+                                <span>{{g.gamePlayers.length}}</span>,
+                                <!-- <span class="fa-stack">
+                                    <i class="fa fa-long-arrow-right fa-stack-2x"></i>
+                                    <i class="fa fa-font fa-stack-1x"></i>
+                                </span> -->
+                                <span title="{{g.gameAlphabetArray.length}} alphabets left"><i data-ng-class="gameCompletedClass(g.gameAlphabetArray.length)"></i></span>
+                            </div>
                         </div>
                         <!-- <div class="col-xs-6">{{g.gamePlayers.length}}&nbsp;<i class="fa fa-user"></i></div> -->
                     </div>

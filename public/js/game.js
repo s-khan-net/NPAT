@@ -67,6 +67,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.gameTime=0;
     $scope.alphabet = ''
 
+    var FullList = [];
     $scope.players =[];
     $scope.gameName='';
     $scope.games =[];
@@ -78,7 +79,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
 
-    const interval = 10000;
+    const interval = 1000000;
     //get current games if any...
     refreshGameList();
     let loadGamesTimer = setInterval(() => {
@@ -93,7 +94,31 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         .then(function (result) {
             if(result.status==200){
                 $scope.games=[];
-                $scope.games = result.data.game;
+                $.each(result.data.game,function(i,v){
+                    if(v.gamePlayers.length<10 && v.gameAlphabetArray.length>5)
+                        $scope.games.push(v);
+                    else{
+                        if(v.gameAlphabetArray.length>5){
+                            let players=[];
+                            $.each(v.gamePlayers,function(u,p){
+                                if(p.isActive)
+                                    players.push(p);
+                            });
+                            if(players.length<10){
+                                let tempg={
+                                    gameId:v.gameId,
+                                    gameName:v.gameName,
+                                    gameStarted:v.gameStarted,
+                                    gameAlphabetArray:v.gameAlphabetArray,
+                                    gameTime:v.gameTime,
+                                    gamePlayers:players
+                                };
+                                $scope.games.push(tempg);
+                            }
+                        }
+                    }
+                })
+                FullList = $scope.games;
             }
             else
                 $scope.games = [];
@@ -103,7 +128,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $scope.wait = false;
         });
     }
-    
+    $scope.gameSearchChanged = function () {
+        $scope.games = $scope.searchGamesText ? performfilter($scope.searchGamesText) : FullList;
+    }
+    performfilter = function (searchtext) {
+        filterby = searchtext.toLocaleLowerCase();
+        return FullList.filter(function (game) {
+            //var n =  game.gameName;
+            return game.gameName.toLocaleLowerCase().indexOf(filterby) != -1;
+        });
+    }
     function refreshPlayerList(){
         $('.js-playerLoad').show();
         let gameId=$scope.currentGameId;//$('#hidGameId').val();
@@ -222,7 +256,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     /*---- join game-----*/
     $scope.joinGame = function(gameId,gameName,totalGamePlayers){
        // console.log(gameId);
-       if(totalGamePlayers<100){
+       if(totalGamePlayers<10){
             $scope.gameName = gameName;
             $scope.wait=true;
             $scope.loaderMsg='Joining game...';
@@ -496,8 +530,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $.each($scope.players,function(i,v){
                 if(v.playerId == data.playerId){
                     v.playerTyping = 'S';
-                    if(isNaN(v.pointsForGame)){
-                        v.pointsForGame = data.pointsForGame==0?'':data.pointsForGame;
+                    if(v.pointsForGame==''){
+                        v.pointsForGame = data.pointsForGame;
                     }
                     else{
                         v.pointsForGame = Number(v.pointsForGame)+Number(data.pointsForGame);
@@ -532,7 +566,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 $('#cover').css(styles);
                 if($scope.players.length==c){
                     //everyone has submitted so 
-                    if(data.gameAlphabetArray.length<26){
+                    if(data.gameAlphabetArray.length<26){ //this can be undefined as well
                         $scope.coverMessage='Everyone submitted, starting new play...';
                         setTimeout(() => {
                             //if($('#hidPlayerId').val().indexOf('~')>-1){ BIG BUGGY CODE! cost me a day!!!
@@ -716,6 +750,26 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
         else{
             return $scope.game.gameStarted?'fa fa-play fa-lg':'fa fa-clock-o fa-spin';
+        }
+    }
+    $scope.gameCompletedClass = function(v){
+        switch (v) {
+            case 0,1,2,3:
+                return 'fa fa-battery-4 blue';
+                break;
+            case 4,5,6,7,8:
+                return 'fa fa-battery-3 blue';
+                break;
+            case 9,10,11,12,13:
+                return 'fa fa-battery-2 red';
+                break;
+            case 14,15,16,17:
+                return 'fa fa-battery-1 red';
+            case 18,19,20:
+                return 'fa fa-battery-0 red';
+            default:
+                return 'fa fa-battery-4';
+                break;
         }
     }
     $scope.typingClass = function(v){
