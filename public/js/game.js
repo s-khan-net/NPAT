@@ -671,19 +671,17 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     /*----------------leave game------------ */
     $scope.leaveGame = function(){
         console.log('leavin');
-        socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
-        // $scope.playingGame.name='';
-        // $scope.playingGame.place='';
-        // $scope.playingGame.animal='';
-        // $scope.playingGame.thing='';
-        // $scope.playingGame.namePoints=0;
-        // $scope.playingGame.placePoints=0;
-        // $scope.playingGame.animalPoints=0;
-        // $scope.playingGame.thingPoints=0;
-        $('#mainContainer').fadeOut(100);
-        $('#gameContainer').fadeIn(1000);
-        $scope.wait=false;
-        $scope.loaderMsg='Loading...';
+        if($scope.playerId.indexOf('~')>-1 && !$scope.gameStarted){
+            alert('You are the admin, you cannot leave before starting the game');
+        }
+        else{
+            socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
+            $('#mainContainer').fadeOut(100);
+            $('#gameContainer').fadeIn(1000);
+            refreshGameList();
+            $scope.wait=false;
+            $scope.loaderMsg='Loading...';
+        }
     }
     socket.on('onLeave',function(data){
         // if(data.err!=''){
@@ -768,21 +766,37 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     }
     $scope.gameCompletedClass = function(v){
         switch (v) {
-            case 0,1,2,3:
-                return 'fa fa-battery-4 blue';
-                break;
-            case 4,5,6,7,8:
-                return 'fa fa-battery-3 blue';
-                break;
-            case 9,10,11,12,13:
-                return 'fa fa-battery-2 red';
-                break;
-            case 14,15,16,17:
-                return 'fa fa-battery-1 red';
-            case 18,19,20:
+            case 0:
+            case 1:
+            case 2:
+            case 3:
                 return 'fa fa-battery-0 red';
+                break;
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                return 'fa fa-battery-1 red';
+                break;
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                return 'fa fa-battery-2 orange';
+                break;
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+                return 'fa fa-battery-3 blue';
+            case 18:
+            case 19:
+            case 20:
+                return 'fa fa-battery-4 blue';
             default:
-                return 'fa fa-battery-4';
+                return 'fa fa-battery-4 green';
                 break;
         }
     }
