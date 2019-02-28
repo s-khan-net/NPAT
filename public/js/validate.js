@@ -19,6 +19,7 @@ function initialize(){
         $('.nameForSmall').hide();
         $('#chatSection').show();
         $('#chatsectionhead').show();
+        $('.close').hide();
         $('#btnChat #btnChat').hide();
         $('.js-PlayerPic').css('margin-left','-7px');
     }
@@ -28,7 +29,8 @@ function initialize(){
         $('.js-PlayerStatus').hide();
         $('.nameForSmall').show();
         $('#chatSection').hide();
-        $('#btnChat #btnChat').show();
+        if(!$('#gameContainer').is(':visible'))
+            $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');
     }
     $( window ).resize(function() { //repeat telecast.... bad
@@ -40,6 +42,8 @@ function initialize(){
             $('.nameForSmall').hide();
             $('#chatSection').show();
             $('#chatsectionhead').show();
+            $('#chatcontainer').css({display:'block',left:'auto',top:'42px'});
+            $('.close').hide();
             $('#btnChat #btnChat').hide();
             $('.js-PlayerPic').css('margin-left','-7px');
         }
@@ -49,7 +53,8 @@ function initialize(){
             $('.js-PlayerStatus').hide();
             $('.nameForSmall').show();
             $('#chatSection').hide();
-            $('#btnChat #btnChat').show();
+            if(!$('#gameContainer').is(':visible'))
+                $('#btnChat #btnChat').show();
             $('.js-PlayerPic').css('margin-left','7px');
         }
     });

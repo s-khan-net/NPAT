@@ -369,6 +369,12 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             }
             $('#mainContainer').fadeIn(1000);
             $('#gameContainer').fadeOut(100);
+            if($(window).width()>1000){
+                $('#btnChat #btnChat').hide();
+            }
+            else{
+                $('#btnChat #btnChat').show();
+            }
               
             $scope.wait=false;
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
@@ -564,7 +570,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     border:'1px ridge #8ebfe3'
                 };
                 $('#cover').css(styles);
-                if($scope.players.length==c){
+                if($scope.players.length==c && data.gameAlphabetArray != undefined){
                     //everyone has submitted so 
                     if(data.gameAlphabetArray.length<26){ //this can be undefined as well
                         $scope.coverMessage='Everyone submitted, starting new play...';
@@ -592,12 +598,12 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 }
             }
             if($('#cover').css('display')=='block'){
-                if($scope.players.length==c){
+                if($scope.players.length==c && data.gameAlphabetArray != undefined){
                     //everyone has submitted so 
                     $scope.coverMessage='Everyone submitted';
                 // $scope.wait=true;
                    // setTimeout(function() {
-                        if(data.gameAlphabetArray.length<26){
+                        if(data.gameAlphabetArray.length<26 ){
                             $scope.coverMessage='Everyone submitted, starting new play...';
                             //socket.emit('newPlay', data.gameId);  
                         }
