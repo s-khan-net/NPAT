@@ -89,13 +89,19 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     //     if(!$('#gameContainer').is(':visible'))
     //         refreshPlayerList();
     // }, interval); 
+
+    $scope.refreshGames = function(){
+        if(!$('.js-gamesLoad').hasClass('fa-spin'))
+            refreshGameList()
+    }
     function refreshGameList(){
+        $('.js-gamesLoad').addClass('fa-spin');
         $http.get('/api/game')
         .then(function (result) {
             if(result.status==200){
                 $scope.games=[];
                 $.each(result.data.game,function(i,v){
-                    if(v.gamePlayers.length<10 && v.gameAlphabetArray.length>5)
+                    if(v.gamePlayers.length<10 && (v.gameAlphabetArray.length==0 || v.gameAlphabetArray.length>5))
                         $scope.games.push(v);
                     else{
                         if(v.gameAlphabetArray.length>5){
@@ -122,8 +128,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             }
             else
                 $scope.games = [];
+            $('.js-gamesLoad').removeClass('fa-spin');
         },
         function(error){
+            $('.js-gamesLoad').removeClass('fa-spin');
             alert(error.statusText);
             $scope.wait = false;
         });
@@ -207,7 +215,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 //game saved
                 //build player list
                 $scope.players=[];
-                $scope.players.push({playerId:game.gamePlayers[0].playerId,playerName:game.gamePlayers[0].playerName,pointsForGame:'',isCreator:true,playerAvatar:`images/avatars/${game.gamePlayers[0].playerAvatar}`,me:true});
+                $scope.players.push({playerId:game.gamePlayers[0].playerId,playerName:game.gamePlayers[0].playerName,pointsForGame:0,isCreator:true,playerAvatar:`images/avatars/${game.gamePlayers[0].playerAvatar}`,me:true});
                 $scope.currentPlayerId = `${playerid}~c`; //to indicate the creator
                 $scope.currentGameId = gameid
                 // $('#hidPlayerId').val(`${playerid}~c`); //to indicate the creator
@@ -294,8 +302,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     if($scope.currentPlayerId.split('~')[0] == player.playerId){
                         p=player.playerName;
                     }
-                    let a = player.pointsForGame.reduce((a, b) => a + b, 0)
-                    player.pointsForGame = a==0?'':a;
+                    //let a = player.pointsForGame.reduce((a, b) => a + b, 0)
+                    player.pointsForGame = player.pointsForGame.reduce((a, b) => a + b, 0);// a==0?'':a;
                     player.playerAvatar = `images/avatars/${player.playerAvatar}`;
                     if(!data.gameStarted)
                         player.playerTyping=''; 
@@ -316,7 +324,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                         player = {
                            playerId:v.playerId,
                            playerName:v.playerName,
-                           pointsForGame:'',
+                           pointsForGame:0,
                            playerAvatar:`images/avatars/${v.playerAvatar}`,
                            playerTyping:'',
                            me:$scope.currentPlayerId.split('~')[0] == v.playerId?true:false
@@ -536,12 +544,12 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $.each($scope.players,function(i,v){
                 if(v.playerId == data.playerId){
                     v.playerTyping = 'S';
-                    if(v.pointsForGame==''){
-                        v.pointsForGame = data.pointsForGame;
-                    }
-                    else{
+                    // if(v.pointsForGame==''){
+                    //     v.pointsForGame = data.pointsForGame;
+                    // }
+                    // else{
                         v.pointsForGame = Number(v.pointsForGame)+Number(data.pointsForGame);
-                    }
+                    //}
                 }
                 if(v.playerTyping=='S')
                 c++;

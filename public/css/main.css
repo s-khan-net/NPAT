@@ -183,10 +183,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
     background: -webkit-linear-gradient(top, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 62%,rgba(137,195,235,1) 100%,rgba(213,235,251,1) 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 62%,rgba(137,195,235,1) 100%,rgba(213,235,251,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 ); /* IE6-9 */
-    height: 32px;
+    min-height: 32px;
     padding-left:1px;
     border-radius: 5px;
     cursor: pointer;
     margin: 3px;
     line-height: 15px;
+    border:1px solid transparent;
+}
+.gameButton:hover{
+  border: 1px solid #639ece;
+}
+.fa-stack {
+  position: relative;
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  line-height: 1;
+  vertical-align: middle
 }
