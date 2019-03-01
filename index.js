@@ -38,7 +38,7 @@ app.use(express.static(`${__dirname}/public/views`));
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/images', express.static(__dirname + '/public/images'));
-
+app.use('/assets', express.static(__dirname + '/assets'));
 // app.use('/',(req,res)=>{
 //     res.sendFile(`${__dirname}/public/views/index.html`)}
 // );
