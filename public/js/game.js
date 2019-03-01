@@ -76,7 +76,6 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.currentPlayerId='';
 
     $scope.coverMessage='';
-    $scope.htmlCoverMessage=''
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
 
@@ -549,12 +548,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             $.each($scope.players,function(i,v){
                 if(v.playerId == data.playerId){
                     v.playerTyping = 'S';
-                    // if(v.pointsForGame==''){
-                    //     v.pointsForGame = data.pointsForGame;
-                    // }
-                    // else{
-                        v.pointsForGame = Number(v.pointsForGame)+Number(data.pointsForGame);
-                    //}
+                    v.pointsForGame = Number(v.pointsForGame)+Number(data.pointsForGame || 0);
                 }
                 if(v.playerTyping=='S')
                 c++;
@@ -596,12 +590,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     else{
                         $scope.coverMessage='Everyone submitted, game over... Wait for the leaderboard...';
                         setTimeout(() => {
-                            //if($('#hidPlayerId').val().indexOf('~')>-1){
                                 socket.emit('endGame', data.gameId);  
-                            //}    
                         }, 3300);
                     }
-                    //$scope.wait=false;
                 }
                 else{
                     if($scope.coverMessage.indexOf('missed')>-1)
