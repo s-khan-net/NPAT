@@ -244,7 +244,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                   };
                 $('#cover').css(styles);
                 
-                $scope.coverMessage='The game is not started yet, <br>You need atleast <b>2</b> players to start the game. It is good to have <b>3 or more</b>.';
+                $scope.coverMessage='The game is not started yet, You need atleast 2 players to start the game. It is good to have 3 or more.';
                 $('#mainContainer').fadeIn(1000);
                 $('#gameContainer').fadeOut(100);
                 $scope.wait=false;
@@ -359,15 +359,15 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             if(!$scope.gameStarted){
                 $('#cover').css(styles);
                 if($scope.currentPlayerId.indexOf('~')>-1)
-                    $scope.coverMessage=`The game is not started yet, <b>you</b> can start the game`;
+                    $scope.coverMessage=`The game is not started yet, you can start the game`;
                 else
-                    $scope.coverMessage=`The game is not started yet, waiting for <b>${x}</b> to start the game`;
+                    $scope.coverMessage=`The game is not started yet, waiting for ${x} to start the game`;
             }
             else{
                 //if($('#hidPlayerId').val().split('~')[0] == data.playerId){
                 if($scope.currentPlayerId.split('~')[0] == data.playerId){
                     $('#cover').css(styles);
-                    $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, <br>please wait until a new play begins`;
+                    $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
                     setTimeout(() => {
                         let submitObj={
                             gameId:$scope.currentGameId,//$('#hidGameId').val(),
@@ -727,7 +727,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     p = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
                     p += (p/100) * Number(w.bonusPoints.split('%')[0]); 
                 });
-                coverMsg +=` ${v.playerName}: ${p} points<br>`;
+                coverMsg +=` ${v.playerName}: ${p} points,`;
             });
             coverMsg = coverMsg.substr(0,coverMsg.length-1);
             if($('#cover').css('display')=='block'){
