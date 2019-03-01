@@ -414,6 +414,100 @@ io.sockets.on('connection', function(socket) { //socket code
             });
         }
     });
+
+    socket.on('admin',function(obj){
+        winston.info(`random admin generation for ${obj.gameId}`);
+        if(obj.gameId){
+            const p = new Promise((resolve,reject)=>{
+                //get the game
+                Game.findOne({gameId:obj.gameId},function(err,game){
+                    if(err){
+                        winston.error(`Could not retrieve ${obj.gameId} from the database, erred out: ${err.message}`);
+                        var d = {err:'could not choose new admin'}
+                        resolve(d);
+                    }
+                    else{
+                        if(game){
+                            var players = [];
+                            game.gamePlayers.forEach(function(v,i){
+                                if(v.isActive)
+                                    players.push(v);
+                            });
+                            var player = players[Math.floor(Math.random()*players.length)] 
+                            player.isCreator = true;
+                            game.gamePlayers.forEach(function(v,i){
+                                if(v.playerId == player.playerId){
+                                    v.isCreator=true;
+                                }
+                            });
+                            game.save()
+                            .then(g=>{
+                                var d = {gameId:g.gameId,playerId:player.playerId,err:''};
+                                resolve(d);
+                            })
+                            .catch(err=>{
+                                var d = {err:'could not choose random admin'}
+                                resolve(d);
+                            });
+                        }
+                    }
+                });
+            });
+            p.then(data=>{
+                winston.info(`Emitting onAdmin event for player: ${data.playerId} to game : ${data.gameId}`)
+                io.sockets.in(`game-${data.gameId}`).emit('onAdmin', data);
+            }).catch(ex=>{
+                winston.error(`Fatal error while leaving the game! ${ex.message}`);
+                // var data = {err:'could not leave'}
+                // io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+                // socket.leave(`game-${data.gameId}`);
+            });
+        }
+    });
+
+    socket.on('abandon',function(obj){
+        winston.info(`abadoning ${obj.gameId}`);
+        if(obj.gameId){
+            const p = new Promise((resolve,reject)=>{
+                //get the game
+                Game.findOne({gameId:obj.gameId},function(err,game){
+                    if(err){
+                        winston.error(`Could not retrieve ${obj.gameId} from the database, erred out: ${err.message}`);
+                        var d = {err:'could not choose new admin'}
+                        resolve(d);
+                    }
+                    else{
+                        if(game){
+                            game.gameAbandoned = true;
+                            game.save()
+                            .then(g=>{
+                                var d = {gameId:g.gameId,err:''};
+                                resolve(d);
+                            })
+                            .catch(err=>{
+                                var d = {err:'could not abandon'};
+                                resolve(d);
+                            });
+                        }
+                    }
+                });
+            });
+            p.then(data=>{
+                winston.info(`ab andoning game : ${data.gameId}`)
+                io.sockets.in(`game-${data.gameId}`).clients(function(err,clients){
+                    winston.error(`could'nt get player sockets in game ${ex.message}`);   
+                    for(var i=0; i <clients.length; i++){
+                        io.sockets.connected[clients[i]].disconnect(true); //disconnect everyone.
+                    } 
+                });
+            }).catch(ex=>{
+                winston.error(`Fatal error while leaving the game! ${ex.message}`);
+                // var data = {err:'could not leave'}
+                // io.sockets.in(`game-${data.gameId}`).emit('onLeave', data);
+                // socket.leave(`game-${data.gameId}`);
+            });
+        }
+    });
 });
 
 // Create a Node.js based http server on port 8080

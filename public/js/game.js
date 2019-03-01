@@ -76,6 +76,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.currentPlayerId='';
 
     $scope.coverMessage='';
+    $scope.htmlCoverMessage=''
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
 
@@ -243,7 +244,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     border:'1px ridge #8ebfe3'  
                   };
                 $('#cover').css(styles);
-                $scope.coverMessage='The game is not started yet, you need atleast 2 players to start the game. It is good to have 3 or more.';
+                
+                $scope.coverMessage='The game is not started yet, <br>You need atleast <b>2</b> players to start the game. It is good to have <b>3 or more</b>.';
                 $('#mainContainer').fadeIn(1000);
                 $('#gameContainer').fadeOut(100);
                 $scope.wait=false;
@@ -357,13 +359,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
 
             if(!$scope.gameStarted){
                 $('#cover').css(styles);
-                $scope.coverMessage=`The game is not started yet, waiting for ${x} to start the game`;
+                if($scope.currentPlayerId.indexOf('~')>-1)
+                    $scope.coverMessage=`The game is not started yet, <b>you</b> can start the game`;
+                else
+                    $scope.coverMessage=`The game is not started yet, waiting for <b>${x}</b> to start the game`;
             }
             else{
                 //if($('#hidPlayerId').val().split('~')[0] == data.playerId){
                 if($scope.currentPlayerId.split('~')[0] == data.playerId){
                     $('#cover').css(styles);
-                    $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, please wait until a new play begins`;
+                    $scope.coverMessage=`You have missed ${26-data.gameAlphabetArray.length} ${26-data.gameAlphabetArray.length>1?'alphabets':'alphabet'}, <br>please wait until a new play begins`;
                     setTimeout(() => {
                         let submitObj={
                             gameId:$scope.currentGameId,//$('#hidGameId').val(),
@@ -671,8 +676,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     /*----------------leave game------------ */
     $scope.leaveGame = function(){
         console.log('leavin');
-        if($scope.playerId.indexOf('~')>-1 && !$scope.gameStarted){
-            alert('You are the admin, you cannot leave before starting the game');
+        if($scope.currentPlayerId.indexOf('~')>-1 && !$scope.gameStarted){
+            alert('You are the admin, you cannot leave');
         }
         else{
             socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
@@ -690,13 +695,26 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         // }
         // else{
             let p='';
-            $.each($scope.players,function(i,v){
-                if(v.playerId == data.playerId){
-                    p = v.playerName;
-                    $scope.players.splice(i,1);
-                }
-            });
-            $('#divStatus').text(`${p} has left`).fadeIn('slow').fadeOut(5000);
+            if($scope.players.length>1){
+                var index=0;
+                $.each($scope.players,function(i,v){
+                    if(v.playerId == data.playerId){
+                        p = v.playerName;
+                        if(v.isCreator){
+                            //admin left!
+                            $scope.wait=true;
+                            $scope.loaderMsg='Admin left...';
+                            socket.emit('admin', {gameId:$scope.currentGameId});
+                        }
+                        index=i;
+                    }
+                });
+                $scope.players.splice(index,1);
+                $('#divStatus').text(`${p} has left`).fadeIn('slow').fadeOut(5000);
+            }
+            else{
+                socket.emit('abandon', {gameId:$scope.currentGameId});
+            }
         //}
     })
 
@@ -707,8 +725,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             v.playerTyping='';
         });
         if(data.err!=''){
-        console.log('game end err');
-        alert('Some error occured while ending the game\n please try again');
+            console.log('game end err');
+            alert('Some error occured while ending the game\n please try again');
         }
         else{
             let coverMsg='';
@@ -718,11 +736,11 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     p = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
                     p += (p/100) * Number(w.bonusPoints.split('%')[0]); 
                 });
-                coverMsg +=` ${v.playerName}: ${p} points,`;
+                coverMsg +=` ${v.playerName}: ${p} points<br>`;
             });
-            coverMsg = coverMsg.substr(0,coverMsg.lenght-1);
+            coverMsg = coverMsg.substr(0,coverMsg.length-1);
             if($('#cover').css('display')=='block'){
-                $scope.coverMessage =coverMsg;
+                $scope.coverMessage = coverMsg;
             }
             else{
                 var styles = {
@@ -751,6 +769,28 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             }
         }
     });
+
+    /*------on random admin creation----------*/
+    socket.on('onAdmin',function(data){
+        let p='';
+        $.each($scope.players,function(i,v){
+            if(v.playerId == data.playerId){
+                //admin is..
+                p=v.playerName;
+                v.isCreator=true;
+                if($scope.currentPlayerId == data.playerId){
+                    $scope.currentPlayerId = $scope.currentPlayerId + '~c'; //is admin
+                    $scope.loaderMsg = 'You are the admin now';
+                }
+                else{
+                    $scope.loaderMsg = `${p} is the admin now`;
+                }
+            }
+        });
+        setTimeout(() => {
+            $scope.wait=false;
+        }, 2000);
+    })
     /**------ng-classes---------------------*/
     $scope.gameStartedIndicatorClass = function(){
         //if($('#hidPlayerId').val().split('~')[1]=='c'){

@@ -1,10 +1,21 @@
 function initialize(){
+    $(document).keyup(function(e) {
+        if (e.which == 27) {
+            if($('#chatcontainer').css('position')=='absolute'){
+                $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
+                $('.close').hide();
+                $('#chatSection').hide();
+                $('#chatsectionhead').hide();
+            }
+        }
+    });
     let w= $(window).width();
     $('#playersContainer').slimScroll({
         height: '100%', 
         position: 'left',
     });
     $('.gamesScroller').slimScroll({
+        height: ($('#gameContainer').height() - 100)+'px'
     });
     $('#chatbox').slimScroll();
     $('#allgames').slimScroll();
@@ -119,6 +130,7 @@ function initialize(){
         $('#btnPlayerOn').click(function(){
             $('.js-playerStuff').hide();
             $('#gamesList').show();
+            //$('#gameTime').val(60); doesnt set the scope var!!:(
             $('.js-gameStuff').show();
             $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
             $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
