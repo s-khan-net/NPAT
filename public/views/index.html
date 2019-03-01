@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="css/main.css">
     <script>
         $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();
+            //$('[data-toggle="popover"]').popover();
             initialize();
         });
     </script>
 </head>
 <body >
 <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
-<div style="min-width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:41%;background-color: beige" data-ng-show="wait" >{{loaderMsg}}</div>
+<div style="min-width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:41%;background-color: beige;" data-ng-show="wait" >{{loaderMsg}}</div>
 <div class="container"  id="mainContainer" style="margin-top:32px;display: none">
     <div class="row">
         <div class="col-xs-2 text-center" id="npat" style="font-family:Verdana, Geneva, Tahoma, sans-serif;user-select: none;font-weight: 700;"><span style="color:#cb0a0a;user-select: none;padding: 3px">N</span><span style="color:darkolivegreen;user-select: none;padding: 3px">P</span><span style="color:#8b8603;user-select: none;padding: 3px">A</span><span style="color:darkslateblue;user-select: none;padding: 3px">T</span></div>
@@ -84,9 +84,9 @@
                 </div>
                 <div class="col-md-1 col-xs-1 text-right" >
                     <i class="fa fa-ellipsis-v fa-2x"  role="button" data-toggle="dropdown" aria-hidden="true" style="padding-top: 7px;cursor: pointer;" id="mnu"></i>
-                    <ul class="dropdown-menu " role="menu" aria-labelledby="dropdownMenu">
-                        <li><a><i class="fa fa-question fa-2x" aria-hidden="true"></i></a></li>
-                        <li><a><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a></li>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
+                        <li><a id="showHelp"><i class="fa fa-question fa-2x" aria-hidden="true"></i></a></li>
+                        <!-- <li><a><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a></li> -->
                         <li class="divider"></li>
                         <li> <a style="color:darkred;cursor:pointer" ng-confirm="really??" ng-click="leaveGame()">Leave game</a></li>
                     </ul>
@@ -159,7 +159,7 @@
     <div class="container" style="min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
-            <div id="logoDiv" style="position:absolute;top:-33px;z-index:3;right:125px;"><img src="/images/logo_150X150.png" /></div>
+            <div id="logoDiv" style="position:absolute;top:-33px;z-index:3;right:125px;"><img src="/images/logo_75X75.png" /></div>
         </div>
         <div class="col-md-6 col-xs-9" style="padding-top:43px;">
             <div class="row">
@@ -331,7 +331,30 @@
         </div>
       </div>
     </div>
-    </div> 
+</div> 
+<div class="modal fade" id="modalHelp" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+     <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title" ><i class="fa fa-question fa-2x" aria-hidden="true"></i></h4>
+        </div>
+            
+        <div class="modal-body" id="modalHelpBody">
+          This game is in english :)
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+          <div class="col-xs-8"></div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div> 
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -342,5 +365,8 @@
 <script src="js/angular-timer.min.js"></script>
 <script src="js/angular-sanitize.js"></script>
 <script src="js/game.js"></script>
+<script>
+    
+</script>
 </body>
 </html>

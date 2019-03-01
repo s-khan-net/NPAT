@@ -1,14 +1,14 @@
 function initialize(){
-    $(document).keyup(function(e) {
-        if (e.which == 27) {
-            if($('#chatcontainer').css('position')=='absolute'){
-                $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
-                $('.close').hide();
-                $('#chatSection').hide();
-                $('#chatsectionhead').hide();
-            }
-        }
-    });
+    // $(document).keyup(function(e) { doesnt work on my phone.....
+    //     if (e.which == 27) {
+    //         if($('#chatcontainer').css('position')=='absolute'){
+    //             $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
+    //             $('.close').hide();
+    //             $('#chatSection').hide();
+    //             $('#chatsectionhead').hide();
+    //         }
+    //     }
+    // });
     let w= $(window).width();
     $('#playersContainer').slimScroll({
         height: '100%', 
@@ -27,6 +27,7 @@ function initialize(){
         $('#logoDiv > img').prop('src','/images/logo_150X150.png');
         $('.js-PlayerName').show();
         $('.js-PlayerStatus').show();
+        $('#btnPlayer > img').css('width','50px');
         $('.nameForSmall').hide();
         $('#chatSection').show();
         $('#chatsectionhead').show();
@@ -38,6 +39,7 @@ function initialize(){
         $('#logoDiv > img').prop('src','/images/logo_75X75.png');
         $('.js-PlayerName').hide();
         $('.js-PlayerStatus').hide();
+        $('#btnPlayer > img').css('width','41px');
         $('.nameForSmall').show();
         $('#chatSection').hide();
         if(!$('#gameContainer').is(':visible'))
@@ -50,6 +52,7 @@ function initialize(){
             $('#logoDiv > img').prop('src','/images/logo_150X150.png');
             $('.js-PlayerName').show();
             $('.js-PlayerStatus').show();
+            $('#btnPlayer > img').css('width','50px');
             $('.nameForSmall').hide();
             $('#chatSection').show();
             $('#chatsectionhead').show();
@@ -62,6 +65,7 @@ function initialize(){
             $('#logoDiv > img').prop('src','/images/logo_75X75.png');
             $('.js-PlayerName').hide();
             $('.js-PlayerStatus').hide();
+            $('#btnPlayer > img').css('width','41px');
             $('.nameForSmall').show();
             $('#chatSection').hide();
             if(!$('#gameContainer').is(':visible'))
@@ -173,6 +177,12 @@ function initialize(){
 
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({
+                backdrop: "static",
+                keyboard:true
+            });
+        });
+        $('#showHelp').click(function(){
+            $("#modalHelp").modal({
                 backdrop: "static",
                 keyboard:true
             });

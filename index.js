@@ -518,7 +518,7 @@ io.sockets.on('connection', function(socket) { //socket code
 });
 
 server.listen(process.env.PORT, function() {
-    console.log('localhost:9000');
+    console.log(process.env.PORT);
 });
 
 

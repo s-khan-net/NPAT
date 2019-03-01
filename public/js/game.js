@@ -170,9 +170,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         });
     }
 
-    $scope.gameStartedClass = function(v){
-        return v?'fa fa-circle green':' fa fa-circle red';
-    }
+
     $scope.createGame = function(){
         //create a new game
         let gameid = `G-${$scope.gameName.substring(0, 3)}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
@@ -240,7 +238,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     color:'#00588b',
                     display:'block',
                     borderRadius: '5px',
-                    border:'1px ridge #8ebfe3'  
+                    border:'1px ridge #8ebfe3',
+                    marginLeft:'-11px'
                   };
                 $('#cover').css(styles);
                 
@@ -334,6 +333,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 });
                 $scope.players.push(player);
             }
+            // let w =(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px';
+            // let h = (Number($('#mainGameSection').css('height').split('p')[0])-20)+'px'
             var styles = {
                 zIndex:2,
                 background:"rgb(225,255,255)",
@@ -341,9 +342,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                 background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                 filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                width:"95%",//(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                width:'98%',
                 opacity:0.7,
-                height:"319px",//(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                height:"319px",
                 top:'43px',
                 position:'absolute',
                 paddingLeft:'57px',
@@ -353,7 +354,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 color:'#00588b',
                 display:'block',
                 borderRadius: '5px',
-                border:'1px ridge #8ebfe3'
+                border:'1px ridge #8ebfe3',
+                marginLeft:'-11px',
             };
 
             if(!$scope.gameStarted){
@@ -562,9 +564,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                    width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                    width:'98%',
                     opacity:0.7,
-                    height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                    height:'319px',
                     top:'43px',
                     position:'absolute',
                     paddingLeft:'57px',
@@ -574,7 +576,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     color:'#00588b',
                     display:'block',
                     borderRadius: '5px',
-                    border:'1px ridge #8ebfe3'
+                    border:'1px ridge #8ebfe3',
+                    marginLeft:'-11px'
                 };
                 $('#cover').css(styles);
                 if($scope.players.length==c && data.gameAlphabetArray != undefined){
@@ -741,9 +744,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                    width:(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                    width:'98%',
                     opacity:0.7,
-                    height:(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
+                    height:'319px',
                     top:'43px',
                     position:'absolute',
                     paddingLeft:'57px',
@@ -753,7 +756,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     color:'#00588b',
                     display:'block',
                     borderRadius: '5px',
-                    border:'1px ridge #8ebfe3'
+                    border:'1px ridge #8ebfe3',
+                    marginLeft:'-11px',
                 };
                 $('#cover').css(styles);
                 $scope.coverMessage =coverMsg;
@@ -783,6 +787,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }, 2000);
     })
     /**------ng-classes---------------------*/
+    $scope.gameStartedClass = function(v){
+        return v?'fa fa-circle green':' fa fa-circle red';
+    }
     $scope.gameStartedIndicatorClass = function(){
         //if($('#hidPlayerId').val().split('~')[1]=='c'){
         if($scope.currentPlayerId.split('~')[1]=='c'){
