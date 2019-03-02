@@ -24,7 +24,7 @@ function initialize(){
         height: 32
     });    
     if(w>1000){
-        $('#logoDiv > img').prop('src','/images/logo_150X150.png');
+        $('#logoDiv > img').prop('src','/images/logo_145X145_t.png');
         $('.js-PlayerName').show();
         $('.js-PlayerStatus').show();
         $('#btnPlayer > img').css('width','50px');
@@ -36,7 +36,7 @@ function initialize(){
         $('.js-PlayerPic').css('margin-left','-7px');
     }
     else{
-        $('#logoDiv > img').prop('src','/images/logo_75X75.png');
+        $('#logoDiv > img').prop('src','/images/logo_75X75_t.png');
         $('.js-PlayerName').hide();
         $('.js-PlayerStatus').hide();
         $('#btnPlayer > img').css('width','41px');
@@ -49,7 +49,7 @@ function initialize(){
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
         if(w>1000){
-            $('#logoDiv > img').prop('src','/images/logo_150X150.png');
+            $('#logoDiv > img').prop('src','/images/logo_145X145_t.png');
             $('.js-PlayerName').show();
             $('.js-PlayerStatus').show();
             $('#btnPlayer > img').css('width','50px');
@@ -62,7 +62,7 @@ function initialize(){
             $('.js-PlayerPic').css('margin-left','-7px');
         }
         else{
-            $('#logoDiv > img').prop('src','/images/logo_75X75.png');
+            $('#logoDiv > img').prop('src','/images/logo_75X75_t.png');
             $('.js-PlayerName').hide();
             $('.js-PlayerStatus').hide();
             $('#btnPlayer > img').css('width','41px');
@@ -174,7 +174,53 @@ function initialize(){
             html +='</div>';
             $('#modalAvatarsBody').html(html);
         });
-
+        $('#cover').click(function(){
+            if($('#cover').html().indexOf('points,')>-1){
+                $('#pointsModal').modal({
+                    backdrop: "static",
+                    keyboard:true
+                });
+            }
+        });
+        $('#pointsModal').on('shown.bs.modal', function() {
+            var $scope = angular.element($('[data-ng-controller="game"]')).scope();
+            let gid = $scope.currentGameId;
+            let url = new URL(window.location.href);
+            let u=url.host+'/api/game/'+gid;
+            // $.get(u,function(data,status){
+            //     if(data.game)
+            //     $('#hidGameId').val(gid);
+            // })
+            let html='oops....';
+            $.ajax({
+                url: '/api/game/'+gid,
+                type: 'GET',
+                async: true,
+                crossDomain: true,
+                dataType: 'jsonP', // added data type
+                success: function(data) {
+                    if(data.game){
+                        html = '<div class="container">';
+                        $.each(data.game.gamePlayers,function(i,v){
+                            html += `<div class="row">`;
+                            html += `<div class="col-xs-12 text-left">`;
+                            html += `<b>${v.playerName}:</b>`;
+                            html += '</div>';
+                            html += '</div>';
+                            $.each(v.wordsForGame,function(j,w){
+                                html += '<div class="row">';
+                                html += '<div class="col-xs-12">';
+                                html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints} + Bonus- ${w.bonusPoints}), submitted in-${w.playTime} seconds`;// A: point-2, Bonus-1, submitted in-2 seconds
+                                html += '</div>';
+                                html += '</div>';
+                            });
+                        });
+                        html += '</div>';
+                    }
+                }
+            });
+            $('#pointsModalBody').html(html);
+        });
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({
                 backdrop: "static",

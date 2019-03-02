@@ -55,7 +55,7 @@ if(!process.env.jwtKey) {
 else{
     console.log(process.env.jwtKey);
 }
-let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+let alphabets=['A','B'];//,'C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
 io.sockets.on('connection', function(socket) { //socket code
     logger.info(`someone connected ${socket.id}`);
@@ -248,7 +248,7 @@ io.sockets.on('connection', function(socket) { //socket code
                                 })
                             }
                             else{
-                                var d = {gameId:g.gameId,gamePlayers:g.gamePlayers,gameTime:g.gameTime,err:'cannot submit, the game seems to have ended, oops!'};
+                                var d = {err:'cannot submit, the game seems to have ended, oops!'};
                                 resolve(d);
                             }
                         }
