@@ -61,6 +61,7 @@ io.sockets.on('connection', function(socket) { //socket code
     logger.info(`someone connected ${socket.id}`);
 
     socket.on('testMsg',function(obj){
+        logger.error('test message');
         var data ={msg:'wassup from server',o:obj};
         io.sockets.emit('onTestMsg', data)
     })
