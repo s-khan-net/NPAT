@@ -114,7 +114,7 @@ function initialize(){
         $('#gameContainer').hide();
     }
     else{
-        var pics=31;
+        var pics=35;
         $('.js-playerStuff').show();
         $('.js-gameStuff').hide();
         var items = ['Truman', 'Sloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Ralph','Monoke','Shrek','Alcázar','sharkBait','Rastapopulous'];
