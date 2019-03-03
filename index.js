@@ -60,6 +60,11 @@ let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','
 io.sockets.on('connection', function(socket) { //socket code
     logger.info(`someone connected ${socket.id}`);
 
+    socket.on('testMsg',function(obj){
+        var data ={msg:'wassup from server',o:obj};
+        io.sockets.emit('joined', data)
+    })
+
     socket.on('createGame', function(obj) { //is whole game
         logger.info(`creating, joining game: ${obj.gameId}`);
         socket.join(`game-${obj.gameId}`);

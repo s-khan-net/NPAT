@@ -272,6 +272,10 @@ function initialize(){
                 }
             });
         });
+        $("#pointsModal").on('hidden.bs.modal', function () {
+            $('#pointsModalBody').html('');
+        });
+
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({
                 backdrop: "static",
