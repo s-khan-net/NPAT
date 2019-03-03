@@ -185,41 +185,92 @@ function initialize(){
         $('#pointsModal').on('shown.bs.modal', function() {
             var $scope = angular.element($('[data-ng-controller="game"]')).scope();
             let gid = $scope.currentGameId;
-            let url = new URL(window.location.href);
-            let u=url.host+'/api/game/'+gid;
-            // $.get(u,function(data,status){
-            //     if(data.game)
-            //     $('#hidGameId').val(gid);
-            // })
-            let html='oops....';
+            // let url = new URL(window.location.href);
+            // let u=url.host+'/api/game/'+gid;
+            let html='loading...';
             $.ajax({
                 url: '/api/game/'+gid,
                 type: 'GET',
-                async: true,
-                crossDomain: true,
-                dataType: 'jsonP', // added data type
+                dataType: 'jsonP',
                 success: function(data) {
+                    
+                },
+                complete:function(data){
                     if(data.game){
+                        let players=[];
+                        
+                        $.each(data.game.gamePlayers,function(o,p){
+                            p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
+                        });
+                        players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
+
                         html = '<div class="container">';
-                        $.each(data.game.gamePlayers,function(i,v){
+                        $.each(players,function(i,v){
                             html += `<div class="row">`;
                             html += `<div class="col-xs-12 text-left">`;
                             html += `<b>${v.playerName}:</b>`;
+                            if(i==0){
+                                html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                            }
                             html += '</div>';
                             html += '</div>';
                             $.each(v.wordsForGame,function(j,w){
                                 html += '<div class="row">';
                                 html += '<div class="col-xs-12">';
-                                html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints} + Bonus- ${w.bonusPoints}), submitted in-${w.playTime} seconds`;// A: point-2, Bonus-1, submitted in-2 seconds
+                                if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
+                                    let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
+                                    html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                }
+                                else{
+                                    html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                }
                                 html += '</div>';
                                 html += '</div>';
                             });
                         });
                         html += '</div>';
+                        $('#pointsModalBody').html(html);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var data = JSON.parse(xhr.responseText);
+                    if(data.game){
+                        let players=[];
+                        
+                        $.each(data.game.gamePlayers,function(o,p){
+                            p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
+                        });
+                        players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
+
+                        html = '<div class="container">';
+                        $.each(players,function(i,v){
+                            html += `<div class="row">`;
+                            html += `<div class="col-xs-12 text-left">`;
+                            html += `<b>${v.playerName}:</b>`;
+                            if(i==0){
+                                html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                            }
+                            html += '</div>';
+                            html += '</div>';
+                            $.each(v.wordsForGame,function(j,w){
+                                html += '<div class="row">';
+                                html += '<div class="col-xs-12">';
+                                if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
+                                    let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
+                                    html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                }
+                                else{
+                                    html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                }
+                                html += '</div>';
+                                html += '</div>';
+                            });
+                        });
+                        html += '</div>';
+                        $('#pointsModalBody').html(html);
                     }
                 }
             });
-            $('#pointsModalBody').html(html);
         });
         $('#avatarContainer').click(function(){
             $("#modalAvatars").modal({

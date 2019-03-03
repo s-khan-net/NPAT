@@ -226,7 +226,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
                     filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                    width:"95%",//(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
+                    width:"98%",//(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px',
                     opacity:0.7,
                     height:"319px",//(Number($('#mainGameSection').css('height').split('p')[0])-20)+'px',
                     top:'43px',
@@ -508,11 +508,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         thing:$scope.playingGame.thing,thingPoints:$scope.playingGame.thingPoints,
         bonusPoints:getBonus(),playTime:$scope.playerTime,
       }
+      let b = (Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints));
+      let points = b;
+      if((`-${wordsArray.namePoints}-${wordsArray.placePoints}-${wordsArray.animalPoints}-${wordsArray.thingPoints}`).indexOf('-0-')==-1){
+        points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b;
+      }
       let submitObj={
         gameId:$scope.currentGameId,//$('#hidGameId').val(),
         playerId:$scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
         words:wordsArray,
-        pointsForGame:(Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints))+Math.ceil(wordsArray.bonusPoints)
+        pointsForGame:points
       }
       socket.emit('submit', submitObj);
     }
@@ -529,11 +534,16 @@ mainmodule.controller("game", function ($scope, $http,socket) {
           thing:$scope.playingGame.thing,thingPoints:$scope.playingGame.thingPoints,
           bonusPoints:getBonus(),playTime:$scope.playerTime,
         }
+        let b = (Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints));
+        let points = b;
+        if((`-${wordsArray.namePoints}-${wordsArray.placePoints}-${wordsArray.animalPoints}-${wordsArray.thingPoints}`).indexOf('-0-')==-1){
+            points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b;
+        }
         let submitObj={
           gameId:$scope.currentGameId,//$('#hidGameId').val(),
           playerId:$scope.currentPlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
           words:wordsArray,
-          pointsForGame:(Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints))+Math.ceil(wordsArray.bonusPoints)
+          pointsForGame:points
         }
         socket.emit('submit', submitObj);
     }
