@@ -62,7 +62,7 @@ io.sockets.on('connection', function(socket) { //socket code
 
     socket.on('testMsg',function(obj){
         var data ={msg:'wassup from server',o:obj};
-        io.sockets.emit('joined', data)
+        io.sockets.emit('onTestMsg', data)
     })
 
     socket.on('createGame', function(obj) { //is whole game
