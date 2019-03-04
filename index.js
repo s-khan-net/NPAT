@@ -508,10 +508,13 @@ io.sockets.on('connection', function(socket) { //socket code
             p.then(data=>{
                 logger.info(`ab andoning game : ${data.gameId}`)
                 io.sockets.in(`game-${data.gameId}`).clients(function(err,clients){
-                    logger.error(`could'nt get player sockets in game ${ex.message}`);   
-                    for(var i=0; i <clients.length; i++){
-                        io.sockets.connected[clients[i]].disconnect(true); //disconnect everyone.
-                    } 
+                    if(err)
+                        logger.error(`could'nt get player sockets in game`);   
+                    else{
+                        for(var i=0; i <clients.length; i++){
+                            io.sockets.connected[clients[i]].disconnect(true); //disconnect everyone.
+                        } 
+                    }
                 });
             }).catch(ex=>{
                 logger.error(`Fatal error while leaving the game! ${ex.message}`);

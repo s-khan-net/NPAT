@@ -244,6 +244,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 $('#cover').css(styles);
                 
                 $scope.coverMessage='The game is not started yet, You need atleast 2 players to start the game. It is good to have 3 or more.';
+                $('body').css({backgroundImage:'url("../images/paperbg.jpg")',backgroundRepeat: 'repeat' });
                 $('#mainContainer').fadeIn(1000);
                 $('#gameContainer').fadeOut(100);
                 $scope.wait=false;
@@ -290,6 +291,14 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         if(data.err!=''){
             console.log('game join err');
             alert(`Some error occured while starting the game\n please try again :${data.err}`);
+        }
+        else if(data.gameEnded){
+            loggers.error('The game has ended');
+            alert('oops.... the game ended before you could join\n please choose another one');
+        }
+        else if(data.gameAbandoned){
+            loggers.error('The game is Abandoned');
+            alert('oops.... the game has been abandoned by its players before you could join\n please choose another one');
         }
         else{
             let p='';
@@ -381,6 +390,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                     }, 900);
                 }
             }
+            $('body').css({backgroundImage:'url("../images/paperbg.jpg")',backgroundRepeat: 'repeat' });
             $('#mainContainer').fadeIn(1000);
             $('#gameContainer').fadeOut(100);
             if($(window).width()>1000){

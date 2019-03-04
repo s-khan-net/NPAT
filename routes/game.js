@@ -9,8 +9,7 @@ const router = express.Router();
 //     res.send(game);
 // });
 router.get('/', async (req,res)=>{
-    //,'gamePlayers.9':{$exists: false} 
-    const g = await Game.find({gameActive:true,gameEnded:false},'gameId gameName gameStarted gamePlayers gameAlphabetArray gameTime');
+    const g = await Game.find({gameActive:true,gameEnded:false,gameAbandoned:false},'gameId gameName gameStarted gamePlayers gameAlphabetArray gameTime');
     if(g) res.status(200).send({game:g});
     else res.status(401).send('Games not found');
 });
