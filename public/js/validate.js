@@ -88,217 +88,177 @@ function initialize(){
         $(this).animate({ height: '-=3' }, 'slow');
     });
 
-    if(window.location.href.indexOf('Join')>-1){ 
-        var url = new URL(window.location.href);
-        var gid = url.searchParams.get("id");
-        //var gid = url.split('?')[1].substr(0,url.length);
-        //verifyGameId
-        let u=url.host+'/api/game/'+gid;
-        // $.get(u,function(data,status){
-        //     if(data.game)
-        //     $('#hidGameId').val(gid);
-        // })
+    var pics=35;
+    $('.js-playerStuff').show();
+    $('.js-gameStuff').hide();
+    var items = ['Truman', 'Sloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Ralph','Monoke','Shrek','Alcázar','sharkBait','Rastapopulous','Aviator', 'Parkins', 'Randall', 'Farquaad', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Ralph','Monoke','Shrek','Alcázar','sharkBait','Rastapopulous'];
+    var i = Math.floor(Math.random() * pics) + 1;
+    $('#txtPlayerName').attr('placeholder',items[i]);
+    $('#avatarContainer > img').prop('src','images/avatars/'+i+'.png');
+
+    $('#txtPlayerName').on('keyup',function(){
+        if($('#txtPlayerName').val().length>3){
+            $('#btnPlayerOn').removeAttr('disabled');
+        }
+        else{
+            $('#btnPlayerOn').attr('disabled','disabled');
+        }
+    });
+    $('#btnPlayerOn').click(function(){
+        $('.js-playerStuff').hide();
+        $('#gamesList').show();
+        //$('#gameTime').val(60); doesnt set the scope var!!:(
+        $('.js-gameStuff').show();
+        $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
+        $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
+    });
+    $('#txtGameName').on('keyup',function(){
+        if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
+            $('#btnGameOn').removeAttr('disabled');
+        }
+        else{
+            $('#btnGameOn').attr('disabled','disabled');
+        }
+    });
+    $('#gameTime').on('change',function(){
+        if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
+            $('#btnGameOn').removeAttr('disabled');
+        }
+        else{
+            $('#btnGameOn').attr('disabled','disabled');
+        }
+    });
+    $('.js-avRight').click(function(){
+        var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
+        v = v==pics?1:v+1;
+        $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+    });
+    $('.js-avLeft').click(function(){
+        var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
+        v = v==1?pics:v-1;
+        $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+    });
+    
+    $('#modalAvatars').on('shown.bs.modal', function() {
+        var html = '<div class="row">';
+        for (let i = 1; i <= pics; i++) {
+            html +=`<div class="col-md-2 col-xs-4" id="selectAvatar" onclick="$('#avatarContainer > img').prop('src','/images/avatars/${i}.png');$('#modalAvatars').modal('hide');" style="text-align:center;margin-bottom:2px;cursor:pointer"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
+        }
+        html +='</div>';
+        $('#modalAvatarsBody').html(html);
+    });
+    $('#cover').click(function(){
+        if($('#cover').html().indexOf('points,')>-1){
+            $('#pointsModal').modal({
+                backdrop: "static",
+                keyboard:true
+            });
+        }
+    });
+    $('#pointsModal').on('shown.bs.modal', function() {
+        var $scope = angular.element($('[data-ng-controller="game"]')).scope();
+        let gid = $scope.currentGameId;
+        // let url = new URL(window.location.href);
+        // let u=url.host+'/api/game/'+gid;
+        let html='loading...';
         $.ajax({
             url: '/api/game/'+gid,
             type: 'GET',
-            async: true,
-            crossDomain: true,
-            dataType: 'jsonP', // added data type
+            dataType: 'jsonP',
             success: function(data) {
-                if(data.game)
-                    $('#hidGameId').val(gid);
-            }
-        });
-    }
-    if($('#hidGameId').val().length>3){
-        $('#gameContainer').hide();
-    }
-    else{
-        var pics=35;
-        $('.js-playerStuff').show();
-        $('.js-gameStuff').hide();
-        var items = ['Truman', 'Sloth', 'toothless', 'sullivan', 'aceVentura', 'BruceAlmighty','Astrid','JackTheReaper','Elsa','MikeLebowsky','JamesDean','Hiccup','Ralph','Monoke','Shrek','Alcázar','sharkBait','Rastapopulous'];
-        var item = jQuery.rand(items);
-        $('#txtPlayerName').attr('placeholder',item);
-        var i = Math.floor(Math.random() * pics) + 1;
-        $('#avatarContainer > img').prop('src','images/avatars/'+i+'.png');
-
-        $('#txtPlayerName').on('keyup',function(){
-            if($('#txtPlayerName').val().length>3){
-                $('#btnPlayerOn').removeAttr('disabled');
-            }
-            else{
-                $('#btnPlayerOn').attr('disabled','disabled');
-            }
-        });
-        $('#btnPlayerOn').click(function(){
-            $('.js-playerStuff').hide();
-            $('#gamesList').show();
-            //$('#gameTime').val(60); doesnt set the scope var!!:(
-            $('.js-gameStuff').show();
-            $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
-            $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
-        });
-        $('#txtGameName').on('keyup',function(){
-            if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
-                $('#btnGameOn').removeAttr('disabled');
-            }
-            else{
-                $('#btnGameOn').attr('disabled','disabled');
-            }
-        });
-        $('#gameTime').on('change',function(){
-            if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
-                $('#btnGameOn').removeAttr('disabled');
-            }
-            else{
-                $('#btnGameOn').attr('disabled','disabled');
-            }
-        });
-        $('.js-avRight').click(function(){
-            var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
-            v = v==pics?1:v+1;
-            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
-        });
-        $('.js-avLeft').click(function(){
-            var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
-            v = v==1?pics:v-1;
-            $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
-        });
-        
-        $('#modalAvatars').on('shown.bs.modal', function() {
-            var html = '<div class="row">';
-            for (let i = 1; i <= pics; i++) {
-                html +=`<div class="col-md-2 col-xs-4" id="selectAvatar" onclick="$('#avatarContainer > img').prop('src','/images/avatars/${i}.png');$('#modalAvatars').modal('hide');" style="text-align:center;margin-bottom:2px;cursor:pointer"><img style="border: 3px solid silver;border-radius: 4px;"src="/images/avatars/${i}.png" /></div>`;
-            }
-            html +='</div>';
-            $('#modalAvatarsBody').html(html);
-        });
-        $('#cover').click(function(){
-            if($('#cover').html().indexOf('points,')>-1){
-                $('#pointsModal').modal({
-                    backdrop: "static",
-                    keyboard:true
-                });
-            }
-        });
-        $('#pointsModal').on('shown.bs.modal', function() {
-            var $scope = angular.element($('[data-ng-controller="game"]')).scope();
-            let gid = $scope.currentGameId;
-            // let url = new URL(window.location.href);
-            // let u=url.host+'/api/game/'+gid;
-            let html='loading...';
-            $.ajax({
-                url: '/api/game/'+gid,
-                type: 'GET',
-                dataType: 'jsonP',
-                success: function(data) {
+                
+            },
+            complete:function(data){
+                if(data.game){
+                    let players=[];
                     
-                },
-                complete:function(data){
-                    if(data.game){
-                        let players=[];
-                        
-                        $.each(data.game.gamePlayers,function(o,p){
-                            p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
-                        });
-                        players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
+                    $.each(data.game.gamePlayers,function(o,p){
+                        p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
+                    });
+                    players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
 
-                        html = '<div class="container">';
-                        $.each(players,function(i,v){
-                            html += `<div class="row">`;
-                            html += `<div class="col-xs-12 text-left">`;
-                            html += `<b>${v.playerName}:</b>`;
-                            if(i==0){
-                                html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                    html = '<div class="container">';
+                    $.each(players,function(i,v){
+                        html += `<div class="row">`;
+                        html += `<div class="col-xs-12 text-left">`;
+                        html += `<b>${v.playerName}:</b>`;
+                        if(i==0){
+                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                        }
+                        html += '</div>';
+                        html += '</div>';
+                        $.each(v.wordsForGame,function(j,w){
+                            html += '<div class="row">';
+                            html += '<div class="col-xs-12">';
+                            if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
+                                let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
+                                html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                            }
+                            else{
+                                html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
                             }
                             html += '</div>';
                             html += '</div>';
-                            $.each(v.wordsForGame,function(j,w){
-                                html += '<div class="row">';
-                                html += '<div class="col-xs-12">';
-                                if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
-                                    let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                    html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
-                                }
-                                else{
-                                    html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
-                                }
-                                html += '</div>';
-                                html += '</div>';
-                            });
                         });
-                        html += '</div>';
-                        $('#pointsModalBody').html(html);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    var data = JSON.parse(xhr.responseText);
-                    if(data.game){
-                        let players=[];
-                        
-                        $.each(data.game.gamePlayers,function(o,p){
-                            p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
-                        });
-                        players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
-
-                        html = '<div class="container">';
-                        $.each(players,function(i,v){
-                            html += `<div class="row">`;
-                            html += `<div class="col-xs-12 text-left">`;
-                            html += `<b>${v.playerName}:</b>`;
-                            if(i==0){
-                                html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
-                            }
-                            html += '</div>';
-                            html += '</div>';
-                            $.each(v.wordsForGame,function(j,w){
-                                html += '<div class="row">';
-                                html += '<div class="col-xs-12">';
-                                if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
-                                    let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                    html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
-                                }
-                                else{
-                                    html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
-                                }
-                                html += '</div>';
-                                html += '</div>';
-                            });
-                        });
-                        html += '</div>';
-                        $('#pointsModalBody').html(html);
-                    }
+                    });
+                    html += '</div>';
+                    $('#pointsModalBody').html(html);
                 }
-            });
-        });
-        $("#pointsModal").on('hidden.bs.modal', function () {
-            $('#pointsModalBody').html('');
-        });
+            },
+            error: function(xhr, status, error) {
+                var data = JSON.parse(xhr.responseText);
+                if(data.game){
+                    let players=[];
+                    
+                    $.each(data.game.gamePlayers,function(o,p){
+                        p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
+                    });
+                    players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
 
-        $('#avatarContainer').click(function(){
-            $("#modalAvatars").modal({
-                backdrop: "static",
-                keyboard:true
-            });
+                    html = '<div class="container">';
+                    $.each(players,function(i,v){
+                        html += `<div class="row">`;
+                        html += `<div class="col-xs-12 text-left">`;
+                        html += `<b>${v.playerName}:</b>`;
+                        if(i==0){
+                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                        }
+                        html += '</div>';
+                        html += '</div>';
+                        $.each(v.wordsForGame,function(j,w){
+                            html += '<div class="row">';
+                            html += '<div class="col-xs-12">';
+                            if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
+                                let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
+                                html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                            }
+                            else{
+                                html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                            }
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                    });
+                    html += '</div>';
+                    $('#pointsModalBody').html(html);
+                }
+            }
         });
-        $('#showHelp').click(function(){
-            $("#modalHelp").modal({
-                backdrop: "static",
-                keyboard:true
-            });
+    });
+    $("#pointsModal").on('hidden.bs.modal', function () {
+        $('#pointsModalBody').html('');
+    });
+
+    $('#avatarContainer').click(function(){
+        $("#modalAvatars").modal({
+            backdrop: "static",
+            keyboard:true
         });
-    }
+    });
+    $('#showHelp').click(function(){
+        $("#modalHelp").modal({
+            backdrop: "static",
+            keyboard:true
+        });
+    });
 }
-
-(function($) {
-    $.rand = function(arg) {
-        if ($.isArray(arg)) {
-            return arg[$.rand(arg.length)];
-        } else if (typeof arg === "number") {
-            return Math.floor(Math.random() * arg);
-        } else {
-            return 4;  // chosen by fair dice roll
-        }
-    };
-})(jQuery);
