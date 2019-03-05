@@ -275,3 +275,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
 
 
 /*--------------------------------------------------------------------*/
+
+.alpha{
+  padding: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 25px;
+  border-radius: 3px;
+}
+.alpha:hover{
+  border:1px solid #ccc;
+}
