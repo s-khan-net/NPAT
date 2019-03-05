@@ -58,6 +58,7 @@ router.post('/',async (req,res)=>{
         gameName:g.gameName,
         gameTime:g.gameTime,
         gameActive:g.gameActive,
+        gamePrivate:g.gamePrivate,
         gameStarted:g.gameStarted,
         gameStartedAt:g.gameStartedAt,
         gameEnded:g.gameEnded,

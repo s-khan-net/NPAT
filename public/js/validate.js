@@ -46,6 +46,12 @@ function initialize(){
             $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');
     }
+    if(w<350){
+        $('label').css({letterSpacing:'0px',fontSize:'smaller'});
+    }
+    else{
+        $('label').css({letterSpacing:'3px',fontSize:'inherit'});
+    }
     $( window ).resize(function() { //repeat telecast.... bad
         let w= $(window).width();
         if(w>1000){
@@ -71,6 +77,12 @@ function initialize(){
             if(!$('#gameContainer').is(':visible'))
                 $('#btnChat #btnChat').show();
             $('.js-PlayerPic').css('margin-left','7px');
+        }
+        if(w<350){
+            $('label').css({letterSpacing:'0px',fontSize:'smaller'});
+        }
+        else{
+            $('label').css({letterSpacing:'3px',fontSize:'inherit'});
         }
     });
     

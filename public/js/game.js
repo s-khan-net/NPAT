@@ -64,7 +64,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         thingPoints:0,
     }
     $scope.playerTime=0;
-    $scope.gameTime=0;
+    $scope.gameTime='30';
+    $scope.gameAlphabets='26';
+    $scope.gamePrivate=false;
     $scope.alphabet = ''
 
     var FullList = [];
@@ -180,6 +182,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             gameName:$scope.gameName,
             gameTime:$scope.gameTime?$scope.gameTime:0,
             gameActive:true,
+            gamePrivate:$scope.gamePrivate,
             gameStarted:false,
             gameStartedAt:0,
             gameEnded:false,
