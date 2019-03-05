@@ -179,7 +179,7 @@
         <div class="col-md-3 col-xs-0">
             <div id="logoDiv" style="position:absolute;top:-33px;z-index:3;"><img src="/images/logo_75X75_t.png" /></div>
         </div>
-        <div class="col-md-6 col-xs-9" style="padding-top:43px;">
+        <div class="col-md-6 col-xs-12" id="js-gameContainer" style="padding-top:11px">
             <div class="row">
                 <div class="col-md-12 col-xs-12">
                     &nbsp;
@@ -248,49 +248,51 @@
                         <label for="txtGameName">or create a new one... <i style="padding-top:6px" class="fa fa-arrow-down fa-lg"></i></label>
                     </div>
             </div>
-            <div class="row formrowpadding js-gameStuff" style="display:none">
-                <div class="col-md-10 col-xs-12">
-                    <label for="txtGameName">Name your game</label>
-                    <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1" maxlength="8" />
+            <div class="panel js-gameStuff" style="display:none;padding: 9px;background: transparent;border: 1px solid #c0deea;">
+                <div class="row formrowpadding js-gameStuff" style="display:none">
+                    <div class="col-md-10 col-xs-12">
+                        <label for="txtGameName">Name your game</label><span style="color:red">*</span>
+                        <input type="text" class="form-control" id="txtGameName" data-ng-model="gameName" placeholder="game1" maxlength="8" aria-autocomplete="none"/>
+                    </div>
                 </div>
-            </div>
-            <div class="row formrowpadding js-gameStuff" style="display:none">
-                <div class="col-md-10 col-xs-12">
-                    <div class="col-xs-12">
-                            <label for="gameTime">Each play has a time of </label>
+                <div class="row formrowpadding js-gameStuff" style="display:none">
+                    <div class="col-md-10 col-xs-12">
+                        <div class="col-xs-12">
+                                <label for="gameTime">Each play has a time of </label>
+                        </div>
+                        <!-- <select class="form-control" id="gameTime" ng-model="gameTime" >
+                            <option value="" disabled="" selected="" class="ng-binding">Select time</option>
+                            <option value="90">90 Seconds</option>
+                            <option value="60">60 Seconds</option>
+                            <option value="30">30 Seconds</option>
+                        </select> -->
+                        <div class="col-xs-12 text-center">
+                            <input type="radio" ng-model="gameTime" value="90" name="gtGroup" class="option-input radio"><span>90</span>
+                            <input type="radio" ng-model="gameTime" value="60" name="gtGroup" class="option-input radio"><span>60</span>
+                            <input type="radio" ng-model="gameTime" value="30" name="gtGroup" class="option-input radio"><span>30</span>
+                            <input type="radio" ng-model="gameTime" value="15" name="gtGroup" class="option-input radio"><span>15</span>
+                        </div>
+                        <div class="col-xs-12 text-center formrowpadding"><label>{{gameTime}} Seconds</label></div>
                     </div>
-                    <!-- <select class="form-control" id="gameTime" ng-model="gameTime" >
-                        <option value="" disabled="" selected="" class="ng-binding">Select time</option>
-                        <option value="90">90 Seconds</option>
-                        <option value="60">60 Seconds</option>
-                        <option value="30">30 Seconds</option>
-                    </select> -->
-                    <div class="col-xs-12 text-center">
-                        <b><input type="radio" ng-model="gameTime" value="90" name="gtGroup">90</b>
-                        <b><input type="radio" ng-model="gameTime" value="60" name="gtGroup">60</b>
-                        <b><input type="radio" ng-model="gameTime" value="30" name="gtGroup">30</b>
-                        <b><input type="radio" ng-model="gameTime" value="15" name="gtGroup">15</b>
-                    </div>
-                    <div class="col-xs-12 text-center"><label>Seconds</label></div>
                 </div>
-            </div>
-            <div class="row formrowpadding js-gameStuff" style="display:none">
-                <div class="col-md-10 col-xs-12">
-                    <div class="col-xs-12">
-                        <label for="gameTime">Alphabets for game </label>
+                <div class="row formrowpadding js-gameStuff" style="display:none">
+                    <div class="col-md-10 col-xs-12">
+                        <div class="col-xs-12">
+                            <label for="gameTime">Alphabets for game </label>
+                        </div>
+                        <div class="col-xs-12 text-center">
+                            <input type="radio" ng-model="gameAlphabets" value="26" name="alGroup" class="option-input radio"><span>26</span>
+                            <input type="radio" ng-model="gameAlphabets" value="20" name="alGroup" class="option-input radio"><span>20</span>
+                            <input type="radio" ng-model="gameAlphabets" value="10" name="alGroup" class="option-input radio"><span>10</span>
+                            <input type="radio" ng-model="gameAlphabets" value="x" name="alGroup" class="option-input radio" ng-click="randomize()"><span id="axVal">??</span>
+                        </div>
+                        <div class="col-xs-12 text-center formrowpadding"><label>{{gameAlphabets}} Alphabets</label><span data-ng-show="gameAlphabets!=26"><button class="btn btn-info" style="padding:0px;padding-right:3px;padding-left: 3px;" id="btnChooseAlphabets">Choose</button></span></div>
                     </div>
-                    <div class="col-xs-12 text-center">
-                        <b><input type="radio" ng-model="gameAlphabets" value="26" name="alGroup">26</b>
-                        <b><input type="radio" ng-model="gameAlphabets" value="20" name="alGroup">20</b>
-                        <b><input type="radio" ng-model="gameAlphabets" value="10" name="alGroup">10</b>
-                        <b><input type="radio" ng-model="gameAlphabets" value="x" name="alGroup"><span id="axVal">??</span></b>
-                    </div>
-                    <!-- <div class="col-xs-12 text-center"><label>All 26</label></div> -->
                 </div>
-            </div>
-            <div class="row formrowpadding js-gameStuff" style="display:none">
-                <div class="col-md-9 col-xs-9 text-right" >
-                    <button class="btn btn-primary btn-sm" disabled id="btnGameOn" ng-click="createGame()">Create game &nbsp;<i style="padding-top:6px" class="fa fa-circle-o fa-lg"></i></button>
+                <div class="row formrowpadding js-gameStuff" style="display:none">
+                    <div class="col-md-11 col-xs-11 text-right" >
+                        <button class="btn btn-primary btn-sm" disabled id="btnGameOn" ng-click="createGame()">Create game &nbsp;<i style="padding-top:6px" class="fa fa-circle-o fa-lg"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -399,6 +401,28 @@
             <h4 class="modal-title" ><i class="fa fa-question fa-2x" aria-hidden="true"></i></h4>
         </div>
         <div class="modal-body" id="pointsModalBody">
+            
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+          <div class="col-xs-8"></div>
+          <div class="col-xs-4">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal fade" id="alphabetsModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+     <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title" >Choose...</h4>
+        </div>
+        <div class="modal-body" id="alphabetsModalBody">
             
         </div>
         <div class="modal-footer">

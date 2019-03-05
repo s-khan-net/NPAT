@@ -172,7 +172,12 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         });
     }
 
-
+    /*--------------UI click------------- */
+    $scope.randomize = function(){
+        let i = (Math.floor(Math.random() * 26) + 1);
+        $scope.gameAlphabets = i<5?i+5:i; 
+    }
+    /*------------create game----------------- */
     $scope.createGame = function(){
         //create a new game
         let gameid = `G-${$scope.gameName.substring(0, 3)}-${uuidv4()}-${Date.now()}-${uuidv4()}`;

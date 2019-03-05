@@ -118,7 +118,8 @@ function initialize(){
     });
     $('#btnPlayerOn').click(function(){
         $('.js-playerStuff').hide();
-        $('#gamesList').show();
+        $('#js-gameContainer').removeClass().addClass('col-xs-9').addClass('col-md-6');
+        $('#gamesList').fadeIn('slow');
         //$('#gameTime').val(60); doesnt set the scope var!!:(
         $('.js-gameStuff').show();
         $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
@@ -272,5 +273,11 @@ function initialize(){
             backdrop: "static",
             keyboard:true
         });
+    });
+
+    $('#btnChooseAlphabets').click(function(){
+        var $scope = angular.element($('[data-ng-controller="game"]')).scope();
+        let a = $scope.gameAlphabets;
+        alert(a);
     });
 }
