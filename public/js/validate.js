@@ -284,6 +284,7 @@ function initialize(){
     $('#alphabetsModal').on('shown.bs.modal', function(){
         var $scope = angular.element($('[data-ng-controller="game"]')).scope();
         let a = $scope.gameAlphabets;
+        $('#alphabetsModalTitle').text(`Choose ${a} alphabets`);
         rArray = [];
         for(var i=1;i<=a;i++){
             var r = Math.floor(Math.random() *26) + 1;
@@ -294,17 +295,22 @@ function initialize(){
                 rArray.push(r);
             }
         }
+        $('#hidrArray').val(rArray);
         var alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         var html='<div class="row">'
         for(var i=1;i<=26;i++){
             if(rArray.indexOf(i)>-1)
-            html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha" style="background-color:darkred;color:white">'+alphabets[i-1]+'</span></div>';
+            html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha btn-info" >'+alphabets[i-1]+'</span></div>';
             else
                 html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha" >'+alphabets[i-1]+'</span></div>';
         }
         html +='</div>';
         $('#alphabetsModalBody').html(html);
     });
-
-   
+    $('#alphabetsModal').on('hidden.bs.modal', function(){
+        $('#alphabetsModalBody').html('');
+    });
+    $('#alpha-1').on('click',function(){
+        console.log(this.id);
+    });
 }
