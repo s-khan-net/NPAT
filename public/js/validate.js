@@ -151,7 +151,10 @@ function initialize(){
         v = v==1?pics:v-1;
         $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
     });
-    
+    $('#btnFinshGame').click(function(){
+        $('#mainContainer').fadeOut(100);
+        $('#gameContainer').fadeIn(1000);
+    });
     $('#modalAvatars').on('shown.bs.modal', function() {
         var html = '<div class="row">';
         for (let i = 1; i <= pics; i++) {

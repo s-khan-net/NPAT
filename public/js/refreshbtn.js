@@ -14,6 +14,7 @@
         $(this).html('<div id="btnChat" style="width:' + w + 'px;height:' + h + 'px;display:none;position:absolute;bottom:0px;"><i class="fa fa-comments-o fa-3x "></i></div>');
         
         $('#btnChat').click(function () {
+            //var t=($(window).height()/4.7)+'px';
             if($('#chatcontainer').css('position')=='absolute'){
                 $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
                 $('.close').hide();
@@ -21,7 +22,8 @@
                 $('#chatsectionhead').hide();
             }
             else{
-                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'13%',top:'42px',maxWidth:'250px'});
+                
+                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'13%',top:'32px',maxWidth:'250px'});
                 $('.close').show();
                 $('#chatSection').show();
                 $('#chatsectionhead').hide();
