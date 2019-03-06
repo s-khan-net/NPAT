@@ -3,25 +3,79 @@
 <head>
 <meta charset="UTF-8">
     <title>CCTV - About us</title>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
-        <div class="container" >
-                <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                      <h4 class="panel-title">
-                        <button data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="btn-masajid panel-heading" style="width:100%;letter-spacing:4px">Basic usage</button>
-                      </h4>
-                    <div id="collapse1" class="panel-collapse collapse">
-                      <div style="padding:4px">&nbsp;&nbsp;&nbsp;When you start this application, it locates you on the map <img src="./img/pin.png" />, and gets the nearest masjids <img src="https://maps.google.com/mapfiles/ms/icons/green-dot.png" />, masjid names are listed on the menu. On touching the marker, or on a name from the menu, the details of the masjid are shown. You can navigate to the masjid by touching the <i class="glyphicon glyphicon-send"></i> button in the description window. (this will open google maps).<br>
-                            <div style="display:inline-block">&nbsp;Refresh the search by touching </div><div id="btnReset" style="width:22px;height:22px;display:inline-block;border-radius: 50%;background: darkgreen;cursor: default;box-shadow: 0px 1px 3px #666;bottom: inherit;right:inherit;position:inherit;"><div id="blRing" ><div id="wRing" class="plus" ></div></div></div><div style="display:inline-block"> on the bottom left</div>. You can move the pin (long press the pin to activate) to reload the masjids at the new location. Watch a demo here: <a href="https://youtu.be/QTt8uqg2LtQ" target="_blank"><img src="img/y_24X24.png" alt="YouTube"/></a><br>If no masjids are found, search for masjids will be triggered automatically by incrementing the search radius. Watch: <a href="https://youtu.be/8HiAeIq9Xrg" target="_blank"><img src="img/y_24X24.png" alt="YouTube"/></a></div>
-                    </div>
+    <div class="container" >
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <button data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="btn-info panel-heading" style="width:100%;letter-spacing:4px">Begin</button>
+              </h4>
+              <div id="collapse1" class="panel-collapse collapse">
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;After you have entered your name and clicked ahead, you can either join a game or create one. To create, you need to enter a name <small>(of the game... ofcourse)</small>. The time for each play <small>(time for each alphabet is a play)</small> is selected to 30 seconds, that can be changed. The alphabets you want to play for is selected to the complete english alphabet <small>(!)</small> or you can change the number of alphabets and also, you can choose the alphabets you want to play for Watch: <a href="#" target="_blank" style="color:darkred"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
                 </div>
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;To join a game, select a game from the list.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <button data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="btn-info panel-heading" style="width:100%;letter-spacing:4px">Start</button>
+              </h4>
+              <div id="collapse2" class="panel-collapse collapse">
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;After creation or joining a game, the game are will show up, that will have a list of players in the game <small>(to the left)</small>. Four fields for the name, place, animal thing<small>y</small> where you need to type quick and correct to get points. A chat <small>(to the right or click <i class="fa fa-comments-o fa-2x"></i>)</small> where you can write to the players in the game. After you submit youll have to wait for others to finish the play. The play will also end automatically, if the time runs out. Watch: <a href="#" target="_blank" style="color:darkred"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <button data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="btn-info panel-heading" style="width:100%;letter-spacing:4px">Play</button>
+              </h4>
+              <div id="collapse3" class="panel-collapse collapse">
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;The four text boxes have their own valdation. You know what you typed is correct if you see a green check <i class="fa fa-check-circle green"></i> your points will also show up. For validating the place and animal, a complete database for the same is referred.
+                  After you submit, your points will show up in the player list for everyone. Every player can see what every other player is typing from the blinking typing indicator (<i aria-checked="fa fa-commenting-o red"></i>). Watch: <a href="#" target="_blank" style="color:darkred"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <button data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="btn-info panel-heading" style="width:100%;letter-spacing:4px">Submit</button>
+              </h4>
+              <div id="collapse4" class="panel-collapse collapse">
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;A random alphabet is chosen from the alphabets remaining in the game. If you have filled up all the boxes with correct stuff and the <i class="fa fa-check-circle green"></i> appear and there is time left you can submit. (<small>The sooner you submit</small> with the correct words<small>you will get a better bonus</small>) after a user submits, you see the <i class="a fa fa-check-square"></i> . Watch: <a href="#" target="_blank" style="color:darkred"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>  
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <button data-toggle="collapse" data-parent="#accordion" href="#collapse5" class="btn-info panel-heading" style="width:100%;letter-spacing:4px">Points</button>
+              </h4>
+              <div id="collapse5" class="panel-collapse collapse">
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;The points depend on the correctness and length of the word. Name and Thing get 4 points no matter what <small>(!)</small> The place and animal get more points with longer words. (<small><i>Birmingham</i> has more points than <i>Bristol</i></small>). The bonus points are the percentage of time remaining added to you total points. These are shown at the end.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <button data-toggle="collapse" data-parent="#accordion" href="#collapse6" class="btn-info panel-heading" style="width:100%;letter-spacing:4px">Finish</button>
+              </h4>
+              <div id="collapse6" class="panel-collapse collapse">
+                <div style="padding:4px">
+                  &nbsp;&nbsp;&nbsp;The game will end after everyone submits and the alphabets choosen are complete. Clicking on the points will show up details ... Game on
+                </div>
+              </div>
             </div>
         </div>
+    </div>
 </body>
 </html>

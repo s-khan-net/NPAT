@@ -275,6 +275,12 @@ function initialize(){
             keyboard:true
         });
     });
+    $('#logoDiv').click(function(){
+        $("#modalHelp").modal({
+            backdrop: "static",
+            keyboard:true
+        });
+    });
 
     $('#btnChooseAlphabets').click(function(){
         $('#alphabetsModal').modal({
