@@ -66,6 +66,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.playerTime=0;
     $scope.gameTime='30';
     $scope.gameAlphabets='26';
+    $scope.gameAlphabetArray=[];
     $scope.gamePrivate=false;
     $scope.alphabet = ''
 
@@ -478,6 +479,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             //if($('#hidGameId').val() == data.gameId){
             if($scope.currentGameId == data.gameId){ //not needed to check
                 $scope.alphabet = data.alphabet;
+                $scope.gameAlphabetArray = data.gameAlphabetArray;
                 $scope.gameStarted = data.gameStarted;
                 $scope.gameTime = data.gameTime;
                 console.log('game start evt');
@@ -695,7 +697,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
           //change icon
           //if($('#hidGameId').val() == data.gameId){
           if($scope.currentGameId == data.gameId){
-            $scope.gameTime = data.gameTime;
+            $scope.gameTime = data.gameTime; //need this for the timer
+            $scope.gameAlphabetArray = data.gameAlphabetArray;
             $scope.playingGame.name='';
             $scope.playingGame.place='';
             $scope.playingGame.animal='';

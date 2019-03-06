@@ -317,6 +317,15 @@ function initialize(){
         }
     });
     $("span[id^='alpha']").on('click',function(){
-        console.log(this.id);
+        id = this.id.split('-')[1];
+        rArray = $('#hidrArray').val().split(',');
+        if(rArray.indexOf(id)==-1){
+            var r = Math.floor(Math.random() *rArray.length);
+            var removed = rArray[r];
+            rArray[r]=id;
+            $( '#alpha-'+removed ).removeClass('btn-info');
+            $( '#alpha-'+id ).addClass('btn-info');
+            $('#hidrArray').val(rArray);
+        }
     });
 }
