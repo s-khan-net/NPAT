@@ -23,7 +23,7 @@
             }
             else{
                 
-                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'13%',top:'32px',maxWidth:'250px'});
+                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'13%',top:'32pxzdv',maxWidth:'250px'});
                 $('.close').show();
                 $('#chatSection').show();
                 $('#chatsectionhead').hide();
