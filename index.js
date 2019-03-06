@@ -179,7 +179,7 @@ io.sockets.on('connection', function(socket) { //socket code
                 }
                 else{
                     logger.info(`got the game details from DB`);
-                    if(game.gameAlphabetArray.length==0){
+                    if(game.gameAlphabetArray.length==0){//this might not be needed
                         game.gameAlphabetArray = alphabets;
                     }
                     //GENERATE RANDOM ALPHABET
@@ -447,21 +447,27 @@ io.sockets.on('connection', function(socket) { //socket code
                                     players.push(v);
                             });
                             var player = players[Math.floor(Math.random()*players.length)] 
-                            player.isCreator = true;
-                            game.gamePlayers.forEach(function(v,i){
-                                if(v.playerId == player.playerId){
-                                    v.isCreator=true;
-                                }
-                            });
-                            game.save()
-                            .then(g=>{
-                                var d = {gameId:g.gameId,playerId:player.playerId,err:''};
-                                resolve(d);
-                            })
-                            .catch(err=>{
+                            if(player){
+                                player.isCreator = true;
+                                game.gamePlayers.forEach(function(v,i){
+                                    if(v.playerId == player.playerId){
+                                        v.isCreator=true;
+                                    }
+                                });
+                                game.save()
+                                .then(g=>{
+                                    var d = {gameId:g.gameId,playerId:player.playerId,err:''};
+                                    resolve(d);
+                                })
+                                .catch(err=>{
+                                    var d = {err:'could not choose random admin'}
+                                    resolve(d);
+                                });
+                            }
+                            else{
                                 var d = {err:'could not choose random admin'}
                                 resolve(d);
-                            });
+                            }
                         }
                     }
                 });

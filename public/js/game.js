@@ -195,7 +195,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             gameAbandoned:false,
             gameSuspended:false,
             gameAlphabet:'',
-            gameAlphabetArray:[],
+            gameAlphabetArray:getAlphabetArray(),
             gamePlayers:[
                 {
                     playerId:playerid,
@@ -269,7 +269,33 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         });
         
     }
-
+    getAlphabetArray = function(){
+        let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        let alphabetArray =[];
+        let rArray = [];
+        if($('#hidrArray').val()==''){
+            if($scope.gameAlphabets == 26)
+                alphabetArray = alphabets
+            else{
+                for(var i=1;i<=$scope.gameAlphabets;i++){
+                    var r = Math.floor(Math.random() *26) + 1;
+                    if(rArray.indexOf(r)>-1){
+                        i--;
+                    }
+                    else{
+                        rArray.push(r);
+                    }
+                }
+            }
+        }
+        else{
+            rArray = $('#hidrArray').val().split(',');
+        }
+        $.each(rArray,function(i,v){
+            alphabetArray.push(alphabets[v-1]);
+        });
+        return alphabetArray;
+    }
     /*---- join game-----*/
     $scope.joinGame = function(gameId,gameName,totalGamePlayers){
        // console.log(gameId);

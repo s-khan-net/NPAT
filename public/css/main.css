@@ -221,8 +221,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   right: 0;
   bottom: 0;
   left: 0;
-  height: 20px;
-  width: 20px;
+  height: 28px;
+  width: 28px;
   transition: all 0.15s ease-out 0s;
   background: #fff;
   border: 1px solid #619cc9;
@@ -241,8 +241,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   background:dodgerblue;
 }
 .option-input:checked::before {
-  height: 20px;
-  width: 20px;
+  height: 28px;
+  width: 28px;
   position: absolute;
   content: '';
   display: inline-block;
@@ -277,10 +277,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
 /*--------------------------------------------------------------------*/
 
 .alpha{
-  padding: 3px;
+  padding: 9px;
   cursor: pointer;
   font-weight: 600;
-  line-height: 25px;
+  line-height: 37px;
   border-radius: 3px;
 }
 .alpha:hover{

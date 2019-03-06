@@ -46,8 +46,8 @@ function initialize(){
             $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');
     }
-    if(w<350){
-        $('label').css({letterSpacing:'0px',fontSize:'smaller'});
+    if(w<=360){
+        $('label').css({letterSpacing:'1px',fontSize:'inherit'});
     }
     else{
         $('label').css({letterSpacing:'3px',fontSize:'inherit'});
@@ -78,8 +78,8 @@ function initialize(){
                 $('#btnChat #btnChat').show();
             $('.js-PlayerPic').css('margin-left','7px');
         }
-        if(w<350){
-            $('label').css({letterSpacing:'0px',fontSize:'smaller'});
+        if(w<=360){
+            $('label').css({letterSpacing:'1px',fontSize:'inherit'});
         }
         else{
             $('label').css({letterSpacing:'3px',fontSize:'inherit'});
@@ -221,15 +221,13 @@ function initialize(){
             error: function(xhr, status, error) {
                 var data = JSON.parse(xhr.responseText);
                 if(data.game){
-                    let players=[];
-                    
                     $.each(data.game.gamePlayers,function(o,p){
                         p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
                     });
-                    players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
+                    data.game.gamePlayers.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
 
                     html = '<div class="container">';
-                    $.each(players,function(i,v){
+                    $.each(data.game.gamePlayers,function(i,v){
                         html += `<div class="row">`;
                         html += `<div class="col-xs-12 text-left">`;
                         html += `<b>${v.playerName}:</b>`;
@@ -296,21 +294,26 @@ function initialize(){
             }
         }
         $('#hidrArray').val(rArray);
-        var alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        var html='<div class="row">'
-        for(var i=1;i<=26;i++){
-            if(rArray.indexOf(i)>-1)
-            html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha btn-info" >'+alphabets[i-1]+'</span></div>';
-            else
-                html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha" >'+alphabets[i-1]+'</span></div>';
-        }
-        html +='</div>';
-        $('#alphabetsModalBody').html(html);
+        $.each(rArray,function(i,v){
+            $('#alpha-'+v).addClass('btn-info');
+        });
+        // var alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        // var html='<div class="row">'
+        // for(var i=1;i<=26;i++){
+        //     if(rArray.indexOf(i)>-1)
+        //     html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha btn-info" >'+alphabets[i-1]+'</span></div>';
+        //     else
+        //         html +='<div class="col-xs-2 text-center"><span id="alpha-'+i+'" class="alpha" >'+alphabets[i-1]+'</span></div>';
+        // }
+        // html +='</div>';
+        // $('#alphabetsModalBody').html(html);
     });
     $('#alphabetsModal').on('hidden.bs.modal', function(){
-        $('#alphabetsModalBody').html('');
+        for(var i=1;i<=26;i++){
+            $('#alpha-'+i).removeClass('btn-info');
+        }
     });
-    $('#alpha-1').on('click',function(){
+    $("span[id^='alpha']").on('click',function(){
         console.log(this.id);
     });
 }
