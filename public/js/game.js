@@ -557,7 +557,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
       let b = (Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints));
       let points = b;
       if((`-${wordsArray.namePoints}-${wordsArray.placePoints}-${wordsArray.animalPoints}-${wordsArray.thingPoints}`).indexOf('-0-')==-1){
-        points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b;
+        points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil(wordsArray.bonusPoints)+b: b;
       }
       let submitObj={
         gameId:$scope.currentGameId,//$('#hidGameId').val(),
@@ -583,7 +583,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         let b = (Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints));
         let points = b;
         if((`-${wordsArray.namePoints}-${wordsArray.placePoints}-${wordsArray.animalPoints}-${wordsArray.thingPoints}`).indexOf('-0-')==-1){
-            points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b;
+            points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil(wordsArray.bonusPoints)+b : b;
         }
         let submitObj={
           gameId:$scope.currentGameId,//$('#hidGameId').val(),
@@ -785,6 +785,10 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 coverMsg +=` ${v.playerName}: ${v.pointsForGame.reduce((a, b) => a + b, 0)} points,`;
             });
             coverMsg = coverMsg.substr(0,coverMsg.length-1);
+            setTimeout(() => {
+                $scope.wait=false;
+                $scope.loaderMsg="loading...";
+            }, 3000);
             if($('#cover').css('display')=='block'){
                 $scope.coverMessage = coverMsg;
             }

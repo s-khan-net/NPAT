@@ -295,3 +295,289 @@
 {"level":"info","message":"send chat message from player P-ave-ghjghj-1551849758973-10","timestamp":"2019-03-06T05:22:45.344Z"}
 {"level":"info","message":"P-ave-ghjghj-1551849758973-10 is leaving G-ave-3mpc-1551845541733-ur4x","timestamp":"2019-03-06T05:23:00.889Z"}
 {"level":"info","message":"Emitting onLeave event for player: P-ave-ghjghj-1551849758973-10 to game : G-ave-3mpc-1551845541733-ur4x","timestamp":"2019-03-06T05:23:00.896Z"}
+{"level":"info","message":"someone connected cIdPNG6ggue4lvtqAAAA","timestamp":"2019-03-08T09:56:12.853Z"}
+{"level":"info","message":"creating, joining game: G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:56:37.251Z"}
+{"level":"info","message":"someone connected OAzMeM8ZAcSi-5z9AAAB","timestamp":"2019-03-08T09:56:57.855Z"}
+{"level":"info","message":"someone connected mSUNm4m3lcFwuwkuAAAC","timestamp":"2019-03-08T09:57:03.296Z"}
+{"level":"info","message":"player ralph joining G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:57:12.014Z"}
+{"level":"info","message":"got the game from DB","timestamp":"2019-03-08T09:57:12.017Z"}
+{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-08T09:57:12.018Z"}
+{"level":"info","message":"saved the game with player ralph","timestamp":"2019-03-08T09:57:12.022Z"}
+{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-08T09:57:12.023Z"}
+{"level":"info","message":"starting G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:57:15.155Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T09:57:15.158Z"}
+{"level":"info","message":"updated the game with start info and alphabet:B","timestamp":"2019-03-08T09:57:15.200Z"}
+{"level":"info","message":"Emitting onPlayStart event to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:57:15.200Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:58:29.207Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T09:58:29.211Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T09:58:29.215Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:58:29.216Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:58:46.208Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T09:58:46.210Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T09:58:46.213Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:58:46.213Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:58:49.519Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T09:58:49.522Z"}
+{"level":"info","message":"updated the game with next info and alphabet:I","timestamp":"2019-03-08T09:58:49.524Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet I","timestamp":"2019-03-08T09:58:49.525Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:59:15.286Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T09:59:15.289Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T09:59:15.292Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T09:59:15.293Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:00:12.531Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:00:12.534Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:00:12.538Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:00:12.539Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:00:15.842Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:00:15.844Z"}
+{"level":"info","message":"updated the game with next info and alphabet:S","timestamp":"2019-03-08T10:00:15.847Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet S","timestamp":"2019-03-08T10:00:15.848Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:01:25.450Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:01:25.453Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:01:25.457Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:01:25.457Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:01:45.851Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:01:45.854Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:01:45.857Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:01:45.857Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:01:49.160Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:01:49.163Z"}
+{"level":"info","message":"updated the game with next info and alphabet:H","timestamp":"2019-03-08T10:01:49.166Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet H","timestamp":"2019-03-08T10:01:49.166Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:02:25.528Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:02:25.532Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:02:25.535Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:02:25.535Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:03:09.784Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:03:09.787Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:03:09.791Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:03:09.791Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:03:13.093Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:03:13.095Z"}
+{"level":"info","message":"updated the game with next info and alphabet:M","timestamp":"2019-03-08T10:03:13.097Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet M","timestamp":"2019-03-08T10:03:13.097Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:04:33.102Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:04:33.105Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:04:33.108Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:04:33.108Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:04:42.646Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:04:42.648Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:04:42.651Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:04:42.651Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:04:45.953Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:04:45.957Z"}
+{"level":"info","message":"updated the game with next info and alphabet:X","timestamp":"2019-03-08T10:04:45.959Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet X","timestamp":"2019-03-08T10:04:45.959Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:06:06.242Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:06:06.244Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:06:06.246Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:06:06.246Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:06:17.250Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:06:17.255Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:06:17.258Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:06:17.258Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:06:20.570Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:06:20.574Z"}
+{"level":"info","message":"updated the game with next info and alphabet:G","timestamp":"2019-03-08T10:06:20.576Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet G","timestamp":"2019-03-08T10:06:20.576Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:07:51.590Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:07:51.592Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:07:51.594Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:07:51.594Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:07:51.598Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:07:51.600Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:07:51.603Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:07:51.603Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:07:54.906Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:07:54.909Z"}
+{"level":"info","message":"updated the game with next info and alphabet:Z","timestamp":"2019-03-08T10:07:54.911Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet Z","timestamp":"2019-03-08T10:07:54.911Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:09:25.931Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:09:25.933Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:09:25.935Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:09:25.936Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:09:25.949Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:09:25.952Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:09:25.955Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:09:25.955Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:09:29.260Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:09:29.262Z"}
+{"level":"info","message":"updated the game with next info and alphabet:Q","timestamp":"2019-03-08T10:09:29.264Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet Q","timestamp":"2019-03-08T10:09:29.265Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:11:00.299Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:11:00.301Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:11:00.303Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:11:00.303Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:11:00.305Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:11:00.306Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:11:00.309Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:11:00.309Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:11:03.613Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:11:03.616Z"}
+{"level":"info","message":"updated the game with next info and alphabet:T","timestamp":"2019-03-08T10:11:03.620Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet T","timestamp":"2019-03-08T10:11:03.620Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:12:34.674Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:12:34.676Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:12:34.678Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:12:34.679Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:12:35.648Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:12:35.650Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:12:35.653Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:12:35.653Z"}
+{"level":"info","message":"New play for game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:12:38.956Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:12:38.958Z"}
+{"level":"info","message":"updated the game with next info and alphabet:J","timestamp":"2019-03-08T10:12:38.961Z"}
+{"level":"info","message":"Emitting onNewPlay for G-tes-x2la-1552038997122-k5mo with alphabet J","timestamp":"2019-03-08T10:12:38.961Z"}
+{"level":"info","message":"submitting for P-tes-shrek-1552038997123-14 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:14:01.967Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:14:01.970Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-shrek-1552038997123-14","timestamp":"2019-03-08T10:14:01.975Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-shrek-1552038997123-14to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:14:01.976Z"}
+{"level":"info","message":"submitting for P-tes-ralph-1552039032000-12 in game G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:14:10.503Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:14:10.506Z"}
+{"level":"info","message":"updated the game with submitted info for:P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:14:10.510Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-tes-ralph-1552039032000-12to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:14:10.510Z"}
+{"level":"info","message":"send chat message from player P-tes-ralph-1552039032000-12","timestamp":"2019-03-08T10:17:30.940Z"}
+{"level":"info","message":"send chat message from player P-tes-shrek-1552038997123-14~c","timestamp":"2019-03-08T10:17:40.111Z"}
+{"level":"info","message":"someone connected Hgt2PV9f6do8f5hBAAAD","timestamp":"2019-03-08T10:18:26.605Z"}
+{"level":"info","message":"someone connected TbETTlGtBod3rByZAAAE","timestamp":"2019-03-08T10:28:54.065Z"}
+{"level":"info","message":"P-tes-shrek-1552038997123-14 is leaving G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:29:15.723Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-tes-shrek-1552038997123-14 to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:29:15.729Z"}
+{"level":"info","message":"random admin generation for G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:29:15.731Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-tes-ralph-1552039032000-12 to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:29:15.736Z"}
+{"level":"info","message":"P-tes-ralph-1552039032000-12 is leaving G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:29:28.240Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-tes-ralph-1552039032000-12 to game : G-tes-x2la-1552038997122-k5mo","timestamp":"2019-03-08T10:29:28.244Z"}
+{"level":"info","message":" is leaving ","timestamp":"2019-03-08T10:29:30.172Z"}
+{"level":"info","message":"someone connected 6EmQUVgF4uM2S9kQAAAA","timestamp":"2019-03-08T10:29:46.454Z"}
+{"level":"info","message":"creating, joining game: G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:30:16.299Z"}
+{"level":"info","message":"someone connected FUmTYoWwRXXodzwVAAAB","timestamp":"2019-03-08T10:30:21.919Z"}
+{"level":"info","message":"player donkey joining G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:30:35.153Z"}
+{"level":"info","message":"got the game from DB","timestamp":"2019-03-08T10:30:35.156Z"}
+{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-08T10:30:35.157Z"}
+{"level":"info","message":"saved the game with player donkey","timestamp":"2019-03-08T10:30:35.162Z"}
+{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-08T10:30:35.163Z"}
+{"level":"info","message":"starting G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:30:37.049Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:30:37.053Z"}
+{"level":"info","message":"updated the game with start info and alphabet:Z","timestamp":"2019-03-08T10:30:37.057Z"}
+{"level":"info","message":"Emitting onPlayStart event to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:30:37.057Z"}
+{"level":"info","message":"submitting for P-rak-raph-1552041016258-29 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:31:13.323Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:31:13.326Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-raph-1552041016258-29","timestamp":"2019-03-08T10:31:13.329Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-raph-1552041016258-29to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:31:13.330Z"}
+{"level":"info","message":"submitting for P-rak-donkey-1552041035141-32 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:31:41.519Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:31:41.521Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-donkey-1552041035141-32","timestamp":"2019-03-08T10:31:41.524Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-donkey-1552041035141-32to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:31:41.525Z"}
+{"level":"info","message":"New play for game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:31:45.422Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:31:45.442Z"}
+{"level":"info","message":"updated the game with next info and alphabet:Y","timestamp":"2019-03-08T10:31:45.445Z"}
+{"level":"info","message":"Emitting onNewPlay for G-rak-qd4o-1552041016258-wb51 with alphabet Y","timestamp":"2019-03-08T10:31:45.446Z"}
+{"level":"info","message":"submitting for P-rak-raph-1552041016258-29 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:33:08.449Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:33:08.452Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-raph-1552041016258-29","timestamp":"2019-03-08T10:33:08.457Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-raph-1552041016258-29to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:33:08.458Z"}
+{"level":"info","message":"submitting for P-rak-donkey-1552041035141-32 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:33:16.442Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:33:16.443Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-donkey-1552041035141-32","timestamp":"2019-03-08T10:33:16.446Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-donkey-1552041035141-32to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:33:16.447Z"}
+{"level":"info","message":"New play for game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:33:20.441Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:33:20.445Z"}
+{"level":"info","message":"updated the game with next info and alphabet:O","timestamp":"2019-03-08T10:33:20.448Z"}
+{"level":"info","message":"Emitting onNewPlay for G-rak-qd4o-1552041016258-wb51 with alphabet O","timestamp":"2019-03-08T10:33:20.449Z"}
+{"level":"info","message":"submitting for P-rak-raph-1552041016258-29 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:34:37.454Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:34:37.458Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-raph-1552041016258-29","timestamp":"2019-03-08T10:34:37.461Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-raph-1552041016258-29to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:34:37.462Z"}
+{"level":"info","message":"submitting for P-rak-donkey-1552041035141-32 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:34:51.464Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:34:51.467Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-donkey-1552041035141-32","timestamp":"2019-03-08T10:34:51.470Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-donkey-1552041035141-32to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:34:51.471Z"}
+{"level":"info","message":"New play for game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:34:54.774Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:34:54.776Z"}
+{"level":"info","message":"updated the game with next info and alphabet:A","timestamp":"2019-03-08T10:34:54.779Z"}
+{"level":"info","message":"Emitting onNewPlay for G-rak-qd4o-1552041016258-wb51 with alphabet A","timestamp":"2019-03-08T10:34:54.779Z"}
+{"level":"info","message":"submitting for P-rak-donkey-1552041035141-32 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:35:21.992Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:35:21.995Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-donkey-1552041035141-32","timestamp":"2019-03-08T10:35:21.998Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-donkey-1552041035141-32to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:35:21.999Z"}
+{"level":"info","message":"submitting for P-rak-raph-1552041016258-29 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:35:58.063Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:35:58.066Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-raph-1552041016258-29","timestamp":"2019-03-08T10:35:58.070Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-raph-1552041016258-29to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:35:58.070Z"}
+{"level":"info","message":"New play for game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:36:01.373Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:36:01.376Z"}
+{"level":"info","message":"updated the game with next info and alphabet:V","timestamp":"2019-03-08T10:36:01.378Z"}
+{"level":"info","message":"Emitting onNewPlay for G-rak-qd4o-1552041016258-wb51 with alphabet V","timestamp":"2019-03-08T10:36:01.379Z"}
+{"level":"info","message":"submitting for P-rak-donkey-1552041035141-32 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:36:44.386Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:36:44.390Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-donkey-1552041035141-32","timestamp":"2019-03-08T10:36:44.394Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-donkey-1552041035141-32to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:36:44.395Z"}
+{"level":"info","message":"submitting for P-rak-raph-1552041016258-29 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:36:51.060Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:36:51.063Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-raph-1552041016258-29","timestamp":"2019-03-08T10:36:51.066Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-raph-1552041016258-29to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:36:51.066Z"}
+{"level":"info","message":"New play for game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:36:54.369Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:36:54.371Z"}
+{"level":"info","message":"updated the game with next info and alphabet:R","timestamp":"2019-03-08T10:36:54.373Z"}
+{"level":"info","message":"Emitting onNewPlay for G-rak-qd4o-1552041016258-wb51 with alphabet R","timestamp":"2019-03-08T10:36:54.374Z"}
+{"level":"info","message":"submitting for P-rak-raph-1552041016258-29 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:37:03.668Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:37:03.670Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-raph-1552041016258-29","timestamp":"2019-03-08T10:37:03.673Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-raph-1552041016258-29to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:37:03.673Z"}
+{"level":"info","message":"submitting for P-rak-donkey-1552041035141-32 in game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:37:34.485Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:37:34.489Z"}
+{"level":"info","message":"updated the game with submitted info for:P-rak-donkey-1552041035141-32","timestamp":"2019-03-08T10:37:34.492Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-rak-donkey-1552041035141-32to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:37:34.492Z"}
+{"level":"info","message":"End game G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:37:37.795Z"}
+{"level":"info","message":"updating game...","timestamp":"2019-03-08T10:37:37.798Z"}
+{"level":"info","message":"updated the game with end status","timestamp":"2019-03-08T10:37:37.800Z"}
+{"level":"info","message":"Emitting onEndGame for G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:37:37.800Z"}
+{"level":"info","message":"P-rak-raph-1552041016258-29 is leaving G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:42:15.126Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-rak-raph-1552041016258-29 to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:42:15.132Z"}
+{"level":"info","message":"random admin generation for G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:42:15.134Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-rak-donkey-1552041035141-32 to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:42:15.139Z"}
+{"level":"info","message":"P-rak-donkey-1552041035141-32 is leaving G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:42:16.908Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-rak-donkey-1552041035141-32 to game : G-rak-qd4o-1552041016258-wb51","timestamp":"2019-03-08T10:42:16.912Z"}
+{"level":"info","message":"someone connected 6T9WLyOz9WgGmlZ8AAAC","timestamp":"2019-03-08T10:48:12.620Z"}
+{"level":"info","message":"creating, joining game: G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:49:39.793Z"}
+{"level":"info","message":"someone connected Z1zNlTc5vOzQct0OAAAD","timestamp":"2019-03-08T10:49:55.367Z"}
+{"level":"info","message":"player Player joining G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:51:07.938Z"}
+{"level":"info","message":"got the game from DB","timestamp":"2019-03-08T10:51:07.940Z"}
+{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-08T10:51:07.941Z"}
+{"level":"info","message":"saved the game with player Player","timestamp":"2019-03-08T10:51:07.943Z"}
+{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-08T10:51:07.943Z"}
+{"level":"info","message":"starting G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:51:15.330Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:51:15.332Z"}
+{"level":"info","message":"updated the game with start info and alphabet:W","timestamp":"2019-03-08T10:51:15.335Z"}
+{"level":"info","message":"Emitting onPlayStart event to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:51:15.335Z"}
+{"level":"info","message":"submitting for P-gam-Mask-1552042179754-10 in game G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:11.342Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:52:11.346Z"}
+{"level":"info","message":"updated the game with submitted info for:P-gam-Mask-1552042179754-10","timestamp":"2019-03-08T10:52:11.348Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-gam-Mask-1552042179754-10to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:11.349Z"}
+{"level":"info","message":"submitting for P-gam-Player-1552042267909-8 in game G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:14.982Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:52:14.983Z"}
+{"level":"info","message":"updated the game with submitted info for:P-gam-Player-1552042267909-8","timestamp":"2019-03-08T10:52:14.986Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-gam-Player-1552042267909-8to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:14.986Z"}
+{"level":"info","message":"New play for game G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:18.289Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-08T10:52:18.291Z"}
+{"level":"info","message":"updated the game with next info and alphabet:L","timestamp":"2019-03-08T10:52:18.295Z"}
+{"level":"info","message":"Emitting onNewPlay for G-gam-uvnr-1552042179754-q22h with alphabet L","timestamp":"2019-03-08T10:52:18.295Z"}
+{"level":"info","message":"P-gam-Mask-1552042179754-10 is leaving G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:27.243Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-gam-Mask-1552042179754-10 to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:27.250Z"}
+{"level":"info","message":"random admin generation for G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:27.254Z"}
+{"level":"info","message":"random admin generation for G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:27.293Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-gam-Player-1552042267909-8 to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:29.263Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-gam-Player-1552042267909-8 to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:29.265Z"}
+{"level":"info","message":"P-gam-Player-1552042267909-8 is leaving G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:39.939Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-gam-Player-1552042267909-8 to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:39.943Z"}
+{"level":"info","message":"abadoning G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:39.946Z"}
+{"level":"info","message":"ab andoning game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:52:39.968Z"}
+{"level":"info","message":"someone connected VolbU6N4KkvlSKwEAAAE","timestamp":"2019-03-08T10:53:13.645Z"}
+{"level":"info","message":"submitting for P-gam-Player-1552042267909-8 in game G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:53:14.499Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-08T10:53:14.501Z"}
+{"level":"info","message":"updated the game with submitted info for:P-gam-Player-1552042267909-8","timestamp":"2019-03-08T10:53:14.504Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-gam-Player-1552042267909-8to game : G-gam-uvnr-1552042179754-q22h","timestamp":"2019-03-08T10:53:14.504Z"}
+{"level":"info","message":"creating, joining game: G-gam-10od-1552042410794-m1g8","timestamp":"2019-03-08T10:53:30.834Z"}
+{"level":"info","message":"someone connected pV4P9F7VKFc11PUXAAAF","timestamp":"2019-03-08T10:53:35.361Z"}
+{"level":"info","message":"P-gam-Mask-1552042410794-10 is leaving G-gam-10od-1552042410794-m1g8","timestamp":"2019-03-08T10:54:13.310Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-gam-Mask-1552042410794-10 to game : G-gam-10od-1552042410794-m1g8","timestamp":"2019-03-08T10:54:13.314Z"}
+{"level":"info","message":" is leaving ","timestamp":"2019-03-08T10:54:15.103Z"}

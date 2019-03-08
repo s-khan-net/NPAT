@@ -244,7 +244,7 @@ function initialize(){
                             html += '<div class="col-xs-12">';
                             if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
                                 let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${Math.ceil(w/wordsArray.bonusPoints) >0 ? Math.ceil(w.wordsArray.bonusPoints)+b: b} , submitted on-<b><i>${w.playTime}</b></i> second`;
                             }
                             else{
                                 html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
