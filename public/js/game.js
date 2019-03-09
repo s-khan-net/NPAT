@@ -557,7 +557,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
       let b = (Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints));
       let points = b;
       if((`-${wordsArray.namePoints}-${wordsArray.placePoints}-${wordsArray.animalPoints}-${wordsArray.thingPoints}`).indexOf('-0-')==-1){
-        points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil(wordsArray.bonusPoints)+b: b;
+        points = wordsArray.bonusPoints+b;
       }
       let submitObj={
         gameId:$scope.currentGameId,//$('#hidGameId').val(),
@@ -583,7 +583,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         let b = (Number($scope.playingGame.namePoints) + Number($scope.playingGame.placePoints)+ Number($scope.playingGame.animalPoints) + Number($scope.playingGame.thingPoints));
         let points = b;
         if((`-${wordsArray.namePoints}-${wordsArray.placePoints}-${wordsArray.animalPoints}-${wordsArray.thingPoints}`).indexOf('-0-')==-1){
-            points = Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil(wordsArray.bonusPoints)+b : b;
+            points =  wordsArray.bonusPoints+b;
         }
         let submitObj={
           gameId:$scope.currentGameId,//$('#hidGameId').val(),
@@ -681,9 +681,13 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     });
 
     getBonus = function(){
-        return (($scope.playerTime/$scope.gameTime) * 100).toFixed(1);// + '%'
+        let p=0;
+        let b=(($scope.playerTime/$scope.gameTime) * 100).toFixed(1);
+        if(b>=74.5) p=5;
+        else if(b>=49.5) p=3;
+        else if(b>=24.5) p=1;
+        return p;
     }
-
     /*-----------new play------------------ */
     socket.on('onNewPlay',function(data){
         $.each($scope.players,function(i,v){
