@@ -286,3 +286,47 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
 .alpha:hover{
   border:1px solid #ccc;
 }
+
+/*---------------social---------------*/
+.social{
+  border-radius:50%;
+  border:1px solid #CCC;
+  width: 28px;
+  height: 28px;
+}
+.fb{
+  padding-left: 9px;
+  padding-top: 4px;
+  color: steelblue;
+}
+.fb:hover{
+  color: white;
+  background-color: steelblue;
+}
+.tw{
+  padding-left: 6px;
+  padding-top: 4px;
+  color: lightblue;
+}
+.tw:hover{
+  color: white;
+  background-color: lightblue;
+}
+.wa{
+  padding-left: 6px;
+  padding-top: 3px;
+  color:green;
+}
+.wa:hover{
+  color:white;
+  background-color:green
+}
+.em{
+  padding-left: 6px;
+  padding-top: 3px;
+  color:darkblue;
+}
+.em:hover{
+  color:white;
+  background-color:darkblue
+}

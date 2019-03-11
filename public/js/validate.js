@@ -34,6 +34,7 @@ function initialize(){
         $('.close').hide();
         $('#btnChat #btnChat').hide();
         $('.js-PlayerPic').css('margin-left','-7px');
+        $('.wa').hide();
     }
     else{
         $('#logoDiv > img').prop('src','/images/logo_75X75_t.png');
@@ -45,6 +46,7 @@ function initialize(){
         if(!$('#gameContainer').is(':visible'))
             $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');
+        $('.wa').show();
     }
     if(w<=360){
         $('label').css({letterSpacing:'1px',fontSize:'inherit'});
@@ -281,7 +283,9 @@ function initialize(){
             keyboard:true
         });
     });
-
+    $('#shareGame').click(function(){
+        alert('in the works...');
+    });
     $('#btnChooseAlphabets').click(function(){
         $('#alphabetsModal').modal({
             backdrop: "static",
@@ -333,5 +337,11 @@ function initialize(){
             $( '#alpha-'+id ).addClass('btn-info');
             $('#hidrArray').val(rArray);
         }
+    });
+    $('.wa').click(function(){
+        $("#modalHelp").modal({
+            backdrop: "static",
+            keyboard:true
+        });
     });
 }

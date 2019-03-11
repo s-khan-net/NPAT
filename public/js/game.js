@@ -450,7 +450,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         }
     }
     socket.on('onMessage',function(data){
-        $('#chatbox').append(`<div style='border:1px solid #ddd;padding:3px;margin-top: 2px;margin-left:-22px;margin-right: 2px;background-color: white;border-radius: 7px;'>${data.playerName}&nbsp;<img src="${data.playerAvatar}" width=30 />&nbsp;:&nbsp;${data.message}</div>`);
+        $('#chatbox').append(`<div style="border:1px solid #ddd;padding:3px;margin-top: 2px;margin-left:-22px;margin-
+        right: 2px;background-color: white;border-radius: 7px;"><div class="row"><div class="col-xs-8" style="letter-spacing:2px;font-size:9px">${data.playerName}</div></div><div class="row"><div class="col-xs-2"><img src="${data.playerAvatar}" width=30 /></div><div class="col-xs-10">:&nbsp;${data.message}</div></div></div>`);
     })
 
     /*-----wait from socket----*/

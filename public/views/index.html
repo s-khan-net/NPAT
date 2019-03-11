@@ -101,12 +101,41 @@
                     
                 </div>
                 <div class="col-md-1 col-xs-1 text-right" >
-                    <i class="fa fa-ellipsis-v fa-2x"  role="button" data-toggle="dropdown" aria-hidden="true" style="padding-top: 7px;cursor: pointer;" id="mnu"></i>
+                    <!-- <i class="fa fa-ellipsis-v fa-2x"  role="button" data-toggle="dropdown" aria-hidden="true" style="padding-top: 7px;cursor: pointer;" id="mnu"></i> -->
+                    <button type="button" data-toggle="dropdown" aria-hidden="true" class="btn" style="padding-top: 7px;background:transparent;">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="fa fa-ellipsis-v fa-2x"></span>
+                      </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a id="showHelp"><i class="fa fa-question fa-2x" aria-hidden="true"></i></a></li>
+                        <li><div class="row">
+                                 <div class="col-xs-2"><i class="fa fa-share fa-2x" aria-hidden="true"></i></div>
+                                <div class="col-xs-2">
+                                    <div class="social fb">
+                                        <i class="fa fa-facebook-f " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="social tw">
+                                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="social em">
+                                        <i class="fa fa-envelope-o " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="social wa">
+                                        <i class="fa fa-whatsapp " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a id="showHelp" style="cursor:pointer"><i class="fa fa-question fa-1x" aria-hidden="true"></i></a></li>
                         <!-- <li><a><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a></li> -->
                         <li class="divider"></li>
-                        <li> <a style="color:darkred;cursor:pointer" ng-confirm="really??" ng-click="leaveGame()">Leave game</a></li>
+                        <li><a style="color:darkred;cursor:pointer" ng-confirm="really??" ng-click="leaveGame()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></i>Leave game</a></li>
                     </ul>
                 </div>
             </div>
