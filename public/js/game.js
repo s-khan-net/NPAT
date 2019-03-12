@@ -43,7 +43,7 @@ mainmodule.factory('socket', function($rootScope) {
     };
   });
 
-mainmodule.controller("game", function ($scope, $window, $http, socket) {
+mainmodule.controller("game", function ($scope, $window, $location, $http, socket) {
     $scope.wait = false;
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
@@ -83,6 +83,13 @@ mainmodule.controller("game", function ($scope, $window, $http, socket) {
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
 
+    $scope.submit=true;
+
+    let ju = $location.absUrl();
+    if(ju.indexOf('/join/G-')>-1){
+        //join code
+    }
+
     const interval = 1000000;
     //get current games if any...
     refreshGameList();
@@ -94,6 +101,39 @@ mainmodule.controller("game", function ($scope, $window, $http, socket) {
     //         refreshPlayerList();
     // }, interval); 
 
+    /*-------------socket methods----------------- */
+
+    socket.on('connect',function(d){
+        console.log(`connected -> ${d}`);
+        if($scope.loaderMsg.indexOf('attempt')>-1){
+            $scope.loaderMsg='Connected!';
+            setTimeout(() => {
+                $scope.wait=false;
+                $scope.loaderMsg='...';
+            }, 1300);
+        }
+    })
+    socket.on('connecting',function(d){
+        console.log(`connecting! -> ${d}`);
+    });
+    socket.on('disconnect',function(d){
+        console.log(`DISCONNECTED! -> ${d}`);
+        if(d=='ping timeout'){
+            $scope.wait=true;
+            $scope.loaderMsg='You have been IDLE, please join the fun!';
+        }
+    });
+    socket.on('connect_failed',function(d){
+        console.log(`connection failed -> ${d}`);
+        $scope.wait=true;
+        $scope.loaderMsg='Your connection dropped out, please refresh and start over'; // this very very rare
+    });
+    socket.on('reconnecting',function(d){
+        console.log(`Reconnecting  -> ${d}`);
+        $scope.wait=true;
+        $scope.loaderMsg=`Reconnecting (attempt: ${d})... please wait`;
+    });
+    /*--------------------------------------------------- */
     $scope.refreshGames = function(){
         if(!$('.js-gamesLoad').hasClass('fa-spin'))
             refreshGameList()
@@ -563,7 +603,7 @@ mainmodule.controller("game", function ($scope, $window, $http, socket) {
       $scope.$broadcast('timer-stop');
       $scope.loaderMsg='submitting...'
       $scope.wait=true;
-      
+      $scope.submit = false;
       let wordsArray={
         name:$scope.playingGame.name,namePoints:$scope.playingGame.namePoints,
         place:$scope.playingGame.place,placePoints:$scope.playingGame.placePoints,
@@ -710,6 +750,7 @@ mainmodule.controller("game", function ($scope, $window, $http, socket) {
         $.each($scope.players,function(i,v){
           v.playerTyping='';
         });
+        $scope.submit=true;
         if(data.err!=''){
           console.log('game start err');
           alert('Some error occured while starting the game\n please try again');

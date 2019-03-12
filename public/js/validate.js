@@ -201,19 +201,23 @@ function initialize(){
                         html += `<div class="col-xs-12 text-left">`;
                         html += `<b>${v.playerName}:</b>`;
                         if(i==0){
-                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;padding-left:3px"></i></span>';
                         }
                         html += '</div>';
                         html += '</div>';
                         $.each(v.wordsForGame,function(j,w){
+                            let starta =  w.name || w.place || w.animal || w.thing;
                             html += '<div class="row">';
                             html += '<div class="col-xs-12">';
                             if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
                                 let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}%) = ${Math.ceil(wordsArray.bonusPoints) >0 ? Math.ceil((b*100)/Math.ceil(wordsArray.bonusPoints)): b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                html += `<b>${starta.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${b+w.bonusPoints} , submitted on-<b><i>${w.playTime}</b></i> second`;
                             }
                             else{
-                                html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                if(starta){
+                                    html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                }
+                                else{}
                             }
                             html += '</div>';
                             html += '</div>';
@@ -233,6 +237,7 @@ function initialize(){
 
                     html = '<div class="container">';
                     $.each(data.game.gamePlayers,function(i,v){
+                        let starta =  w.name || w.place || w.animal || w.thing;
                         html += `<div class="row">`;
                         html += `<div class="col-xs-12 text-left">`;
                         html += `<b>${v.playerName}:</b>`;
@@ -242,14 +247,15 @@ function initialize(){
                         html += '</div>';
                         html += '</div>';
                         $.each(v.wordsForGame,function(j,w){
+                            
                             html += '<div class="row">';
                             html += '<div class="col-xs-12">';
                             if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
                                 let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                html += `<b>${w.name.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${Math.ceil(w/wordsArray.bonusPoints) >0 ? Math.ceil(w.wordsArray.bonusPoints)+b: b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                html += `<b>${starta.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${Math.ceil(w/wordsArray.bonusPoints) >0 ? Math.ceil(w.wordsArray.bonusPoints)+b: b} , submitted on-<b><i>${w.playTime}</b></i> second`;
                             }
                             else{
-                                html += `${w.name.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
                             }
                             html += '</div>';
                             html += '</div>';
@@ -282,9 +288,6 @@ function initialize(){
             backdrop: "static",
             keyboard:true
         });
-    });
-    $('#shareGame').click(function(){
-        alert('in the works...');
     });
     $('#btnChooseAlphabets').click(function(){
         $('#alphabetsModal').modal({
@@ -337,11 +340,5 @@ function initialize(){
             $( '#alpha-'+id ).addClass('btn-info');
             $('#hidrArray').val(rArray);
         }
-    });
-    $('.wa').click(function(){
-        $("#modalHelp").modal({
-            backdrop: "static",
-            keyboard:true
-        });
     });
 }

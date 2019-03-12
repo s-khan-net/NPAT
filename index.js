@@ -29,6 +29,9 @@ process.on('unhandledRejection',function(e){
 })
 
 app.use(express.json());
+app.get('/join',(req,res)=>{
+    res.sendFile(`${__dirname}/public/views/index.html`)}
+);
 //routes
 app.use('/api/users',users);
 app.use('/api/words',words);
