@@ -43,7 +43,7 @@ mainmodule.factory('socket', function($rootScope) {
     };
   });
 
-mainmodule.controller("game", function ($scope, $http,socket) {
+mainmodule.controller("game", function ($scope, $window, $http, socket) {
     $scope.wait = false;
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
@@ -68,7 +68,8 @@ mainmodule.controller("game", function ($scope, $http,socket) {
     $scope.gameAlphabets='26';
     $scope.gameAlphabetArray=[];
     $scope.gamePrivate=false;
-    $scope.alphabet = ''
+    $scope.alphabet = '';
+    $scope.showInvite = true;
 
     var FullList = [];
     $scope.players =[];
@@ -178,6 +179,24 @@ mainmodule.controller("game", function ($scope, $http,socket) {
         let i = (Math.floor(Math.random() * 26) + 1);
         $scope.gameAlphabets = i<5?i+5:i; 
     }
+    $scope.invite = function(t){
+        ur='';
+        switch (t) {
+            case 'wa':
+                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;  
+                break;
+            case 'em':
+                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;
+                break;
+            case 'tw':
+                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;
+            case 'fb':
+                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;
+            default:
+                break;
+        }
+        $window.location.href = ur;
+    }
     /*------------create game----------------- */
     $scope.createGame = function(){
         //create a new game
@@ -252,7 +271,7 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                   };
                 $('#cover').css(styles);
                 
-                $scope.coverMessage='The game is not started yet, You need atleast 2 players to start the game. It is good to have 3 or more.';
+                $scope.coverMessage='The game is not started yet, You need atleast 2 players to start the game. It is good to have 3 or more. You can use the menu to invite others';
                 $('body').css({backgroundImage:'url("../images/paperbg.jpg")',backgroundRepeat: 'repeat' });
                 $('#mainContainer').fadeIn(1000);
                 $('#gameContainer').fadeOut(100);
@@ -328,11 +347,9 @@ mainmodule.controller("game", function ($scope, $http,socket) {
             alert(`Some error occured while starting the game\n please try again :${data.err}`);
         }
         else if(data.gameEnded){
-            loggers.error('The game has ended');
             alert('oops.... the game ended before you could join\n please choose another one');
         }
         else if(data.gameAbandoned){
-            loggers.error('The game is Abandoned');
             alert('oops.... the game has been abandoned by its players before you could join\n please choose another one');
         }
         else{
@@ -489,7 +506,6 @@ mainmodule.controller("game", function ($scope, $http,socket) {
                 $('#cover').fadeOut();
                 $scope.$broadcast('timer-set-countdown',data.gameTime);
                 $scope.$broadcast('timer-start');
-                
             }  
         }
     });

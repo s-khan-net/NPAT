@@ -107,7 +107,7 @@
                         <span class="fa fa-ellipsis-v fa-2x"></span>
                       </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
-                        <li><div class="row">
+                        <li data-ng-show="showInvite"><div class="row">
                                  <div class="col-xs-2"><i class="fa fa-share fa-2x" aria-hidden="true"></i></div>
                                 <div class="col-xs-2">
                                     <div class="social fb">
@@ -115,23 +115,23 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
-                                    <div class="social tw">
+                                    <div class="social tw" data-ng-click="invite('tw')">
                                         <i class="fa fa-twitter" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
-                                    <div class="social em">
+                                    <div class="social em" data-ng-click="invite('em')">
                                         <i class="fa fa-envelope-o " aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
-                                    <div class="social wa">
+                                    <div class="social wa" data-ng-click="invite('wa')">
                                         <i class="fa fa-whatsapp " aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        <li class="divider"></li>
+                        <li class="divider" data-ng-show="showInvite"></li>
                         <li><a id="showHelp" style="cursor:pointer"><i class="fa fa-question fa-1x" aria-hidden="true"></i></a></li>
                         <!-- <li><a><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a></li> -->
                         <li class="divider"></li>
