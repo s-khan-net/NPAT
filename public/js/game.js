@@ -1,4 +1,11 @@
 var mainmodule = angular.module("app-npat",['timer','ngConfirm'])
+
+mainmodule.config(function($locationProvider) { //just for url params
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+      });
+  });
 mainmodule.factory('beforeUnload', function ($rootScope, $window) {
     // Events are broadcast outside the Scope Lifecycle
     
@@ -85,9 +92,20 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     $scope.submit=true;
 
-    let ju = $location.absUrl();
-    if(ju.indexOf('/join/G-')>-1){
+    if($location.search().id){
         //join code
+        gid = $location.search().id;
+        $scope.currentGameId = gid;
+        $http.get('/api/game/'+gid)
+        .then(function (result) {
+            if(result.status==200){
+                $scope.game=result.data.game;
+            }
+        }),
+        function(error){
+            alert(error.statusText);
+            $scope.wait = false;
+        }
     }
 
     const interval = 1000000;

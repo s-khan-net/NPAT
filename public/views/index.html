@@ -228,6 +228,10 @@
                     </div>
                 </div>
             </div>
+            <div class="row js-playerStuff" ng-show="currentGameId">
+                <div class="col-md-8 col-xs-12">you are invited to join <b>game: {{game.gameName}}</b>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players</div>
+
+            </div>
             <div class="row js-playerStuff" style="margin-top:49px">
                 <div class="col-md-4 col-xs-1">&nbsp;</div>
                 <div class="col-md-1 col-xs-2 text-right js-avLeft" style="padding-right:0px;padding-top:19px;cursor:pointer">
@@ -243,6 +247,7 @@
                 </div>
                 <div class="col-md-4 col-xs-1">&nbsp;</div>
             </div>
+            
             <div class="row formrowpadding js-playerStuff">
                 <div class="col-md-12 col-xs-12">
                     <label for="txtPlayerName">You are...</label>
@@ -252,10 +257,14 @@
                 <div class="col-md-10 col-xs-10" style="padding-right:0px">
                     <input type="text" class="form-control" id="txtPlayerName" data-ng-model="playerName" placeholder="player1" maxlength="6"/>
                 </div>
-                <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px">
+                <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px" ng-hide="currentGameId">
                     <button class="btn btn-primary btn-sm" disabled id="btnPlayerOn"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
                 </div>
+                <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px;"  ng-show="currentGameId">
+                    <button class="btn btn-primary btn-sm" disabled id="btnPlayerOnJoin">Join <i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
+                </div>
             </div>
+            
             <!-- <div class="row formrowpadding js-playerStuff">   
                 <div class="col-md-12 col-xs-12">
                     <label>you might want to</label>
