@@ -834,7 +834,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     /*----------------leave game------------ */
     $scope.leaveGame = function(){
-        console.log('leavin');
+        //console.log('leavin');
         if($scope.currentPlayerId.indexOf('~')>-1 && !$scope.gameStarted){
             alert('You are the admin, you cannot leave');
         }
@@ -895,13 +895,13 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 //     p += w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
                 //     p += (p/100) * Number(v.wordsForGame.bonusPoints.split('%')[0]); 
                 // });
-                coverMsg +=` ${v.playerName}: ${v.pointsForGame.reduce((a, b) => a + b, 0)} points,`;
+                coverMsg +=` ${v.playerName}: ${v.pointsForGame.reduce((a, b) => a + b, 0)} pts.,`;
             });
             coverMsg = coverMsg.substr(0,coverMsg.length-1);
-            setTimeout(() => {
-                $scope.wait=false;
-                $scope.loaderMsg="loading...";
-            }, 3000);
+            // setTimeout(() => {
+            //     $scope.wait=false;
+            //     $scope.loaderMsg="loading...";
+            // }, 3000);
             if($('#cover').css('display')=='block'){
                 $scope.coverMessage = coverMsg;
             }
@@ -933,7 +933,13 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             }
         }
     });
-
+    $scope.finish = function(){
+        $('#mainContainer').fadeOut(100);
+        $('#gameContainer').fadeIn(1000);
+        refreshGameList();
+        $scope.wait=false;
+        $scope.loaderMsg='Loading...';
+    }
     /*------on random admin creation----------*/
     socket.on('onAdmin',function(data){
         let p='';
