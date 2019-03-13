@@ -1,5 +1,5 @@
 
-body {overflow:hidden;margin-top:11px;background-color: #c0deea;}
+body {overflow-x:hidden;margin-top:9px;background-color: #c0deea;}
 /* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
     .orientation{
         display:block;

@@ -113,9 +113,11 @@ function initialize(){
     $('#txtPlayerName').on('keyup',function(){
         if($('#txtPlayerName').val().length>3){
             $('#btnPlayerOn').removeAttr('disabled');
+            $('#btnPlayerOnJoin').removeAttr('disabled');
         }
         else{
             $('#btnPlayerOn').attr('disabled','disabled');
+            $('#btnPlayerOnJoin').attr('disabled','disabled');
         }
     });
     $('#btnPlayerOn').click(function(){
@@ -193,7 +195,7 @@ function initialize(){
                     $.each(data.game.gamePlayers,function(o,p){
                         p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
                     });
-                    players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
+                    players.sort(function(a,b) {return a.pointsForGame - b.pointsForGame}).reverse();
 
                     html = '<div class="container">';
                     $.each(players,function(i,v){
@@ -201,7 +203,7 @@ function initialize(){
                         html += `<div class="col-xs-12 text-left">`;
                         html += `<b>${v.playerName}:</b>`;
                         if(i==0){
-                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;padding-left:3px"></i></span>';
+                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="line-height: 20px;color: gold;padding-left: 6px;"></i></span>';
                         }
                         html += '</div>';
                         html += '</div>';
@@ -211,14 +213,14 @@ function initialize(){
                             html += '<div class="col-xs-12">';
                             if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
                                 let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                html += `<b>${starta.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${b+w.bonusPoints} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                html += `<b>${starta.substr(0,1)}</b>: (<small>pts.</small>-${b} + <small>Bonus</small>-${w.bonusPoints}) = ${b+w.bonusPoints} , submitted on-<b><i>${w.playTime}</b></i> second <select><option>N-${w.name }</option><option>P-${w.place}</option><option>A-${w.animal}</option><option>T-${w.thing}</option></select>`;
                             }
                             else{
                                 if(starta){
-                                    html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                    html += `${starta.substr(0,1)}: (<small>pts.</small>-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second <select><option>N-${w.name }</option><option>P-${w.place}</option><option>A-${w.animal}</option><option>T-${w.thing}</option></select>`;
                                 }
                                 else{
-                                    html += ` - : (points-0), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                    html += ` - : (<small>pts.</small>-0), submitted on-<b><i>${w.playTime}</i></b> second`;
                                 }
                             }
                             html += '</div>';
@@ -235,7 +237,7 @@ function initialize(){
                     $.each(data.game.gamePlayers,function(o,p){
                         p.pointsForGame = p.pointsForGame.reduce((a, b) => a + b, 0)
                     });
-                    data.game.gamePlayers.sort(function(a,b) {return a.pointsForGame - b.pointsForGame});
+                    data.game.gamePlayers.sort(function(a,b) {return a.pointsForGame - b.pointsForGame}).reverse();
 
                     html = '<div class="container">';
                     $.each(data.game.gamePlayers,function(i,v){
@@ -243,7 +245,7 @@ function initialize(){
                         html += `<div class="col-xs-12 text-left">`;
                         html += `<b>${v.playerName}:</b>`;
                         if(i==0){
-                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="color:#fff;line-height: 20px;"></i></span>';
+                            html +='&nbsp;<span class="fa-stack"><i class="fa fa-trophy fa-stack-2x"></i><i class="fa fa-star fa-stack-1x" style="line-height: 20px;color: gold;padding-left: 6px;"></i></span>';
                         }
                         html += '</div>';
                         html += '</div>';
@@ -253,14 +255,14 @@ function initialize(){
                             html += '<div class="col-xs-12">';
                             if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
                                 let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                html += `<b>${starta.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${b+w.bonusPoints} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                html += `<b>${starta.substr(0,1)}</b>: (<small>pts.</small>-${b} + <small>Bonus</small>-${w.bonusPoints}) = ${b+w.bonusPoints} , submitted on-<b><i>${w.playTime}</b></i> second <select><option>N-${w.name }</option><option>P-${w.place}</option><option>A-${w.animal}</option><option>T-${w.thing}</option></select>`;
                             }
                             else{
                                 if(starta){
-                                    html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                    html += `${starta.substr(0,1)}: (<small>pts.</small>-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second <select><option>N-${w.name }</option><option>P-${w.place}</option><option>A-${w.animal}</option><option>T-${w.thing}</option></select>`;
                                 }
                                 else{
-                                    html += ` - : (points-0), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                    html += ` - : (<small>pts.</small>-0), submitted on-<b><i>${w.playTime}</i></b> second`;
                                 }
                             }
                             html += '</div>';

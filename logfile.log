@@ -1,140 +1,158 @@
-{"level":"info","message":"someone connected 094jpWHCuETBYb3wAAAA","timestamp":"2019-03-13T04:19:50.037Z"}
-{"level":"info","message":"someone connected Bn-cFm3VLDIprKBbAAAB","timestamp":"2019-03-13T04:19:53.443Z"}
-{"level":"info","message":"creating, joining game: G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:20:16.213Z"}
-{"level":"info","message":"player spidy joining G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:20:27.806Z"}
-{"level":"info","message":"got the game from DB","timestamp":"2019-03-13T04:20:27.809Z"}
-{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-13T04:20:27.810Z"}
-{"level":"info","message":"saved the game with player spidy","timestamp":"2019-03-13T04:20:27.814Z"}
-{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-13T04:20:27.815Z"}
-{"level":"info","message":"starting G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:20:31.144Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:20:31.147Z"}
-{"level":"info","message":"updated the game with start info and alphabet:N","timestamp":"2019-03-13T04:20:31.150Z"}
-{"level":"info","message":"Emitting onPlayStart event to game : G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:20:31.150Z"}
-{"level":"info","message":"submitting for P-ter-sdfddd-1552450816119-29 in game G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:20:53.153Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:20:53.169Z"}
-{"level":"info","message":"updated the game with submitted info for:P-ter-sdfddd-1552450816119-29","timestamp":"2019-03-13T04:20:53.174Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-ter-sdfddd-1552450816119-29to game : G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:20:53.174Z"}
-{"level":"info","message":"submitting for P-ter-spidy-1552450827811-27 in game G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:00.158Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:21:00.161Z"}
-{"level":"info","message":"updated the game with submitted info for:P-ter-spidy-1552450827811-27","timestamp":"2019-03-13T04:21:00.164Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-ter-spidy-1552450827811-27to game : G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:00.164Z"}
-{"level":"info","message":"someone connected ktQ-Bp7p29VduzrRAAAA","timestamp":"2019-03-13T04:21:10.207Z"}
-{"level":"info","message":"New play for game G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:10.212Z"}
-{"level":"info","message":"someone connected GeKVrOGeliASVjNKAAAB","timestamp":"2019-03-13T04:21:11.223Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:21:12.037Z"}
-{"level":"info","message":"updated the game with next info and alphabet:G","timestamp":"2019-03-13T04:21:12.050Z"}
-{"level":"info","message":"Emitting onNewPlay for G-ter-rpkw-1552450816119-j54q with alphabet G","timestamp":"2019-03-13T04:21:12.050Z"}
-{"level":"info","message":"P-ter-spidy-1552450827811-27 is leaving G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:44.176Z"}
-{"level":"info","message":"Emitting onLeave event for player: P-ter-spidy-1552450827811-27 to game : G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:44.185Z"}
-{"level":"info","message":"P-ter-sdfddd-1552450816119-29 is leaving G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:46.873Z"}
-{"level":"info","message":"Emitting onLeave event for player: P-ter-sdfddd-1552450816119-29 to game : G-ter-rpkw-1552450816119-j54q","timestamp":"2019-03-13T04:21:46.879Z"}
-{"level":"info","message":"someone connected QqT7fkeCwL04miR-AAAC","timestamp":"2019-03-13T04:21:52.688Z"}
-{"level":"info","message":"creating, joining game: G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:05.856Z"}
-{"level":"info","message":"someone connected WANf1q1jpMVIi2N-AAAD","timestamp":"2019-03-13T04:22:09.488Z"}
-{"level":"info","message":"player MOKO joining G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:16.359Z"}
-{"level":"info","message":"got the game from DB","timestamp":"2019-03-13T04:22:16.361Z"}
-{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-13T04:22:16.362Z"}
-{"level":"info","message":"saved the game with player MOKO","timestamp":"2019-03-13T04:22:16.364Z"}
-{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-13T04:22:16.365Z"}
-{"level":"info","message":"starting G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:18.789Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:22:18.793Z"}
-{"level":"info","message":"updated the game with start info and alphabet:O","timestamp":"2019-03-13T04:22:18.796Z"}
-{"level":"info","message":"Emitting onPlayStart event to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:18.796Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:41.740Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:22:41.743Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:22:41.746Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:41.747Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:48.808Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:22:48.810Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:22:48.813Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:48.813Z"}
-{"level":"info","message":"New play for game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:22:52.116Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:22:52.119Z"}
-{"level":"info","message":"updated the game with next info and alphabet:I","timestamp":"2019-03-13T04:22:52.121Z"}
-{"level":"info","message":"Emitting onNewPlay for G-IUO-ntt0-1552450925827-xbk1 with alphabet I","timestamp":"2019-03-13T04:22:52.122Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:19.127Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:23:19.130Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:23:19.133Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:19.134Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:22.687Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:23:22.692Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:23:22.694Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:22.694Z"}
-{"level":"info","message":"New play for game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:25.998Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:23:26.000Z"}
-{"level":"info","message":"updated the game with next info and alphabet:X","timestamp":"2019-03-13T04:23:26.003Z"}
-{"level":"info","message":"Emitting onNewPlay for G-IUO-ntt0-1552450925827-xbk1 with alphabet X","timestamp":"2019-03-13T04:23:26.004Z"}
-{"level":"info","message":"send chat message from player P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:23:34.009Z"}
-{"level":"info","message":"send chat message from player P-IUO-TEOOO-1552450925827-2~c","timestamp":"2019-03-13T04:23:38.056Z"}
-{"level":"info","message":"send chat message from player P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:23:47.779Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:54.009Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:23:54.013Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:23:54.016Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:54.016Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:55.216Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:23:55.220Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:23:55.237Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:55.240Z"}
-{"level":"info","message":"New play for game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:23:59.510Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:23:59.514Z"}
-{"level":"info","message":"updated the game with next info and alphabet:N","timestamp":"2019-03-13T04:23:59.518Z"}
-{"level":"info","message":"Emitting onNewPlay for G-IUO-ntt0-1552450925827-xbk1 with alphabet N","timestamp":"2019-03-13T04:23:59.518Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:16.207Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:24:16.218Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:24:16.223Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:16.223Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:23.005Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:24:23.018Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:24:23.022Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:23.022Z"}
-{"level":"info","message":"New play for game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:26.325Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:24:26.328Z"}
-{"level":"info","message":"updated the game with next info and alphabet:M","timestamp":"2019-03-13T04:24:26.330Z"}
-{"level":"info","message":"Emitting onNewPlay for G-IUO-ntt0-1552450925827-xbk1 with alphabet M","timestamp":"2019-03-13T04:24:26.331Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:53.950Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:24:53.954Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:24:53.957Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:53.957Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:56.335Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:24:56.338Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:24:56.340Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:56.341Z"}
-{"level":"info","message":"New play for game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:24:59.644Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:24:59.646Z"}
-{"level":"info","message":"updated the game with next info and alphabet:A","timestamp":"2019-03-13T04:24:59.649Z"}
-{"level":"info","message":"Emitting onNewPlay for G-IUO-ntt0-1552450925827-xbk1 with alphabet A","timestamp":"2019-03-13T04:24:59.649Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:15.545Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:25:15.548Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:25:15.552Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:15.552Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:29.654Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:25:29.659Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:25:29.662Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:29.663Z"}
-{"level":"info","message":"New play for game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:32.966Z"}
-{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T04:25:32.968Z"}
-{"level":"info","message":"updated the game with next info and alphabet:V","timestamp":"2019-03-13T04:25:32.971Z"}
-{"level":"info","message":"Emitting onNewPlay for G-IUO-ntt0-1552450925827-xbk1 with alphabet V","timestamp":"2019-03-13T04:25:32.971Z"}
-{"level":"info","message":"submitting for P-IUO-MOKO-1552450936372-13 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:58.978Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:25:58.981Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-MOKO-1552450936372-13","timestamp":"2019-03-13T04:25:58.983Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-MOKO-1552450936372-13to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:25:58.983Z"}
-{"level":"info","message":"submitting for P-IUO-TEOOO-1552450925827-2 in game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:26:03.973Z"}
-{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T04:26:03.977Z"}
-{"level":"info","message":"updated the game with submitted info for:P-IUO-TEOOO-1552450925827-2","timestamp":"2019-03-13T04:26:03.980Z"}
-{"level":"info","message":"Emitting onSubmit event for player: P-IUO-TEOOO-1552450925827-2to game : G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:26:03.980Z"}
-{"level":"info","message":"End game G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:26:07.284Z"}
-{"level":"info","message":"updating game...","timestamp":"2019-03-13T04:26:07.287Z"}
-{"level":"info","message":"updated the game with end status","timestamp":"2019-03-13T04:26:07.291Z"}
-{"level":"info","message":"Emitting onEndGame for G-IUO-ntt0-1552450925827-xbk1","timestamp":"2019-03-13T04:26:07.291Z"}
-{"level":"info","message":"someone connected Fh2BqlqYt5otcWcWAAAA","timestamp":"2019-03-13T04:33:08.159Z"}
-{"level":"info","message":"someone connected j_lFQUJhkc1RhdJpAAAB","timestamp":"2019-03-13T04:33:15.636Z"}
-{"level":"info","message":"player ddfg joining G-ave-3mpc-1551845541733-ur4x","timestamp":"2019-03-13T04:33:18.965Z"}
-{"level":"info","message":"got the game from DB","timestamp":"2019-03-13T04:33:18.970Z"}
-{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-13T04:33:18.974Z"}
-{"level":"info","message":"saved the game with player ddfg","timestamp":"2019-03-13T04:33:18.985Z"}
-{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-13T04:33:18.986Z"}
-{"level":"info","message":"send chat message from player P-ave-ddfg-1552451598988-34","timestamp":"2019-03-13T04:33:23.059Z"}
-{"level":"info","message":"send chat message from player P-ave-ddfg-1552451598988-34","timestamp":"2019-03-13T04:33:28.416Z"}
-{"level":"info","message":"someone connected 5C4bXXcKfm4HnHC9AAAC","timestamp":"2019-03-13T04:39:52.941Z"}
-{"level":"info","message":"someone connected QSxruPC8Kj_3PckyAAAD","timestamp":"2019-03-13T04:48:25.853Z"}
+{"level":"info","message":"someone connected bHQYEzlGime5m_71AAAA","timestamp":"2019-03-13T11:45:53.892Z"}
+{"level":"info","message":"someone connected r9MEt1Zwo2cYQiyKAAAB","timestamp":"2019-03-13T11:46:17.252Z"}
+{"level":"info","message":"someone connected LP-5wQB5J_CpbaNTAAAC","timestamp":"2019-03-13T11:46:21.880Z"}
+{"level":"info","message":"creating, joining game: G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:46:45.411Z"}
+{"level":"info","message":"player randal joining G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:01.497Z"}
+{"level":"info","message":"got the game from DB","timestamp":"2019-03-13T11:47:01.500Z"}
+{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-13T11:47:01.502Z"}
+{"level":"info","message":"saved the game with player randal","timestamp":"2019-03-13T11:47:01.508Z"}
+{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-13T11:47:01.508Z"}
+{"level":"info","message":"player mike joining G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:13.178Z"}
+{"level":"info","message":"got the game from DB","timestamp":"2019-03-13T11:47:13.181Z"}
+{"level":"info","message":"pushed the player to the game","timestamp":"2019-03-13T11:47:13.182Z"}
+{"level":"info","message":"saved the game with player mike","timestamp":"2019-03-13T11:47:13.186Z"}
+{"level":"info","message":"emitting socket joined method to the UI","timestamp":"2019-03-13T11:47:13.187Z"}
+{"level":"info","message":"starting G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:16.936Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:47:16.941Z"}
+{"level":"info","message":"updated the game with start info and alphabet:K","timestamp":"2019-03-13T11:47:16.946Z"}
+{"level":"info","message":"Emitting onPlayStart event to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:16.949Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:39.423Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:47:39.427Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:47:39.431Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:39.431Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:46.962Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:47:46.966Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:47:46.970Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:46.970Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:46.975Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:47:46.977Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:47:47.032Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:47.033Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:47:50.338Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:47:50.350Z"}
+{"level":"info","message":"updated the game with next info and alphabet:I","timestamp":"2019-03-13T11:47:50.356Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet I","timestamp":"2019-03-13T11:47:50.357Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:04.117Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:48:04.122Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:48:04.127Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:04.128Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:12.881Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:48:12.885Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:48:12.888Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:12.890Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:20.359Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:48:20.367Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:48:20.375Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:20.376Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:23.683Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:48:23.696Z"}
+{"level":"info","message":"updated the game with next info and alphabet:M","timestamp":"2019-03-13T11:48:23.713Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet M","timestamp":"2019-03-13T11:48:23.714Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:32.270Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:48:32.273Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:48:32.277Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:32.283Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:53.570Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:48:53.575Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:48:53.578Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:53.579Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:53.724Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:48:53.726Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:48:53.729Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:53.730Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:48:57.034Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:48:57.045Z"}
+{"level":"info","message":"updated the game with next info and alphabet:Q","timestamp":"2019-03-13T11:48:57.051Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet Q","timestamp":"2019-03-13T11:48:57.051Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:16.560Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:49:16.576Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:49:16.581Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:16.583Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:20.959Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:49:20.963Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:49:20.967Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:20.968Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:27.088Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:49:27.098Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:49:27.107Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:27.108Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:30.415Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:49:30.434Z"}
+{"level":"info","message":"updated the game with next info and alphabet:Z","timestamp":"2019-03-13T11:49:30.440Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet Z","timestamp":"2019-03-13T11:49:30.441Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:56.414Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:49:56.419Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:49:56.424Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:49:56.424Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:00.448Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:00.459Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:50:00.467Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:00.468Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:00.472Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:00.475Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:50:00.478Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:00.479Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:03.784Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:50:03.795Z"}
+{"level":"info","message":"updated the game with next info and alphabet:N","timestamp":"2019-03-13T11:50:03.802Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet N","timestamp":"2019-03-13T11:50:03.803Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:22.711Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:22.726Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:50:22.731Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:22.732Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:33.804Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:33.806Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:50:33.809Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:33.809Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:33.812Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:33.815Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:50:33.819Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:33.819Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:37.125Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:50:37.131Z"}
+{"level":"info","message":"updated the game with next info and alphabet:S","timestamp":"2019-03-13T11:50:37.136Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet S","timestamp":"2019-03-13T11:50:37.137Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:52.551Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:52.556Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:50:52.560Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:52.561Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:53.421Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:53.426Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:50:53.429Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:53.429Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:54.341Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:50:54.346Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:50:54.349Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:54.350Z"}
+{"level":"info","message":"New play for game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:50:57.655Z"}
+{"level":"info","message":"generating data for new play...","timestamp":"2019-03-13T11:50:57.672Z"}
+{"level":"info","message":"updated the game with next info and alphabet:P","timestamp":"2019-03-13T11:50:57.680Z"}
+{"level":"info","message":"Emitting onNewPlay for G-sul-ylkw-1552477605342-91dg with alphabet P","timestamp":"2019-03-13T11:50:57.680Z"}
+{"level":"info","message":"submitting for P-sul-sulliv-1552477605342-3 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:22.185Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:51:22.190Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-sulliv-1552477605342-3","timestamp":"2019-03-13T11:51:22.195Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-sulliv-1552477605342-3to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:22.195Z"}
+{"level":"info","message":"submitting for P-sul-mike-1552477633162-9 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:27.682Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:51:27.686Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-mike-1552477633162-9","timestamp":"2019-03-13T11:51:27.690Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-mike-1552477633162-9to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:27.691Z"}
+{"level":"info","message":"submitting for P-sul-randal-1552477621493-20 in game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:27.706Z"}
+{"level":"info","message":"got the game details from DB","timestamp":"2019-03-13T11:51:27.710Z"}
+{"level":"info","message":"updated the game with submitted info for:P-sul-randal-1552477621493-20","timestamp":"2019-03-13T11:51:27.717Z"}
+{"level":"info","message":"Emitting onSubmit event for player: P-sul-randal-1552477621493-20to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:27.718Z"}
+{"level":"info","message":"End game G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:31.034Z"}
+{"level":"info","message":"updating game...","timestamp":"2019-03-13T11:51:31.047Z"}
+{"level":"info","message":"updated the game with end status","timestamp":"2019-03-13T11:51:31.063Z"}
+{"level":"info","message":"Emitting onEndGame for G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:51:31.065Z"}
+{"level":"info","message":"P-sul-sulliv-1552477605342-3 is leaving G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:32.905Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-sul-sulliv-1552477605342-3 to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:32.915Z"}
+{"level":"info","message":"random admin generation for G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:32.937Z"}
+{"level":"info","message":"random admin generation for G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:32.940Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-sul-randal-1552477621493-20 to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:33.949Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-sul-randal-1552477621493-20 to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:33.950Z"}
+{"level":"info","message":"P-sul-randal-1552477621493-20 is leaving G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:45.630Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-sul-randal-1552477621493-20 to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:45.654Z"}
+{"level":"info","message":"random admin generation for G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:45.663Z"}
+{"level":"info","message":"Emitting onAdmin event for player: P-sul-mike-1552477633162-9 to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:45.673Z"}
+{"level":"info","message":"P-sul-mike-1552477633162-9 is leaving G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:51.572Z"}
+{"level":"info","message":"Emitting onLeave event for player: P-sul-mike-1552477633162-9 to game : G-sul-ylkw-1552477605342-91dg","timestamp":"2019-03-13T11:53:51.598Z"}

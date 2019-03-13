@@ -228,11 +228,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row js-playerStuff" ng-show="currentGameId">
-                <div class="col-md-8 col-xs-12">you are invited to join <b>game: {{game.gameName}}</b>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players</div>
-
-            </div>
+            
             <div class="row js-playerStuff" style="margin-top:49px">
+                <div class="row js-playerStuff" ng-show="currentGameId" style="padding-bottom:8px">
+                    <div class="col-md-12 col-xs-12" ng-show="game.gameName">you are invited to join <b>game: {{game.gameName}}</b>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players. {{game.gameAlphabetArray.length}} alphabets are remaining.</div>
+                    <div class="col-md-8 col-xs-12" ng-hide="game.gameName">
+                        The game ID for the invite was incorrect, please verify the URL that brought you here.
+                    </div>
+                </div>
                 <div class="col-md-4 col-xs-1">&nbsp;</div>
                 <div class="col-md-1 col-xs-2 text-right js-avLeft" style="padding-right:0px;padding-top:19px;cursor:pointer">
                     <i class="fa fa-arrow-circle-o-left fa-lg"></i>
@@ -261,7 +264,7 @@
                     <button class="btn btn-primary btn-sm" disabled id="btnPlayerOn"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
                 </div>
                 <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px;"  ng-show="currentGameId">
-                    <button class="btn btn-primary btn-sm" disabled id="btnPlayerOnJoin">Join <i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
+                    <button class="btn btn-primary btn-sm" disabled id="btnPlayerOnJoin" data-ng-click="joinGame(game.gameId,game.gameName,game.gamePlayers.length)">Join <i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
                 </div>
             </div>
             

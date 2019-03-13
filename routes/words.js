@@ -38,21 +38,21 @@ router.get('/place/:word',async (req,res)=>{
             valid=true;
         }
     });
-    if(!valid){
-        var x = '';
-        req.params.word.trim().toLowerCase().split(' ').forEach(e=>{
-            x += capitalizeFirstLetter(e)+' ';
-        });
-        let s = cities.filter(city => {
-            return city.name.match(x.substr(0,x.length-1));
-        });
-        s.forEach(element => {
-            if(element.name.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
-                console.log(`found city ${element.name}`);
-                valid=true;
-            }  
-        });
-    }
+    // if(!valid){
+    //     var x = '';
+    //     req.params.word.trim().toLowerCase().split(' ').forEach(e=>{
+    //         x += capitalizeFirstLetter(e)+' ';
+    //     });
+    //     let s = cities.filter(city => {
+    //         return city.name.match(x.substr(0,x.length-1));
+    //     });
+    //     s.forEach(element => {
+    //         if(element.name.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
+    //             console.log(`found city ${element.name}`);
+    //             valid=true;
+    //         }  
+    //     });
+    // }
     if(!valid){
         var x = '';
         req.params.word.trim().toLowerCase().split(' ').forEach(e=>{
