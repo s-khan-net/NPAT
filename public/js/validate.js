@@ -217,7 +217,9 @@ function initialize(){
                                 if(starta){
                                     html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
                                 }
-                                else{}
+                                else{
+                                    html += ` - : (points-0), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                }
                             }
                             html += '</div>';
                             html += '</div>';
@@ -237,7 +239,6 @@ function initialize(){
 
                     html = '<div class="container">';
                     $.each(data.game.gamePlayers,function(i,v){
-                        let starta =  w.name || w.place || w.animal || w.thing;
                         html += `<div class="row">`;
                         html += `<div class="col-xs-12 text-left">`;
                         html += `<b>${v.playerName}:</b>`;
@@ -247,15 +248,20 @@ function initialize(){
                         html += '</div>';
                         html += '</div>';
                         $.each(v.wordsForGame,function(j,w){
-                            
+                            let starta =  w.name || w.place || w.animal || w.thing;
                             html += '<div class="row">';
                             html += '<div class="col-xs-12">';
                             if((`-${w.namePoints}-${w.placePoints}-${w.animalPoints}-${w.thingPoints}-`).indexOf('-0-')==-1){
                                 let b = w.namePoints + w.placePoints + w.animalPoints + w.thingPoints;
-                                html += `<b>${starta.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${Math.ceil(w/wordsArray.bonusPoints) >0 ? Math.ceil(w.wordsArray.bonusPoints)+b: b} , submitted on-<b><i>${w.playTime}</b></i> second`;
+                                html += `<b>${starta.substr(1,1)}</b>: (points-${b} + Bonus-${w.bonusPoints}) = ${b+w.bonusPoints} , submitted on-<b><i>${w.playTime}</b></i> second`;
                             }
                             else{
-                                html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                if(starta){
+                                    html += `${starta.substr(1,1)}: (points-${w.namePoints + w.placePoints + w.animalPoints + w.thingPoints}), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                }
+                                else{
+                                    html += ` - : (points-0), submitted on-<b><i>${w.playTime}</i></b> second`;
+                                }
                             }
                             html += '</div>';
                             html += '</div>';

@@ -110,7 +110,7 @@
                         <li data-ng-show="showInvite"><div class="row">
                                  <div class="col-xs-2"><i class="fa fa-share fa-2x" aria-hidden="true"></i></div>
                                 <div class="col-xs-2">
-                                    <div class="social fb">
+                                    <div class="social fb" data-ng-click="invite('fb')">
                                         <i class="fa fa-facebook-f " aria-hidden="true"></i>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
             </div>
             <div class="row" style="padding-top:9px">
                     <div class="col-xs-9" style="text-align:right">
-                        <button class="btn btn-primary btn-lg" ng-disabled="submit">Submit</button>
+                        <button class="btn btn-primary btn-lg" ng-disabled="!submit">Submit</button>
                     </div>
             </div>
             </form>

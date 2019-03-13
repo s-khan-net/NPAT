@@ -145,7 +145,7 @@ io.sockets.on('connection', function(socket) { //socket code
     socket.on('message',function(obj){
         logger.info(`send chat message from player ${obj.playerId}`);
         try{
-            io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message});
+            io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message.replace('\n','<br>')});
         }
         catch(ex){
             logger.error(`error while sending chat message from player ${obj.playerId} error:${ex.message}`);

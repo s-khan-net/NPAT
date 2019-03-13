@@ -241,15 +241,15 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         ur='';
         switch (t) {
             case 'wa':
-                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;  
+                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%3Fid%3D${$scope.currentGameId}`;  
                 break;
             case 'em':
-                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;
+                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2Fjoin%3Fid%3D${$scope.currentGameId}`;
                 break;
             case 'tw':
-                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;
+                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2Fjoin%3Fid%3D${$scope.currentGameId}}`;
             case 'fb':
-                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2F${$scope.currentGameId}`;
+                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2Fjoin%3Fid%3D${$scope.currentGameId}`;
             default:
                 break;
         }
@@ -526,7 +526,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
     socket.on('onMessage',function(data){
         $('#chatbox').append(`<div style="border:1px solid #ddd;padding:3px;margin-top: 2px;margin-left:-22px;margin-
-        right: 2px;background-color: white;border-radius: 7px;"><div class="row"><div class="col-xs-8" style="letter-spacing:2px;font-size:9px">${data.playerName}</div></div><div class="row"><div class="col-xs-2"><img src="${data.playerAvatar}" width=30 /></div><div class="col-xs-10">:&nbsp;${data.message}</div></div></div>`);
+        right: 2px;background-color: white;border-radius: 7px;"><div class="row"><div class="col-xs-8" style="letter-spacing:2px;font-size:9px">${data.playerName}</div></div><div class="row"><div class="col-xs-2"><img src="${data.playerAvatar}" width=30 /></div><div class="col-xs-10" style="margin-left:-15px;font-size: 12px;font-family: monospace;">:&nbsp;${data.message}</div></div></div>`);
     })
 
     /*-----wait from socket----*/
