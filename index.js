@@ -59,9 +59,15 @@ else{
     console.log(process.env.jwtKey);
 }
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
+let playersAndSockets=[]
 io.sockets.on('connection', function(socket) { //socket code
     logger.info(`someone connected ${socket.id}`);
+    let sockObj = {
+        socketId:socket.id,
+        playerId:'',
+        gameId:''
+    }
+    playersAndSockets.push(sockObj);
 
     socket.on('testMsg',function(obj){
         logger.error('test message');
@@ -70,7 +76,7 @@ io.sockets.on('connection', function(socket) { //socket code
     })
 
     socket.on('createGame', function(obj) { //is whole game
-        logger.info(`creating, joining game: ${obj.gameId}`);
+        logger.info(`creating, joining game: ${obj.gameId} with socket id of ${socket.id}`);
         socket.join(`game-${obj.gameId}`);
     });
 
@@ -143,9 +149,10 @@ io.sockets.on('connection', function(socket) { //socket code
     });
 
     socket.on('message',function(obj){
-        logger.info(`send chat message from player ${obj.playerId}`);
+        logger.info(`send chat message from player ${obj.playerId} with socket id of ${socket.id}`);
         try{
             io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message.replace('\n','<br>')});
+            logger.info(`sent ${obj.message} `);
         }
         catch(ex){
             logger.error(`error while sending chat message from player ${obj.playerId} error:${ex.message}`);
@@ -534,7 +541,14 @@ io.sockets.on('connection', function(socket) { //socket code
         }
     });
 });
-
+io.sockets.on('disconnect',function(socket){
+    for(let i=0;i<playersAndSockets.length;i++){
+        if(sockObj.soketId == socket.id){
+            let r = playersAndSockets.splice(i,1);
+            logger.info(`removed ${sockObj.playerId} from array of sockets`);
+        }
+    }
+})
 server.listen(process.env.PORT, function() {
     console.log(process.env.PORT);
 });
