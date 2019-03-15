@@ -27,7 +27,7 @@ mainmodule.factory('beforeUnload', function ($rootScope, $window) {
 });
 
 mainmodule.factory('socket', function($rootScope) {
-    var socket = io.connect();
+    var socket = io();//io.connect();
     return {
       socket:socket,
       on: function(eventName, callback) {
@@ -147,7 +147,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.loaderMsg='...';
         $scope.wait=false;
         $scope.connMessage = `Connected`;
-        $('#conn').hide('slow',function(){$scope.connMessage ='';});
+        if($('#conn').is(':visible')){
+            socket.emit('addtogame',{gameId:$scope.currentGameId,playerId:$scope.currentPlayerId});
+            $('#conn').hide('slow',function(){$scope.connMessage ='';});
+        }
         if($scope.gameStarted)
             $scope.$broadcast('timer-start'); //resume timer
         
@@ -352,8 +355,8 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 //game saved
                 // set play state
                 $scope.playState.create = 2; //game created in DB
-                //add to the game room 
-                socket.emit('createGame',game);
+                //add to the game room with the player whoi created it
+                socket.emit('createGame',{gameId:gameid,playerId:playerid});
                 // set play state
                 $scope.playState.create = 3; //got game creation message from socket
                 //build player list

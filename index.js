@@ -59,28 +59,56 @@ else{
     console.log(process.env.jwtKey);
 }
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-let playersAndSockets=[]
+//let playersAndSockets=[]
 io.sockets.on('connection', function(socket) { //socket code
-    logger.info(`someone connected ${socket.id}`);
-    let sockObj = {
-        socketId:socket.id,
-        playerId:'',
-        gameId:''
-    }
-    playersAndSockets.push(sockObj);
+    // let there=false;
+    // for(let i=0;i<playersAndSockets.length;i++){
+    //     if(playersAndSockets[i].socketId == socket.id && playersAndSockets[i].gameId.length>1){
+    //         checkAndAdd(socket.id,playersAndSockets[i].gameId,playersAndSockets[i].playerId,function(t){
+    //             logger.info(`Added ${playersAndSockets[i].playerId} to the game ${playersAndSockets[i].gameId}`);
+    //             there = t;
+    //         })
+    //     }
+    // }
+    // if(there){
+    //     let sockObj = {
+    //         socketId:socket.id,
+    //         playerId:'',
+    //         gameId:'',
+    //         connected:false
+    //     }
+    //     playersAndSockets.push(sockObj);
+    // }
 
     socket.on('testMsg',function(obj){
         logger.error('test message');
         var data ={msg:'wassup from server',o:obj};
         io.sockets.emit('onTestMsg', data)
     })
-
-    socket.on('createGame', function(obj) { //is whole game
+    socket.on('addtogame',function(obj){
+        checkAndAdd(socket.id,obj.gameId,obj.playerId,function(there){
+            console.log(`added to game?->>${there}`);
+        });
+    })
+    socket.on('createGame', function(obj) {
         logger.info(`creating, joining game: ${obj.gameId} with socket id of ${socket.id}`);
         socket.join(`game-${obj.gameId}`);
+        // for(let i=0;i<playersAndSockets.length;i++){
+        //     if(playersAndSockets[i].socketId == socket.id){
+        //         playersAndSockets[i].playerId=obj.playerId;
+        //         playersAndSockets[i].gameId=obj.gameId;
+        //         playersAndSockets[i].connected=true;
+        //         logger.info(`updated sockobj ${sockObj.playerId} in array of sockets`);
+        //     }
+        // }
     });
 
     socket.on('joinGame', function(obj) {
+        if(addedPlayer){
+            var data = {err:'could not join, this player already eaxists, please try again'}
+            io.sockets.in(`game-${data.gameId}`).emit('joined', data);
+            return;
+        }
         const p = new Promise((resolve,reject)=>{
         if(obj.gameId && obj.playerId){
             logger.info(`player ${obj.playerId.split('-')[2]} joining ${obj.gameId}`);
@@ -116,6 +144,14 @@ io.sockets.on('connection', function(socket) { //socket code
                                 });
                                 var d = {gameId:g.gameId,gamePlayers:players,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,playerId:obj.playerId,pushedPlayer:player,gameAlphabet:g.gameAlphabet,gameAlphabetArray:g.gameAlphabetArray,err:''};
                                 socket.join(`game-${g.gameId}`);
+                                // for(let i=0;i<playersAndSockets.length;i++){
+                                //     if(playersAndSockets[i].socketId == socket.id){
+                                //         playersAndSockets[i].playerId=obj.playerId;
+                                //         playersAndSockets[i].gameId=obj.gameId;
+                                //         playersAndSockets[i].connected=true;
+                                //         logger.info(`updated sockobj ${sockObj.playerId} in array of sockets`);
+                                //     }
+                                // }
                                 resolve(d);
                             }) // save the game
                             .catch(err=>{
@@ -151,8 +187,15 @@ io.sockets.on('connection', function(socket) { //socket code
     socket.on('message',function(obj){
         logger.info(`send chat message from player ${obj.playerId} with socket id of ${socket.id}`);
         try{
-            io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message.replace('\n','<br>')});
-            logger.info(`sent ${obj.message} `);
+            checkAndAdd(socket.id,obj.gameId,obj.playerId,function(there){
+                console.log(`there->>${there}`);
+                if(there){
+                    io.sockets.in(`game-${obj.gameId}`).emit('onMessage',{playerName:obj.playerId.split('-')[2],playerAvatar:`images/avatars/${obj.playerId.split('-')[4].split('~')[0]}.png`,message:obj.message.replace('\n','<br>')});
+                }
+                else{
+                    throw 'Cannot connect to chat at this time';
+                }
+            });
         }
         catch(ex){
             logger.error(`error while sending chat message from player ${obj.playerId} error:${ex.message}`);
@@ -540,11 +583,26 @@ io.sockets.on('connection', function(socket) { //socket code
             });
         }
     });
+
+    function checkAndAdd(socketId,gameId,playerId,callback){
+        io.of('/').in(`game-${gameId}`).clients((error, clients) => {
+            if (error) callback(false);
+            console.log(clients); // => [PZDoMHjiu8PYfRiKAAAF, Anw2LatarvGVVXEIAAAD]
+            console.log(clients.indexOf(socketId));
+            if(clients.indexOf(socketId)>-1)
+                callback(true);
+            else{
+                socket.join(`game-${gameId}`);
+                callback(true);
+            }
+        });
+
+    }
 });
 io.sockets.on('disconnect',function(socket){
     for(let i=0;i<playersAndSockets.length;i++){
-        if(sockObj.soketId == socket.id){
-            let r = playersAndSockets.splice(i,1);
+        if(playersAndSockets[i].soketId == socket.id){
+            playersAndSockets[i].connected=false;
             logger.info(`removed ${sockObj.playerId} from array of sockets`);
         }
     }
