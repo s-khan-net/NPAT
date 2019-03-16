@@ -47,7 +47,7 @@
 <div style="min-width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:41%;background-color: beige;" data-ng-show="wait" >{{loaderMsg}}</div>
 <div class="container"  id="mainContainer" style="margin-top:32px;display: none">
     <div class="row">
-        <div class="col-xs-2 text-center" id="npat" style="font-family:Verdana, Geneva, Tahoma, sans-serif;user-select: none;font-weight: 700;"><span style="color:#cb0a0a;user-select: none;padding: 1px">Na</span><span style="color:#319833;user-select: none;padding: 1px">Pl</span><span style="color:#8b8603;user-select: none;padding: 1px">An</span><span style="color:#286090;user-select: none;padding: 1px">Th</span></div>
+        <div class="col-xs-2 text-center" id="npat" style="font-family:Verdana, Geneva, Tahoma, sans-serif;user-select: none;font-weight: 700;"><span style="color:#cb0a0a;user-select: none;padding: 1px">N</span><span style="color:#319833;user-select: none;padding: 1px">P</span><span style="color:#8b8603;user-select: none;padding: 1px">A</span><span style="color:#286090;user-select: none;padding: 1px">T</span></div>
         <div class="col-xs-10 col-md-6 text-center" style="font-family:monospace;letter-spacing:2px;font-size:larger;user-select: none;font-weight: bolder;">{{gameName}}&nbsp;&nbsp;<span id="gameTimer" style="display:none;background-color:whitesmoke"><timer autostart="false" countdown="gameTime" interval="1000">{{mminutes}}:{{sseconds}}</timer></span></div>
     </div>
     <div class="row">
@@ -189,7 +189,7 @@
                 </div>
             </div> 
             <div id="chatcontainer">
-            <div style="position: absolute;z-index: 5;top: -8px;right: -21px;background-color: black;opacity: 1;color: white;" class="close badge">X</div>
+            <div style="position: absolute;z-index: 5;top: -8px;right: -21px;background-color: black;opacity: 1;color: white;width: 11%;  height: 7%;" class="close badge">X</div>
             <div class="row">
                 <div id="chatbox" style="border-radius:4px; border:1px solid lightblue;padding-left: 24px;user-select: none;background-color:#edf3f5;overflow-y:scroll;height: 250px"></div>
             </div>
@@ -234,9 +234,9 @@
             
             <div class="row js-playerStuff" style="margin-top:49px">
                 <div class="row js-playerStuff" ng-show="currentGameId" style="padding-bottom:8px">
-                    <div class="col-md-12 col-xs-12" ng-show="game.gameName">you are invited to join <b>game: {{game.gameName}}</b>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players. {{game.gameAlphabetArray.length}} alphabets are remaining.</div>
+                    <div class="col-md-12 col-xs-12" ng-show="game.gameName">you are invited to join <i><b>{{game.gameName}}</b></i>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players, with {{game.gameAlphabetArray.length}} alphabets remaining.</div>
                     <div class="col-md-8 col-xs-12" ng-hide="game.gameName">
-                        The game ID for the invite was incorrect, please verify the URL that brought you here.
+                        The game ID for the invite is incorrect, please verify the URL that brought you here.
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-1">&nbsp;</div>
@@ -261,7 +261,7 @@
             </div>
             <div class="row js-playerStuff">
                 <div class="col-md-10 col-xs-10" style="padding-right:0px">
-                    <input type="text" class="form-control" id="txtPlayerName" data-ng-model="playerName" placeholder="player1" maxlength="6"/>
+                    <input type="text" class="form-control" id="txtPlayerName" data-ng-model="playerName" placeholder="player1" maxlength="8"/>
                 </div>
                 <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px" ng-hide="currentGameId">
                     <button class="btn btn-primary btn-sm" disabled id="btnPlayerOn"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>

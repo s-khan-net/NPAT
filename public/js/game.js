@@ -281,7 +281,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
     $scope.invite = function(t){
         ur='';
-        let l=`${$location.protocol()}%3A%2F%2F${$location.host()}${($location.port()||'')!=''?':'+$location.port():''}`
+        let l=`${$location.protocol()}%3A%2F%2F${$location.host()}${$location.host().indexOf('local')>-1?':'+$location.port():''}`
         switch (t) {
             case 'wa':
                 ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;  
