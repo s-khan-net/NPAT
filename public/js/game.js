@@ -109,9 +109,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     let playersAndSockets=[];
 
-    if($location.search().id){
+    if($location.search().id && $location.search().hash){
         //join code
-        gid = $location.search().id;
+        let gid = $location.search().id;
         $scope.currentGameId = gid;
         $http.get('/api/game/'+gid)
         .then(function (result) {
@@ -147,8 +147,12 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.loaderMsg='...';
         $scope.wait=false;
         $scope.connMessage = `Connected`;
-        if($('#conn').is(':visible')){
+        if($scope.currentGameId && $scope.currentPlayerId){
+            //player reconnected, hence have to add to game
             socket.emit('addtogame',{gameId:$scope.currentGameId,playerId:$scope.currentPlayerId});
+            $('#conn').hide('slow',function(){$scope.connMessage ='';});
+        }
+        else{
             $('#conn').hide('slow',function(){$scope.connMessage ='';});
         }
         if($scope.gameStarted)
@@ -191,7 +195,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 paddingTop: '90px',
                 fontSize: 'large',
                 paddingRight: '19px',
-                color:'#00588b',
+                color:'darkred',
                 display:'block',
                 borderRadius: '5px',
                 border:'1px ridge #8ebfe3',
@@ -221,23 +225,8 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                             players.push(p);
                     });
                     v.gamePlayers=players;
-                    if(players.length<19 && (v.gameAlphabetArray.length==0 || v.gameAlphabetArray.length>5))
+                    if(players.length<19 )//&& (v.gameAlphabetArray.length==0 || v.gameAlphabetArray.length>5))
                         $scope.games.push(v);
-                    // else{
-                    //     if(v.gameAlphabetArray.length>5){
-                    //         if(players.length<10){
-                    //             let tempg={
-                    //                 gameId:v.gameId,
-                    //                 gameName:v.gameName,
-                    //                 gameStarted:v.gameStarted,
-                    //                 gameAlphabetArray:v.gameAlphabetArray,
-                    //                 gameTime:v.gameTime
-                                   
-                    //             };
-                    //             $scope.games.push(tempg);
-                    //         }
-                    //     }
-                    // }
                 })
                 FullList = $scope.games;
             }
@@ -292,17 +281,18 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
     $scope.invite = function(t){
         ur='';
+        let l=`${$location.protocol()}%3A%2F%2F${$location.host()}${($location.port()||'')!=''?':'+$location.port():''}`
         switch (t) {
             case 'wa':
-                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%3Fid%3D${$scope.currentGameId}`;  
+                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;  
                 break;
             case 'em':
-                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2Fjoin%3Fid%3D${$scope.currentGameId}`;
+                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;
                 break;
             case 'tw':
-                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2Fjoin%3Fid%3D${$scope.currentGameId}}`;
+                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}}`;
             case 'fb':
-                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20https%3A%2F%2Fnpathing.herokuapp.com%2Fjoin%2Fjoin%3Fid%3D${$scope.currentGameId}`;
+                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;
             default:
                 break;
         }
@@ -524,6 +514,11 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                     }
                 });
                 $scope.players.push(player);
+                //if timer is paused, then start 
+                if($scope.coverMessage=='No players! please wait till someone joins'){
+                    $scope.$broadcast('timer-start'); //resume timer
+                    $('#cover').fadeOut(); 
+                }
             }
             // let w =(Number($('#mainGameSection').css('width').split('p')[0])-20)+'px';
             // let h = (Number($('#mainGameSection').css('height').split('p')[0])-20)+'px'
@@ -650,6 +645,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 v.playerTyping = `${data[2]}`
             }
         });
+        setTimeout(() => {
+            v.playerTyping = '';
+        }, 500);
     //}
     });
 
@@ -750,7 +748,6 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         // set play state
         $scope.playState.submit = 3; 
         //$scope.coverMessage=$scope.coverMessage.indexOf('missed')==-1?'':$scope.coverMessage;
-        console.log(`recieved submit ${data.playerId}`);
         if($scope.coverMessage.indexOf('missed')==-1)
             $scope.coverMessage=''
         if(data.err!=''){
@@ -767,7 +764,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 if(v.playerTyping=='S')
                 c++;
             });
-            console.log(`iterated through all players`);
+            //console.log(`iterated through all players`);
             //if($('#hidPlayerId').val().split('~')[0]==data.playerId){
             if($scope.currentPlayerId.split('~')[0]==data.playerId){
                 var styles = {
@@ -811,9 +808,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                     }
                 }
                 else{
-                    if($scope.coverMessage.indexOf('missed')>-1)
-                        $scope.coverMessage +=', waiting for everyone to submit';
-                    else
+                    // if($scope.coverMessage.indexOf('missed')>-1)
+                    //     $scope.coverMessage +=', waiting for everyone to submit';
+                    // else
                         $scope.coverMessage='Waiting for everyone to submit';
                 }
             }
@@ -921,6 +918,36 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 });
                 $scope.players.splice(index,1);
                 $('#divStatus').text(`${p} has left`).fadeIn('slow').fadeOut(5000);
+                if($scope.players.length==1){
+                    //pause game until someone joins
+                    if($scope.gameStarted){
+                        $scope.$broadcast('timer-stop'); //pause timer
+                        var styles = {
+                            zIndex:2,
+                            background:"rgb(225,255,255)",
+                            background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+                            background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                            background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+                            filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
+                            width:'98%',
+                            opacity:0.7,
+                            height:'319px',
+                            top:'43px',
+                            position:'absolute',
+                            paddingLeft:'57px',
+                            paddingTop: '90px',
+                            fontSize: 'large',
+                            paddingRight: '19px',
+                            color:'#00588b',
+                            display:'block',
+                            borderRadius: '5px',
+                            border:'1px ridge #8ebfe3',
+                            marginLeft:'-11px'
+                        };
+                        $('#cover').css(styles);
+                        $scope.coverMessage='No players! please wait till someone joins'
+                    }
+                }
             }
             else{
                 socket.emit('abandon', {gameId:$scope.currentGameId});
@@ -1362,11 +1389,11 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
 
     $scope.$on('onBeforeUnload', function (e, confirmation) {
-        confirmation.message = "All data willl be lost.";
+        confirmation.message = "Your game will be lost!.";
         e.preventDefault();
     });
     $scope.$on('onUnload', function (e) {
-        console.log('leaving page'); // Use 'Preserve Log' option in Console
+       // console.log('leaving page'); // Use 'Preserve Log' option in Console
         socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
         //socket.emit('leave',{gameId:$('#hidGameId').val(),playerId:$('#hidPlayrId').val().split('~')[0]});
     });

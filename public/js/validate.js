@@ -75,7 +75,7 @@ function initialize(){
             $('.js-PlayerStatus').hide();
             $('#btnPlayer > img').css('width','41px');
             $('.nameForSmall').show();
-            $('#chatSection').hide();
+            //$('#chatSection').hide();
             if(!$('#gameContainer').is(':visible'))
                 $('#btnChat #btnChat').show();
             $('.js-PlayerPic').css('margin-left','7px');
@@ -149,11 +149,13 @@ function initialize(){
         var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
         v = v==pics?1:v+1;
         $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+        $('#txtPlayerName').attr('placeholder',items[v]);
     });
     $('.js-avLeft').click(function(){
         var v = Number(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3].split('.')[0]);
         v = v==1?pics:v-1;
         $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
+        $('#txtPlayerName').attr('placeholder',items[v]);
     });
     
     $('#modalAvatars').on('shown.bs.modal', function() {
@@ -165,7 +167,7 @@ function initialize(){
         $('#modalAvatarsBody').html(html);
     });
     $('#cover').click(function(){
-        if($('#cover').html().indexOf('points,')>-1){
+        if($('#cover').html().indexOf('pts.,')>-1){
             $('#pointsModal').modal({
                 backdrop: "static",
                 keyboard:true
