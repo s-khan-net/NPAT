@@ -116,8 +116,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $http.get('/api/game/'+gid)
         .then(function (result) {
             if(result.status==200){
-                if(result.data.game)
-                $scope.game=result.data.game;
+                if(result.data.game){
+                    if(result.data.game.gameEnded || result.data.game.gameAbandoned) $scope.game={gameName:''};
+                    else $scope.game=result.data.game; 
+                }
                 else{
                     $scope.game={gameName:''};
                 }
