@@ -306,13 +306,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   height: 28px;
 }
 .fb{
-  padding-left: 9px;
-  padding-top: 4px;
-  color: steelblue;
+  padding-left: 3px;
+  padding-top: 2px;
+  color: whitesmoke;
 }
 .fb:hover{
   color: white;
-  background-color: steelblue;
+  background-color:whitesmoke;
 }
 .tw{
   padding-left: 6px;

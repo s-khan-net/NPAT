@@ -109,7 +109,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     let playersAndSockets=[];
 
-    if($location.search().id && $location.search().hash){
+    if($location.search().id){
         //join code
         let gid = $location.search().id;
         $scope.currentGameId = gid;
@@ -281,18 +281,19 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
     $scope.invite = function(t){
         ur='';
-        let l=`${$location.protocol()}%3A%2F%2F${$location.host()}${$location.host().indexOf('local')>-1?':'+$location.port():''}`
+        let l=`${$location.protocol()}%3A%2F%2F${$location.host()}${$location.host().indexOf('local')>-1?':'+$location.port():''}`;
         switch (t) {
             case 'wa':
-                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;  
+                ur=`whatsapp://send?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}`;  
                 break;
             case 'em':
-                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;
+                //ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;
+                ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}`;
                 break;
             case 'tw':
-                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}}`;
+                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}}`;
             case 'fb':
-                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%2Fjoin%3Fid%3D${$scope.currentGameId}`;
+                ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}`;
             default:
                 break;
         }
