@@ -37,6 +37,7 @@ app.use('/api/game',game);
 //statics
 app.use(express.static(`${__dirname}/public/views`));
 app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/audio', express.static(__dirname + '/public/audio'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/images', express.static(__dirname + '/public/images'));
 app.use('/assets', express.static(__dirname + '/assets'));
