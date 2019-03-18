@@ -620,7 +620,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     /*----------play start-------------- */
     $scope.playStart = function(){
         //if($('#hidPlayerId').val().indexOf('~')>-1)
-        if($scope.currentPlayerId.indexOf('~')>-1 && $scope.players.lenght>1)
+        if($scope.currentPlayerId.indexOf('~')>-1 && $scope.players.length>1)
             socket.emit('playStarted', $scope.currentGameId);
             //socket.emit('playStarted', `${$('#hidGameId').val()}`);
     }
