@@ -584,6 +584,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             // set play state
             $scope.playState.join = 4; //game join complete
             $scope.wait=false;
+            $('#divStatus').hide();
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
             playClick();
         }
@@ -602,6 +603,8 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $('#chatbox').append(`<div style="border:1px solid #ddd;padding:3px;margin-top: 2px;margin-left:-22px;margin-
         right: 2px;background-color: white;border-radius: 7px;"><div class="row"><div class="col-xs-8" style="letter-spacing:2px;font-size:9px">${data.playerName}</div></div><div class="row"><div class="col-xs-2"><img src="${data.playerAvatar}" width=30 /></div><div class="col-xs-10" style="margin-left:-15px;font-size: 12px;font-family: monospace;">:&nbsp;${data.message}</div></div></div>`);
         $("#chatbox").scrollTop(1E10);
+        $('#divStatus').hide();
+        $('#divStatus').text(`${data.playerName} texted`).fadeIn('slow').fadeOut(1000);
         playClick();
     })
 
