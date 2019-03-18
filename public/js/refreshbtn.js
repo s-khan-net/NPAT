@@ -20,18 +20,27 @@
                 $('.close').hide();
                 $('#chatSection').hide();
                 $('#chatsectionhead').hide();
+                $('#chat').hide();
             }
             else{
-                
-                $('#chatcontainer').css({zIndex:5,position:'absolute',display:'block',left:'13%',top:'32px',maxWidth:'250px'});
+                $('#chatcontainer').css({zIndex:6,position:'absolute',display:'block',left:'13%',top:'32px',maxWidth:'250px'});
                 $('.close').show();
                 $('#chatSection').show();
+                $('#chat').show();
                 $('#chatsectionhead').hide();
             }
         });
         $('.close').click(function(){
             $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
             $('.close').hide();
+            $('#chat').hide();
+            $('#chatSection').hide();
+            $('#chatsectionhead').hide();
+        });
+        $('#chat').click(function(){
+            $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
+            $('.close').hide();
+            $('#chat').hide();
             $('#chatSection').hide();
             $('#chatsectionhead').hide();
         });

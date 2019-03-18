@@ -44,11 +44,11 @@ app.use('/assets', express.static(__dirname + '/assets'));
 
 //check if jwtkey is present
 if(!process.env.jwtKey) {
-    console.log('FATAL ERROR: jwt token key not set');
+    logger.error('FATAL ERROR: jwt token key not set');
     process.exit(1);
 }
 else{
-    console.log(process.env.jwtKey);
+    logger.info(process.env.jwtKey);
 }
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 io.sockets.on('connection', function(socket) { //socket code
@@ -59,7 +59,7 @@ io.sockets.on('connection', function(socket) { //socket code
     })
     socket.on('addtogame',function(obj){
         checkAndAdd(socket.id,obj.gameId,obj.playerId,function(there){
-            console.log(`added to game?->>${there}`);
+            logger.info(`${obj.playerId} added to game?->>${there}`);
         });
     })
     socket.on('createGame', function(obj) {
