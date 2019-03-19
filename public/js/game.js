@@ -302,6 +302,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
         $window.location.href = ur;
     }
+    $scope.playerDetails = function(playerId,admin){
+        console.log(`player details for ${playerId} --> ${admin}`);
+       
+    }
     /*------------create game----------------- */
     $scope.createGame = function(){
         //create a new game
@@ -845,7 +849,15 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.wait=false;
         $scope.loaderMsg='loading...';
     });
-
+    $scope.adminSubmit = function(playerId){
+        let submitObj={
+            gameId:$scope.currentGameId,//$('#hidGameId').val(),
+            playerId:PlayerId.split('~')[0],//$('#hidPlayerId').val().split('~')[0],
+            words:{},
+            pointsForGame:0
+        }
+        socket.emit('submit', submitObj);
+    }
     getBonus = function(){
         let p=0;
         let b=(($scope.playerTime/$scope.gameTime) * 100).toFixed(1);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const cities = require("all-the-cities")
+//const cities = require("all-the-cities")
 
 router.get('/thing/:word',async (req,res)=>{
     let valid =false;//check if word is present
