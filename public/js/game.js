@@ -206,9 +206,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             };
             $('#conn').css(styles);
         }
-        $scope.connMessage = `Reconnecting (attempt: ${d})... please wait`;
+        $scope.connMessage = `Please do not close or refresh, just wait.... tried connecting ${d} times`;
         $scope.wait=true;
-        $scope.loaderMsg=`Connection lost`;
+        $scope.loaderMsg=`Connection lost, please wait...`;
     });
     /*--------------------------------------------------- */
     $scope.refreshGames = function(){
