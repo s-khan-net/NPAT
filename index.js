@@ -4,6 +4,7 @@ const users =require('./routes/users');
 const words =require('./routes/words');
 const game =require('./routes/game');
 const Joi = require('joi');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const {Game, validate} = require('./models/game');
 const app = express();
@@ -528,6 +529,34 @@ io.sockets.on('connection', function(socket) { //socket code
         }
     });
 
+    socket.on('validatePlace',function(obj){
+        let valid =false;//check if word is present
+        var data = fs.readFileSync(`assets/countries_1`,'UTF-8');
+        data.split(/\n/).forEach(element => {
+            if(element.trim().toLowerCase()==obj.word.trim().toLowerCase()){
+                console.log(`found country ${element}`);
+                valid=true;
+            }
+        });
+        if(!valid){
+            var x = '';
+            obj.word.trim().toLowerCase().split(' ').forEach(e=>{
+                x += capitalizeFirstLetter(e)+' ';
+            });
+
+            var cities = JSON.parse(fs.readFileSync('assets/cities.json', 'utf8'));
+
+            cities.forEach(o=>{
+                if(o.name.trim().toLowerCase() == obj.word.trim().toLowerCase()){
+                    console.log(`found city ${o.name}`);
+                    valid=true;
+                }
+            });
+        }
+        var d = {gameId:g.gameId,playerId:player.playerId,valid:valid,err:''};
+        io.sockets.in(`game-${data.gameId}`).emit('onValidatePlace', d);
+    })
+
     function checkAndAdd(socketId,gameId,playerId,callback){
         io.of('/').in(`game-${gameId}`).clients((error, clients) => {
             if (error) callback(false);
@@ -540,6 +569,10 @@ io.sockets.on('connection', function(socket) { //socket code
             }
         });
 
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 });
 server.listen(process.env.PORT, function() {

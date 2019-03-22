@@ -46,6 +46,7 @@
 <div id="appDiv" name="appDiv" data-ng-app="app-npat" data-ng-controller="game">
 <div style="min-width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:41%;background-color: beige;" data-ng-show="wait" >{{loaderMsg}}</div>
 <div id="chat"  class="chatCover"></div>
+<div id="conn" style="width:0px" class="text-center">{{connMessage}}</div>
 <div class="container"  id="mainContainer" style="margin-top:32px;display: none">
     <div class="row">
         <div class="col-xs-2 text-center" id="npat" style="font-family:Verdana, Geneva, Tahoma, sans-serif;user-select: none;font-weight: 700;"><span style="color:#cb0a0a;user-select: none;padding: 1px">N</span><span style="color:#319833;user-select: none;padding: 1px">P</span><span style="color:#8b8603;user-select: none;padding: 1px">A</span><span style="color:#286090;user-select: none;padding: 1px">T</span></div>
@@ -60,7 +61,8 @@
             </div> 
             <div class="row" style="padding-top:3px;direction: 'ltr'">
                 <div id="playersContainer">
-                    <div class="row " ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;" data-ng-click="playerDetails(p.playerId,p.isCreator)">
+                    <div class="row " ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
+                        
                         <div class=" col-md-8 col-xs-12 js-playerName" style="padding-left:17px">
                             <div>
                                 <div class="col-md-12 col-xs-12 text-right js-PlayerName" >
@@ -78,8 +80,10 @@
                             <div class="nameForSmall" style="width: 39px;">
                                 <i ng-class="meClass(p.me)" aria-hidden="true" title="Me"></i>&nbsp;
                                 <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true"></i>
-                            </div>
-                            <div id="btnPlayer" >
+                            </div>  
+                            <div id="btnPlayer" onclick="playerDetails(this)">
+                                <div style="display:none">{{p.playerId}}</div>
+                                <div style="display:none">{{p.isCreator}}</div>
                                 <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
                                 <img  style="border:2px solid silver;border-radius:4px;width:50px"  src="{{p.playerAvatar}}"  />
                             </div>    
@@ -91,7 +95,7 @@
         </div>
         <div class="col-xs-10 col-md-6" id="mainGameSection">
             <div id="cover" style="width:0px" class="text-center">{{coverMessage}}</div>
-            <div id="conn" style="width:0px" class="text-center">{{connMessage}}</div>
+            
             
             <form class="form-horizontal"  ng-submit="submitGame()" name="frmGame" novalidate>
                     <input type="hidden" id="hidGameId" value="" />
@@ -577,7 +581,7 @@
       </div>
     </div>
 </div>
-
+<div class="playerDetailsDiv"></div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

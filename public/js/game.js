@@ -180,35 +180,36 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     socket.on('reconnecting',function(d){
         console.log(`Reconnecting  -> ${d}`);
         if(d==1){
-            if($scope.gameStarted)
+            if($scope.gameStarted){
                 $scope.$broadcast('timer-stop'); //pause timer
-            var styles = {
-                zIndex:2,
-                background:"rgb(225,255,255)",
-                background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
-                background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
-                background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
-                filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
-                width:'98%',
-                opacity:0.7,
-                height:'319px',
-                top:'43px',
-                position:'absolute',
-                paddingLeft:'57px',
-                paddingTop: '90px',
-                fontSize: 'large',
-                paddingRight: '19px',
-                color:'darkred',
-                display:'block',
-                borderRadius: '5px',
-                border:'1px ridge #8ebfe3',
-                marginLeft:'-11px',
-            };
-            $('#conn').css(styles);
+            }
         }
+        var styles = {
+            zIndex:12,
+            background:"rgb(225,255,255)",
+            background:"-moz-linear-gradient(top, rgba(225,255,255,1) 0%, rgba(225,255,255,1) 7%, rgba(225,255,255,1) 12%, rgba(253,255,255,1) 12%, rgba(230,248,253,1) 30%, rgba(200,238,251,1) 54%, rgba(190,228,248,1) 75%, rgba(177,216,245,1) 100%)",
+            background:"-webkit-linear-gradient(top, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+            background:"linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%)",
+            filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 )",
+            width:'98%',
+            opacity:0.8,
+            height:'513px',
+            top:'53px',
+            position:'absolute',
+            paddingLeft:'57px',
+            paddingTop: '90px',
+            fontSize: 'large',
+            paddingRight: '19px',
+            color:'darkred',
+            display:'block',
+            borderRadius: '5px',
+            border:'1px ridge #8ebfe3',
+            marginLeft:'-11px',
+        };
+        $('#conn').css(styles);
         $scope.connMessage = `Please do not close or refresh, just wait.... tried connecting ${d} times`;
         $scope.wait=true;
-        $scope.loaderMsg=`Connection lost, please wait...`;
+        $scope.loaderMsg=`Connection lost`;
     });
     /*--------------------------------------------------- */
     $scope.refreshGames = function(){
@@ -1210,33 +1211,34 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                     if(vc>0 && vc<$scope.playingGame.place.length ){
                         //call api to check
                         $scope.waitPlace=true;
-                        $http.get('api/words/place/'+$scope.playingGame.place)
-                        .then(function (result) {
-                            $scope.waitPlace = false;
-                            if(result.data) {
-                                $scope.placeVal = true;
-                                if($scope.playingGame.place.length<=4)
-                                    $scope.playingGame.placePoints = 4;
-                                else if($scope.playingGame.place.length==5)
-                                    $scope.playingGame.placePoints = 5;
-                                else if($scope.playingGame.place.length==6)
-                                    $scope.playingGame.placePoints = 6;
-                                else if($scope.playingGame.place.length==7)
-                                    $scope.playingGame.placePoints = 7;
-                                else if($scope.playingGame.place.length>=8)
-                                    $scope.playingGame.placePoints = 9;
+                        socket.emit('validatePlace', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0],word:$scope.playingGame.place});
+                        // $http.get('api/words/place/'+$scope.playingGame.place)
+                        // .then(function (result) {
+                        //     $scope.waitPlace = false;
+                        //     if(result.data) {
+                        //         $scope.placeVal = true;
+                        //         if($scope.playingGame.place.length<=4)
+                        //             $scope.playingGame.placePoints = 4;
+                        //         else if($scope.playingGame.place.length==5)
+                        //             $scope.playingGame.placePoints = 5;
+                        //         else if($scope.playingGame.place.length==6)
+                        //             $scope.playingGame.placePoints = 6;
+                        //         else if($scope.playingGame.place.length==7)
+                        //             $scope.playingGame.placePoints = 7;
+                        //         else if($scope.playingGame.place.length>=8)
+                        //             $scope.playingGame.placePoints = 9;
                                     
-                            }
-                            else {
-                                $scope.placeVal = false;
-                                $scope.playingGame.placePoints = 0;
-                            }
+                        //     }
+                        //     else {
+                        //         $scope.placeVal = false;
+                        //         $scope.playingGame.placePoints = 0;
+                        //     }
                             
-                        },
-                        function(error){
-                            alert(error.statusText+'Error connecting to server');
-                            $scope.waitPlace = false;
-                        });
+                        // },
+                        // function(error){
+                        //     alert(error.statusText+'Error connecting to server');
+                        //     $scope.waitPlace = false;
+                        // });
                     }
                     else{
                         $scope.placeVal = false;
@@ -1248,6 +1250,27 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             }
         }
     }
+    socket.on('onValidatePlace',function(data){
+        $scope.waitPlace = false;
+        if(data.playerId==$scope.currentPlayerId.split('~')[0] && data.valid) {
+            $scope.placeVal = true;
+            if($scope.playingGame.place.length<=4)
+                $scope.playingGame.placePoints = 4;
+            else if($scope.playingGame.place.length==5)
+                $scope.playingGame.placePoints = 5;
+            else if($scope.playingGame.place.length==6)
+                $scope.playingGame.placePoints = 6;
+            else if($scope.playingGame.place.length==7)
+                $scope.playingGame.placePoints = 7;
+            else if($scope.playingGame.place.length>=8)
+                $scope.playingGame.placePoints = 9;
+                
+        }
+        else {
+            $scope.placeVal = false;
+            $scope.playingGame.placePoints = 0;
+        }
+    })
     $scope.placeValid = function () {
         let c=''
         if($('#txtPlace').val().length>=1){
