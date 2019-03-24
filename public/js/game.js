@@ -1212,33 +1212,33 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                         //call api to check
                         $scope.waitPlace=true;
                         socket.emit('validatePlace', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0],word:$scope.playingGame.place});
-                        // $http.get('api/words/place/'+$scope.playingGame.place)
-                        // .then(function (result) {
-                        //     $scope.waitPlace = false;
-                        //     if(result.data) {
-                        //         $scope.placeVal = true;
-                        //         if($scope.playingGame.place.length<=4)
-                        //             $scope.playingGame.placePoints = 4;
-                        //         else if($scope.playingGame.place.length==5)
-                        //             $scope.playingGame.placePoints = 5;
-                        //         else if($scope.playingGame.place.length==6)
-                        //             $scope.playingGame.placePoints = 6;
-                        //         else if($scope.playingGame.place.length==7)
-                        //             $scope.playingGame.placePoints = 7;
-                        //         else if($scope.playingGame.place.length>=8)
-                        //             $scope.playingGame.placePoints = 9;
+                        $http.get('api/words/place/'+$scope.playingGame.place)
+                        .then(function (result) {
+                            $scope.waitPlace = false;
+                            if(result.data) {
+                                $scope.placeVal = true;
+                                if($scope.playingGame.place.length<=4)
+                                    $scope.playingGame.placePoints = 4;
+                                else if($scope.playingGame.place.length==5)
+                                    $scope.playingGame.placePoints = 5;
+                                else if($scope.playingGame.place.length==6)
+                                    $scope.playingGame.placePoints = 6;
+                                else if($scope.playingGame.place.length==7)
+                                    $scope.playingGame.placePoints = 7;
+                                else if($scope.playingGame.place.length>=8)
+                                    $scope.playingGame.placePoints = 9;
                                     
-                        //     }
-                        //     else {
-                        //         $scope.placeVal = false;
-                        //         $scope.playingGame.placePoints = 0;
-                        //     }
+                            }
+                            else {
+                                $scope.placeVal = false;
+                                $scope.playingGame.placePoints = 0;
+                            }
                             
-                        // },
-                        // function(error){
-                        //     alert(error.statusText+'Error connecting to server');
-                        //     $scope.waitPlace = false;
-                        // });
+                        },
+                        function(error){
+                            alert(error.statusText+'Error connecting to server');
+                            $scope.waitPlace = false;
+                        });
                     }
                     else{
                         $scope.placeVal = false;
@@ -1250,27 +1250,6 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             }
         }
     }
-    socket.on('onValidatePlace',function(data){
-        $scope.waitPlace = false;
-        if(data.playerId==$scope.currentPlayerId.split('~')[0] && data.valid) {
-            $scope.placeVal = true;
-            if($scope.playingGame.place.length<=4)
-                $scope.playingGame.placePoints = 4;
-            else if($scope.playingGame.place.length==5)
-                $scope.playingGame.placePoints = 5;
-            else if($scope.playingGame.place.length==6)
-                $scope.playingGame.placePoints = 6;
-            else if($scope.playingGame.place.length==7)
-                $scope.playingGame.placePoints = 7;
-            else if($scope.playingGame.place.length>=8)
-                $scope.playingGame.placePoints = 9;
-                
-        }
-        else {
-            $scope.placeVal = false;
-            $scope.playingGame.placePoints = 0;
-        }
-    })
     $scope.placeValid = function () {
         let c=''
         if($('#txtPlace').val().length>=1){
