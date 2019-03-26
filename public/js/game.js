@@ -105,7 +105,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
 
-    $scope.submit=true;
+    $scope.submitting=false;
     $scope.sound=true;
 
     let playersAndSockets=[];
@@ -657,12 +657,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     //if($('#hidGameId').val() == data[0]){
         $.each($scope.players,function(i,v){
             if(v.playerId == data[1]){
-                v.playerTyping = `${data[2]}`
+                v.playerTyping = `${data[2]}`;
             }
         });
-        setTimeout(() => {
-            v.playerTyping = '';
-        }, 500);
     //}
     });
 
@@ -700,8 +697,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.$on('timer-stopped', function (event, data){
        // console.log('Timer Stopped - data = ', data);
         $scope.playerTime =data.seconds;
-        if(data.seconds==0) //update only if not submitted
+        if(data.seconds==0){ //update only if not submitted
+            $scope.submitting = true;
             submitGameWOStop();
+        }
     });
 
     $scope.submitGame = function(){
@@ -711,7 +710,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.$broadcast('timer-stop');
         $scope.loaderMsg='submitting...'
         $scope.wait=true;
-        $scope.submit = false;
+        $scope.submitting = true;
         let wordsArray={
             name:$scope.playingGame.name,namePoints:$scope.playingGame.namePoints,
             place:$scope.playingGame.place,placePoints:$scope.playingGame.placePoints,
@@ -737,11 +736,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.playState.submit = 1; 
         //$scope.$broadcast('timer-stop');
         //console.log('submitting as timer is 0');
-        $('#conn').focus(); //remove focus from the current text
 
         $scope.loaderMsg='Time is up! submitting...'
         $scope.wait=true;
-        $scope.submit = false;
+        
         let wordsArray={
           name:$scope.playingGame.name,namePoints:$scope.playingGame.namePoints,
           place:$scope.playingGame.place,placePoints:$scope.playingGame.placePoints,
@@ -769,8 +767,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         if($scope.coverMessage.indexOf('missed')==-1)
             $scope.coverMessage=''
         if(data.err!=''){
-            console.log('game submit err');
-            alert(`Some error occured while submitting\n please try again :${data.err}`);
+            console.log(`Some error occured while submitting\n please try again :${data.err}`);
         }
         else{
             let c=0;
@@ -875,10 +872,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $.each($scope.players,function(i,v){
           v.playerTyping='';
         });
-        $scope.submit=true;
+        $scope.submitting=false;
+        $(this).removeAttr('disabled');
         if(data.err!=''){
-          console.log('game start err');
-          alert('Some error occured while starting the game\n please try again');
+          console.log(`Some error occured while starting the game: ${data.err}`);
         }
         else{
           //change icon
