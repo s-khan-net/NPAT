@@ -698,6 +698,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
        // console.log('Timer Stopped - data = ', data);
         $scope.playerTime =data.seconds;
         if(data.seconds==0){ //update only if not submitted
+            $('#btnSubmit').focus(); // fire onblur event on all texts
             $scope.submitting = true;
             submitGameWOStop();
         }
