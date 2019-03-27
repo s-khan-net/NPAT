@@ -21,7 +21,6 @@ const RUNTIME = 'runtime';
 const PRECACHE_URLS = [
   'index.html',
   '../css/main.css',
-  '../public/js/game.js'
 ];
 
 // The install handler takes care of precaching the resources we always need.
