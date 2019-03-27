@@ -615,8 +615,11 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     /*-----wait from socket----*/
     socket.on('onWait',function(msg){
-        if(msg){$scope.loaderMsg=msg}
-        $scope.wait=true;
+        if(msg){
+            $scope.loaderMsg=msg;
+            $scope.wait=true;
+        }
+        
     });
     socket.on('onStopWait',function(data){
         $scope.wait=false;
@@ -699,8 +702,13 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.playerTime =data.seconds;
         if(data.seconds==0){ //update only if not submitted
             $('#btnSubmit').focus(); // fire onblur event on all texts
+            $scope.loaderMsg='Time is up! submitting...'
+            $scope.wait=true;
             $scope.submitting = true;
-            submitGameWOStop();
+            let timeout = Math.ceil(Math.random()*300)+300;
+            setTimeout(() => {
+                submitGameWOStop();
+            }, timeout);
         }
     });
 
@@ -735,12 +743,6 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     submitGameWOStop = function(){
         // set play state
         $scope.playState.submit = 1; 
-        //$scope.$broadcast('timer-stop');
-        //console.log('submitting as timer is 0');
-
-        $scope.loaderMsg='Time is up! submitting...'
-        $scope.wait=true;
-        
         let wordsArray={
           name:$scope.playingGame.name,namePoints:$scope.playingGame.namePoints,
           place:$scope.playingGame.place,placePoints:$scope.playingGame.placePoints,
