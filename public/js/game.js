@@ -108,8 +108,6 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.submitting=false;
     $scope.sound=true;
 
-    let playersAndSockets=[];
-
     if($location.search().id){
         //join code
         let gid = $location.search().id;
@@ -914,9 +912,15 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
         else{
             socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
+            $('body').removeAttr('style');
             $('#mainContainer').fadeOut(100);
             $('#gameContainer').fadeIn(1000);
             $('#btnChat #btnChat').hide();
+            $scope.game={};
+            $scope.currentGameId='';
+            $scope.currentPlayerId='';
+            $scope.gameName='';
+            $scope.players =[];
             refreshGameList();
             $scope.wait=false;
             $scope.loaderMsg='Loading...';
@@ -1039,8 +1043,15 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
     });
     $scope.finish = function(){
+        $('body').removeAttr('style');
         $('#mainContainer').fadeOut(100);
         $('#gameContainer').fadeIn(1000);
+        $('#btnChat #btnChat').hide();
+        $scope.game={};
+        $scope.currentGameId='';
+        $scope.currentPlayerId='';
+        $scope.gameName='';
+        $scope.players =[];
         refreshGameList();
         $scope.wait=false;
         $scope.loaderMsg='Loading...';

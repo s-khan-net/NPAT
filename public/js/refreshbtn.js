@@ -28,6 +28,7 @@
                 $('#chatSection').show();
                 $('#chat').show();
                 $('#chatsectionhead').hide();
+                $("#chatbox").scrollTop(1E10);
             }
         });
         $('.close').click(function(){
