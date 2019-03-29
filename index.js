@@ -506,6 +506,7 @@ io.sockets.on('connection', function(socket) { //socket code
                     }
                     else{
                         if(game){
+                            game.gameActive = false;
                             game.gameAbandoned = true;
                             game.save()
                             .then(g=>{
