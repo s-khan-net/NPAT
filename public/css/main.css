@@ -153,6 +153,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   label{
       letter-spacing: 3px
   }
+  .textboxrowpadding{
+    padding-top:9px
+  }
   .formrowpadding{
       padding-top:7px
   }
@@ -341,6 +344,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   color:white;
   background-color:darkblue
 }
+/*-----------------------------*/
 .chatCover{
   position: absolute;
   top:0;
@@ -359,4 +363,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   position: absolute;
   z-index: 25;
   display: none;
+}
+/*-----------------------labels------------------*/
+.nameC{
+  color:#cb0a0a
+}
+.placeC{
+  color:#319833
+}
+.animalC{
+  color:#8b8603
+}
+.thingC{
+  color:#286090
 }

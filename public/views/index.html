@@ -152,35 +152,68 @@
                     </ul>
                 </div>
             </div>
-            <div class="row" style="padding-top:9px">
-                <div class="col-md-12">
-                    <label for="txtName" aria-label="txtName">Name</label>&nbsp;&nbsp;<i ng-class="nameValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.namePoints}}</span>
+            <div class="row textboxrowpadding">
+                <div class="col-xs-2" style="text-align: right;">
+                    <div class="row" style="padding-left: 5px;">
+                        <div class="col-xs-4" style="padding-right: 0px;padding-left: 0px;">
+                            <span class="badge">{{playingGame.namePoints}}</span>
+                            <i ng-class="nameValid()"></i>
+                        </div>
+                        <div class="col-xs-6" style="padding-left: 0px;padding-right: 7px;">
+                            <label for="txtName" aria-label="txtName" class="nameC">Name</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-xs-10" style="padding-left: 0px;">
                     <input type="text" id="txtName" name="txtName" class="form-control box" data-ng-model="playingGame.name" data-ng-change="changeName()" data-ng-blur="ValName()" autocomplete="none" required ng-disabled="submitting"/>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="txtPlace" aria-label="txtPlace">Place</label>&nbsp;&nbsp;<i ng-class="placeValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.placePoints}}</span>
+            <div class="row textboxrowpadding">
+                <div class="col-xs-2" style="text-align: right;">
+                    <div class="row" style="padding-left: 5px;">
+                        <div class="col-xs-4" style="padding-right: 0px;padding-left: 0px;">
+                            <i ng-class="placeValid()"></i>
+                            <span class="badge">{{playingGame.placePoints}}</span>
+                        </div>
+                        <div class="col-xs-6" style="padding-left: 0px;padding-right: 7px;">
+                            <label for="txtPlace" aria-label="txtPlace" class="placeC">Place</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-xs-10" style="padding-left: 0px;">
                     <input type="text" id="txtPlace" name="txtPlace" class="form-control box" data-ng-model="playingGame.place" data-ng-change="changePlace()" data-ng-blur="ValPlace()"autocomplete="none" required ng-disabled="submitting"/>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="txtAnimal" aria-label="txtAnimal">Animal</label>&nbsp;&nbsp;<i ng-class="animalValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.animalPoints}}</span>
+            <div class="row textboxrowpadding">
+                <div class="col-xs-2" style="text-align: right;">
+                    <div class="row" style="padding-left: 5px;">
+                        <div class="col-xs-4" style="padding-right: 0px;padding-left: 0px;">
+                            <span class="badge">{{playingGame.animalPoints}}</span>
+                            <i ng-class="animalValid()"></i>
+                        </div>
+                        <div class="col-xs-6" style="padding-left: 0px;padding-right: 7px;">
+                            <label for="txtAnimal" aria-label="txtAnimal" class="animalC">Animal</label>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="col-md-12">
+                <div class="col-xs-10" style="padding-left: 0px;">
                     <input type="text" id="txtAnimal" name="txtAnimal" class="form-control box" data-ng-model="playingGame.animal" data-ng-change="changeAnimal()" data-ng-blur="ValAnimal()"autocomplete="none" required ng-disabled="submitting"/>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="txtThing" aria-label="txtThing">Thing</label>&nbsp;&nbsp;<i ng-class="thingValid()"></i>&nbsp;&nbsp;<span class="badge">{{playingGame.thingPoints}}</span>
+            <div class="row textboxrowpadding">
+                <div class="col-xs-2" style="text-align: right">
+                    <div class="row" style="padding-left: 5px;">
+                        <div class="col-xs-4" style="padding-right: 0px;padding-left: 0px;">
+                            <span class="badge">{{playingGame.thingPoints}}</span>
+                            <i ng-class="thingValid()"></i>
+                        </div>
+                        <div class="col-xs-6" style="padding-left: 0px;padding-right: 7px;">
+                                <label for="txtThing" aria-label="txtThing" class="thingC">Thing</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-xs-10" style="padding-left: 0px;">
                     <input type="text" id="txtThing" name="txtThing" class="form-control box" data-ng-model="playingGame.thing" data-ng-change="changeThing()" data-ng-blur="ValThing()"autocomplete="none" required ng-disabled="submitting"/>
                 </div>
             </div>
