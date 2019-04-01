@@ -50,7 +50,7 @@
 <div style="min-width:73px;height:20px;color:darkred;position:absolute;z-index: 5;top:0px;left:41%;background-color: beige;" data-ng-show="wait" >{{loaderMsg}}</div>
 <div id="chat"  class="chatCover"></div>
 <div id="conn" style="width:0px" class="text-center">{{connMessage}}</div>
-<div class="container"  id="mainContainer" style="margin-top:32px;display: none">
+<div class="container"  id="mainContainer" style="margin-top:12px;display: none">
     <div class="row">
         <div class="col-xs-2 text-center" id="npat" style="font-family:Verdana, Geneva, Tahoma, sans-serif;user-select: none;font-weight: 700;"><span style="color:#cb0a0a;user-select: none;padding: 1px">N</span><span style="color:#319833;user-select: none;padding: 1px">P</span><span style="color:#8b8603;user-select: none;padding: 1px">A</span><span style="color:#286090;user-select: none;padding: 1px">T</span></div>
         <div class="col-xs-10 col-md-6 text-center" style="font-family:monospace;letter-spacing:2px;font-size:larger;user-select: none;font-weight: bolder;">{{gameName}}&nbsp;&nbsp;<span id="gameTimer" style="display:none;background-color:whitesmoke"><timer autostart="false" countdown="gameTime" interval="1000">{{mminutes}}:{{sseconds}}</timer></span></div>
@@ -186,7 +186,7 @@
             </div>
             <div class="row" style="padding-top:11px">
                     <div class="col-xs-9" style="text-align:right">
-                        <button class="btn btn-primary btn-lg" id="btnSubmit" ng-disabled="frmGame.$invalid" ng-hide="submitting">Submit</button>
+                        <button class="btn btn-primary btn-lg" id="btnSubmit" ng-disabled="frmGame.$invalid" ng-hide="submitting">Done</button>
                         <div class="small warning" data-ng-show="submitting">can't submit now...</div> 
                     </div>
             </div>
@@ -216,11 +216,11 @@
         </div>
     </div>
 </div>
-<div  id="gameContainer" style="margin-top:32px; ">
+<div  id="gameContainer" style="margin-top:12px; ">
     <div class="container" style="min-height:319px">
     <div class="row" >
         <div class="col-md-3 col-xs-0">
-            <div id="logoDiv" style="position:absolute;top:-33px;z-index:3;"><img src="/images/logo_75X75_t.png" /></div>
+            <div id="logoDiv" style="position:absolute;top:1px;z-index:3;"><img src="/images/logo_75X75_t.png" /></div>
         </div>
         <div class="col-md-6 col-xs-12" id="js-gameContainer" style="padding-top:11px">
             <div class="row">
