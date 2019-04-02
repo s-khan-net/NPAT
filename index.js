@@ -235,8 +235,25 @@ io.sockets.on('connection', function(socket) { //socket code
                             if(!game.gameEnded && game.gameActive){
                                 game.gamePlayers.forEach(player => {
                                     if(player.playerId == obj.playerId){
-                                        player.wordsForGame.push(obj.words);
-                                        player.pointsForGame.push(obj.pointsForGame);
+                                        if(game.wordsForGame){ //if submitted atleast once
+                                        //seach words for game
+                                        let updated = false;
+                                        game.wordsForGame.forEach(words => {
+                                            console.log(obj.words[0].substr(1,0)+ ',' + words[0].substr(1,0));
+                                            if(obj.words[0].substr(1,0) == words[0].substr(1,0)){ //submitted once->update
+                                                words = obj.words;
+                                                updated=true;
+                                            }
+                                        });
+                                        if(!updated){
+                                            player.wordsForGame.push(obj.words);
+                                            player.pointsForGame.push(obj.pointsForGame);
+                                        }
+                                        }
+                                        else{
+                                            player.wordsForGame.push(obj.words);
+                                            player.pointsForGame.push(obj.pointsForGame);
+                                        }
                                     }
                                 });
                                 game.save()

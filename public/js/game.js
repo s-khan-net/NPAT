@@ -912,6 +912,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
         else{
             socket.emit('leave', {gameId:$scope.currentGameId,playerId:$scope.currentPlayerId.split('~')[0]});
+            $scope.$broadcast('timer-stop');
             $('body').removeAttr('style');
             $('#mainContainer').fadeOut(100);
             $('#gameContainer').fadeIn(1000);
@@ -1198,7 +1199,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
     $scope.nameValid = function () {
         if($('#txtName').val().length>=1)
-            return $scope.nameVal ? 'fa fa-check-circle green' : 'fa fa-close red';
+            return $scope.nameVal ? 'validC' : 'inValidC';
     }
 
     /*-----validate place-------------*/
@@ -1268,9 +1269,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.placeValid = function () {
         let c=''
         if($('#txtPlace').val().length>=1){
-            if($scope.waitPlace==true) c='fa fa-spinner fa-spin grey';
-            else if($scope.placeVal==true) c='fa fa-check-circle green';
-            else if($scope.placeVal==false) c='fa fa-close red';
+            if($scope.waitPlace==true) c='validatingC';
+            else if($scope.placeVal==true) c='validC';
+            else if($scope.placeVal==false) c='inValidC';
         }
         return c;
     }
@@ -1341,9 +1342,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.animalValid = function () {
         let c=''
         if($('#txtAnimal').val().length>=1){
-            if($scope.waitAnimal==true) c='fa fa-spinner fa-spin grey';
-            else if($scope.animalVal==true) c='fa fa-check-circle green';
-            else if($scope.animalVal==false) c='fa fa-close red';
+            if($scope.waitAnimal==true) c='validatingC';
+            else if($scope.animalVal==true) c='validC';
+            else if($scope.animalVal==false) c='inValidC';
         }
         return c;
     }
@@ -1405,9 +1406,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.thingValid = function () {
         let c=''
         if($('#txtThing').val().length>=1){
-            if($scope.waitThing==true) c='fa fa-spinner fa-spin grey';
-            else if($scope.thingVal==true) c='fa fa-check-circle green';
-            else if($scope.thingVal==false) c='fa fa-close red';
+            if($scope.waitThing==true) c='validatingC';
+            else if($scope.thingVal==true) c='validC';
+            else if($scope.thingVal==false) c='inValidC';
         }
         return c;
     }

@@ -377,3 +377,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
 .thingC{
   color:#286090
 }
+.validC{
+  border-bottom: 2px solid lightblue;
+}
+.inValidC{
+  border-bottom: 1px solid red;
+}
+.validatingC{
+  border-bottom: 3px solid #CCC;
+}

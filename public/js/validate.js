@@ -89,14 +89,14 @@ function initialize(){
             $('.js-PlayerPic').css('margin-left','7px');
         }
         if(w<=360){
-            $('label').css({letterSpacing:'1px',fontSize:'inherit',lineHeight:1.7,paddingLeft:'7px'});
+            $('label').css({letterSpacing:'1px'});//,fontSize:'inherit',lineHeight:1.7,paddingLeft:'7px'});
             $('.nameC').text('N');
             $('.placeC').text('P');
             $('.animalC').text('A');
             $('.thingC').text('T');
         }
         else{
-            $('label').css({letterSpacing:'3px',fontSize:'inherit',lineHeight:1.7});
+            $('label').css({letterSpacing:'3px'});//,fontSize:'inherit',lineHeight:1.7});
             $('.nameC').text('Name');
             $('.placeC').text('Place');
             $('.animalC').text('Animal');
