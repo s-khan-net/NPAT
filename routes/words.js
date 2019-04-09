@@ -18,8 +18,8 @@ router.get('/thing/:word',async (req,res)=>{
 });
 router.get('/animal/:word',async (req,res)=>{
     let valid =false;//check if word is present
-    console.log(req.params.word);
-    var data = fs.readFileSync(`assets/animals.txt`,'UTF-8');
+    let filename = (req.params.word.substring(0,1)).toUpperCase() +'.txt';
+    var data = fs.readFileSync(`assets/animals/${filename}`,'UTF-8');
     data.split(/\n/).forEach(element => {
       //  console.log(element);
         if(element.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
@@ -38,21 +38,16 @@ router.get('/place/:word',async (req,res)=>{
             valid=true;
         }
     });
-    // if(!valid){
-    //     var x = '';
-    //     req.params.word.trim().toLowerCase().split(' ').forEach(e=>{
-    //         x += capitalizeFirstLetter(e)+' ';
-    //     });
-    //     let s = cities.filter(city => {
-    //         return city.name.match(x.substr(0,x.length-1));
-    //     });
-    //     s.forEach(element => {
-    //         if(element.name.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
-    //             console.log(`found city ${element.name}`);
-    //             valid=true;
-    //         }  
-    //     });
-    // }
+    if(!valid){
+        let filename = (req.params.word.substring(0,1)).toUpperCase() +'.txt';
+        var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
+        data.split(/\n/).forEach(element => {
+            if(element.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
+                console.log(`found city ${element}`);
+                valid=true;
+            }
+        });
+    }
     if(!valid){
         var x = '';
         req.params.word.trim().toLowerCase().split(' ').forEach(e=>{

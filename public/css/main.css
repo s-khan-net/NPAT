@@ -378,11 +378,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   color:#286090
 }
 .validC{
-  border-bottom: 2px solid lightblue;
+  border-bottom: 3px solid lightgreen;
 }
 .inValidC{
   border-bottom: 1px solid red;
 }
 .validatingC{
-  border-bottom: 3px solid #CCC;
+  border-bottom: 3px solid gray;
 }

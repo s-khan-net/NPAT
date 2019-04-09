@@ -319,6 +319,7 @@ io.sockets.on('connection', function(socket) { //socket code
                     let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
                     //remove a
                     game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
+                    let animals = []
                     game.save()
                         .then(g=>{
                             logger.info(`updated the game with next info and alphabet:${a}`);
