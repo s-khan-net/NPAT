@@ -98,8 +98,6 @@
         </div>
         <div class="col-xs-10 col-md-6" id="mainGameSection">
             <div id="cover" style="width:0px" class="text-center">{{coverMessage}}</div>
-            
-            
             <form class="form-horizontal"  ng-submit="submitGame()" name="frmGame" novalidate>
                     <input type="hidden" id="hidGameId" value="" />
                     <input type="hidden" id="hidPlayerId" value="" />
@@ -159,6 +157,12 @@
                 </div>
                 <div class="col-xs-10" style="padding-left: 0px;">
                     <input type="text" id="txtName" name="txtName" class="form-control box" data-ng-model="playingGame.name" data-ng-change="changeName()" data-ng-blur="ValName()" autocomplete="none" required ng-disabled="submitting"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">&nbsp;</div>
+                <div class="col-xs-10">
+                    <div class="textBlock" data-ng-repeat="a in animals">{{a}}</div>
                 </div>
             </div>
             <div class="row textboxrowpadding">
@@ -249,9 +253,9 @@
             
             <div class="row js-playerStuff" style="margin-top:49px">
                 <div class="row js-playerStuff" ng-show="currentGameId" style="padding-bottom:8px">
-                    <div class="col-md-12 col-xs-12" ng-show="game.gameName">you are invited to join <i><b>{{game.gameName}}</b></i>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players, with {{game.gameAlphabetArray.length}} alphabets remaining.</div>
-                    <div class="col-md-8 col-xs-12" ng-hide="game.gameName">
-                        The game ID for the invite is incorrect, or the game might have ended.<br> please verify the URL that brought you here.
+                    <div class="col-md-12 col-xs-12 text-center" ng-show="game.gameName">you are invited to join <i><b>{{game.gameName}}</b></i>, its <b>{{game.gameStarted?'Started':'Not started yet'}}</b> and has <b>{{game.gamePlayers.length}}</b> players, with {{game.gameAlphabetArray.length}} alphabets remaining.</div>
+                    <div class="col-md-8 col-xs-12 text-center" ng-hide="game.gameName">
+                        The game might have ended.<br> please verify the URL that brought you here.<br>Or simply continue below
                     </div>
                 </div>
                 <div class="col-md-4 col-xs-1">&nbsp;</div>

@@ -16,6 +16,34 @@
 //     return v.toString(16);
 //   });
 // }
+var replace = require("replace-in-file");
+var fs = require('fs');
 console.log(process.env.PORT);
-
-
+var data = fs.readFileSync(`assets/names.txt`,'UTF-8');
+let array = data.split(/\n/);
+let chk=0;
+let e1='';
+for (let index = 0; index < array.length; index++) {
+    e1 = array[chk];
+    for (let i = chk+1; i < array.length; i++) {
+        if(e1==array[i]){
+            //remove 
+            console.log(e1);
+            console.log(`found ${i}`);
+            const options = {
+                files: 'assets/names.txt',
+                from: e1,
+                to: i,
+              };
+              replace(options)
+                .then(changes => {
+                    console.log('Modified files:', changes.join(', '));
+                })
+                .catch(error => {
+                    console.error('Error occurred:', error);
+                });
+        }
+        
+    }
+    chk++;
+}

@@ -184,12 +184,14 @@ io.sockets.on('connection', function(socket) { //socket code
                     let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
                     //remove a
                     game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
+
+                    var wordsObj = getWords(a);
                     game.gameStarted=true;
                     game.gameStartedAt=Date.now();
                     game.save()
                         .then(g=>{
                             logger.info(`updated the game with start info and alphabet:${a}`);
-                            var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,err:''};
+                            var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,places:wordsObj.places,animals:wordsObj.animals,things:wordsObj.things,err:''};
                             resolve(d);
                         })
                         .catch(err=>{
@@ -319,11 +321,11 @@ io.sockets.on('connection', function(socket) { //socket code
                     let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
                     //remove a
                     game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
-                    let animals = []
+                    var wordsObj = getWords(a);
                     game.save()
                         .then(g=>{
                             logger.info(`updated the game with next info and alphabet:${a}`);
-                            var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,err:''};
+                            var d = {gameId:g.gameId,alphabet:a,alphabetArray:g.gameAlphabetArray,gameTime:g.gameTime,gameStarted:g.gameStarted,gameStartedAt:g.gameStartedAt,places:wordsObj.places,animals:wordsObj.animals,things:wordsObj.things,err:''};
                             resolve(d);
                         })
                         .catch(err=>{
@@ -571,6 +573,70 @@ io.sockets.on('connection', function(socket) { //socket code
             }
         });
 
+    }
+
+    function getWords(a){
+        /* place  */
+        let place=[];
+        let filename = a +'.txt';
+        var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
+        let array = data.split(/\n/);
+        let max = array.length;
+        let min = 0;
+        if(max>13){
+            min = Math.floor(Math.random() * (array.length - 1)) + 1;
+            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+        }
+        else{
+            place = array;
+        }
+        /************************************** */
+        /* animal */
+        let animal=[];
+        filename = a +'.txt';
+        data = fs.readFileSync(`assets/animals/${filename}`,'UTF-8');
+        array = data.split(/\n/);
+        max = array.length;
+        min = 0;
+        if(max>13){
+            min = Math.floor(Math.random() * (array.length - 1)) + 1;
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+        }
+        else{
+            animal = array;
+        }
+        /************************************** */
+         /* thing */
+         let thing=[];
+         filename = a +' Words.txt';
+         data = fs.readFileSync(`assets/thing/${filename}`,'UTF-8');
+         array = data.split(/\n/);
+         max = array.length;
+         min = 0;
+         if(max>13){
+            min = Math.floor(Math.random() * (array.length - 1)) + 1;
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+         }
+         else{
+            thing = array;
+         }
+         /********************************************* */
+         return {places:place,animals:animal,things:thing};
     }
 });
 server.listen(process.env.PORT, function() {

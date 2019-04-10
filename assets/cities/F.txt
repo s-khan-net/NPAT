@@ -20,7 +20,6 @@ Fasa
 Fastiv
 Fatehabad
 Fatehpur
-Fatehpur
 Fatsa
 Favoriten
 Fayetteville
@@ -181,3 +180,7 @@ Fuyu
 Fuzhou
 Fylde
 Fyzabad
+Fiji
+Finland
+France
+Florida

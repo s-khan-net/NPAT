@@ -31,23 +31,14 @@ router.get('/animal/:word',async (req,res)=>{
 });
 router.get('/place/:word',async (req,res)=>{
     let valid =false;//check if word is present
-    var data = fs.readFileSync(`assets/countries_1`,'UTF-8');
+    let filename = (req.params.word.substring(0,1)).toUpperCase() +'.txt';
+    var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
     data.split(/\n/).forEach(element => {
         if(element.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
-            console.log(`found country ${element}`);
+            console.log(`found 1 ${element}`);
             valid=true;
         }
     });
-    if(!valid){
-        let filename = (req.params.word.substring(0,1)).toUpperCase() +'.txt';
-        var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
-        data.split(/\n/).forEach(element => {
-            if(element.trim().toLowerCase()==req.params.word.trim().toLowerCase()){
-                console.log(`found city ${element}`);
-                valid=true;
-            }
-        });
-    }
     if(!valid){
         var x = '';
         req.params.word.trim().toLowerCase().split(' ').forEach(e=>{
@@ -58,7 +49,7 @@ router.get('/place/:word',async (req,res)=>{
 
         obj.forEach(o=>{
             if(o.name.trim().toLowerCase() == req.params.word.trim().toLowerCase()){
-                console.log(`found city ${o.name}`);
+                console.log(`found 2 ${o.name}`);
                 valid=true;
             }
         });

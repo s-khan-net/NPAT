@@ -51,7 +51,6 @@ Ungaran
 Ungsang
 Union
 Union City
-Union City
 Universal City
 Unjha
 Unna
@@ -96,3 +95,13 @@ Uyovu
 Uzhgorod
 Uzice
 Uzlovaya
+Uttaranchal
+Uttar Pradesh
+Uganda
+Ukraine
+United Arab Emirates
+United Kingdom
+United States
+Utah
+Uruguay
+Uzbekistan

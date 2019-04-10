@@ -33,6 +33,7 @@
     "jsonwebtoken": "^8.4.0",
     "loadash": "^1.0.0",
     "mongoose": "^5.4.3",
+    "replace-in-file": "^3.4.4",
     "socket.io": "^2.2.0",
     "winston": "^2.4.0"
   }
