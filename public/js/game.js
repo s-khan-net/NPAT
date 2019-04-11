@@ -108,6 +108,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.connMessage='';
     $scope.loaderMsg='...';
     $scope.gameStarted=false;
+    $scope.hint=false;
 
     $scope.submitting=false;
     $scope.sound=true;
@@ -1436,6 +1437,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
         return vcount;
     }
+    
 
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your game will be lost!.";
@@ -1454,9 +1456,26 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
 
     function makewords(p,a,t){
-        
-        $scope.places=['D','S','F','A','L','K','M','Z'];
-        $scope.animals=['D','S','F','A','L','K','M','Z'];
-        $scope.things=['D','S','F','A','L','K','M','Z'];
+        let rp = (Math.floor(Math.random() * (p.length+1 - 0)) + 0)||0;
+        let ra = (Math.floor(Math.random() * (a.length+1 - 0)) + 0)||0;
+        let rt = (Math.floor(Math.random() * (t.length+1 - 0)) + 0)||0;
+        $scope.places=shuffle(p[rp].split(''));
+        $scope.animals=shuffle(a[ra].split(''));
+        $scope.things=shuffle(t[rt].split(''));
+    }
+    function shuffle(arra1) {
+        var ctr = arra1.length, temp, index;
+        // While there are elements in the array
+        while (ctr > 0) {
+        // Pick a random index
+            index = Math.floor(Math.random() * ctr);
+        // Decrease ctr by 1
+            ctr--;
+        // And swap the last element with it
+            temp = arra1[ctr];
+            arra1[ctr] = arra1[index];
+            arra1[index] = temp;
+        }
+        return arra1;
     }
 });

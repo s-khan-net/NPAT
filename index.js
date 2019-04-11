@@ -583,17 +583,27 @@ io.sockets.on('connection', function(socket) { //socket code
         let array = data.split(/\n/);
         let max = array.length;
         let min = 0;
-        if(max>13){
+        if(max>19){
             min = Math.floor(Math.random() * (array.length - 1)) + 1;
-            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            place.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
         }
         else{
-            place = array;
+            array.forEach(function(v,i,a){
+                v = v.replace('\r','')
+                place.push(v.replace('\r',''));
+            })
         }
         /************************************** */
         /* animal */
@@ -603,17 +613,28 @@ io.sockets.on('connection', function(socket) { //socket code
         array = data.split(/\n/);
         max = array.length;
         min = 0;
-        if(max>13){
+        if(max>19){
             min = Math.floor(Math.random() * (array.length - 1)) + 1;
-            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            animal.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            animal.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
         }
         else{
-            animal = array;
+            array.forEach(function(v,i,a){
+                console.log(v);
+                v = v.replace('\r','')
+                animal.push(v);
+            })
         }
         /************************************** */
          /* thing */
@@ -623,17 +644,27 @@ io.sockets.on('connection', function(socket) { //socket code
          array = data.split(/\n/);
          max = array.length;
          min = 0;
-         if(max>13){
+         if(max>19){
             min = Math.floor(Math.random() * (array.length - 1)) + 1;
-            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
-            thing.push(array[Math.floor(Math.random() * (max - min)) + min]);
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            thing.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
          }
          else{
-            thing = array;
+            array.forEach(function(v,i,a){
+                v = v.replace('\r','');
+                thing.push(v.replace('\r',''));
+            })
          }
          /********************************************* */
          return {places:place,animals:animal,things:thing};
