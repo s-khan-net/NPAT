@@ -386,3 +386,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
 .validatingC{
   border-bottom: 3px solid gray;
 }
+.textBlock{
+  height: 21px;
+  width: 23px;
+  margin-right:5px;
+  margin-bottom:2px;
+  padding:0px;
+  background-color: #c0deea;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  box-shadow: 2px 2px #888888; 
+  border:1px solid #CCC;
+  display: inline-block
+}

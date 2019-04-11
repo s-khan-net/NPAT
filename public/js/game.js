@@ -57,6 +57,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.waitAnimal = false;
     $scope.waitThing = false;
 
+    $scope.places=[];
+    $scope.animals=[];
+    $scope.things=[];
+
     $scope.playState={
         gameId:'',
         playerId:'',
@@ -639,11 +643,12 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             //change icon
             //if($('#hidGameId').val() == data.gameId){
             if($scope.currentGameId == data.gameId){ //not needed to check
+                makewords(data.places,data.animals,data.things);
                 $scope.alphabet = data.alphabet;
                 $scope.gameAlphabetArray = data.gameAlphabetArray;
                 $scope.gameStarted = data.gameStarted;
                 $scope.gameTime = data.gameTime;
-                console.log('game start evt');
+                //console.log('game start evt');
                 $('#gameStartedIndicator').hide();
                 $('#gameTimer').show();
                 $('#cover').fadeOut();
@@ -882,6 +887,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
           //change icon
           //if($('#hidGameId').val() == data.gameId){
           if($scope.currentGameId == data.gameId){
+            makewords(data.places,data.animals,data.things);
             $scope.gameTime = data.gameTime; //need this for the timer
             $scope.gameAlphabetArray = data.gameAlphabetArray;
             $scope.playingGame.name='';
@@ -1445,5 +1451,12 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         if($scope.sound){
             new Audio('audio/click.mp3').play();
         }
+    }
+
+    function makewords(p,a,t){
+        
+        $scope.places=['D','S','F','A','L','K','M','Z'];
+        $scope.animals=['D','S','F','A','L','K','M','Z'];
+        $scope.things=['D','S','F','A','L','K','M','Z'];
     }
 });
