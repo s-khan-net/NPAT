@@ -330,10 +330,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $scope.wait=false;
         });
     }
-    $scope.pclick = function(p){
-        $scope.playingGame.place += p.p;
-        p.p='';
-    }
+    // $scope.pclick = function(p){
+    //     $scope.playingGame.place = $scope.playingGame.place||'' + p.p;
+    //     p.p='';
+    // }
     /*------------create game----------------- */
     $scope.createGame = function(){
         //create a new game
@@ -913,6 +913,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
           //if($('#hidGameId').val() == data.gameId){
           if($scope.currentGameId == data.gameId){
             //makewords(data.places,data.animals,data.things);
+            $scope.hint=false;
             $scope.gameTime = data.gameTime; //need this for the timer
             $scope.gameAlphabetArray = data.gameAlphabetArray;
             $scope.playingGame.name='';

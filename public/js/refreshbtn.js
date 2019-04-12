@@ -15,21 +15,23 @@
         
         $('#btnChat').click(function () {
             //var t=($(window).height()/4.7)+'px';
-            if($('#chatcontainer').css('position')=='absolute'){
-                $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
-                $('.close').hide();
-                $('#chatSection').hide();
-                $('#chatsectionhead').hide();
-                $('#chat').hide();
-            }
-            else{
-                $('#chatcontainer').css({zIndex:6,position:'absolute',display:'block',left:'13%',top:'32px',maxWidth:'250px'});
+            // if($('#chatcontainer').css('position')=='absolute'){
+            //     $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
+            //     $('.close').hide();
+            //     $('#chatSection').hide();
+            //     $('#chatsectionhead').hide();
+            //     $('#chat').hide();
+                
+            // }
+            // else{
+                $('#chatcontainer').css({zIndex:6,position:'absolute',display:'block',left:'22%',top:'32px',maxWidth:'250px'});
                 $('.close').show();
                 $('#chatSection').show();
                 $('#chat').show();
                 $('#chatsectionhead').hide();
+                $('#btnChat').hide();
                 $("#chatbox").scrollTop(1E10);
-            }
+           // }
         });
         $('.close').click(function(){
             $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
@@ -37,9 +39,11 @@
             $('#chat').hide();
             $('#chatSection').hide();
             $('#chatsectionhead').hide();
+            $('#btnChat').show();
         });
         $('#chat').click(function(){
             $('#chatcontainer').css({zIndex:1,position:'static',display:'none',left:'auto'});
+            $('#btnChat').show();
             $('.close').hide();
             $('#chat').hide();
             $('#chatSection').hide();
