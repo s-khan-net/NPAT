@@ -310,6 +310,30 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         console.log(`player details for ${playerId} --> ${admin}`);
        
     }
+    $scope.getHints = function(){
+        $scope.loaderMsg='wait...';
+        $scope.wait=true;
+        $http.get(`/api/words/hints/${$scope.alphabet}/0/0`)
+        .then(function (result) {
+            if(result.status==200){
+                $scope.hint=true;
+                $scope.places = shuffle(result.data.places.split(''));
+                $scope.animals = shuffle(result.data.animals.split(''));
+                $scope.things = shuffle(result.data.things.split(''));
+            }
+            $scope.loaderMsg='loading...';
+            $scope.wait=false;
+        },
+        function(error){
+            $scope.hint=false;
+            $scope.loaderMsg='loading...';
+            $scope.wait=false;
+        });
+    }
+    $scope.pclick = function(p){
+        $scope.playingGame.place += p.p;
+        p.p='';
+    }
     /*------------create game----------------- */
     $scope.createGame = function(){
         //create a new game
@@ -644,7 +668,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             //change icon
             //if($('#hidGameId').val() == data.gameId){
             if($scope.currentGameId == data.gameId){ //not needed to check
-                makewords(data.places,data.animals,data.things);
+                //makewords(data.places,data.animals,data.things);
                 $scope.alphabet = data.alphabet;
                 $scope.gameAlphabetArray = data.gameAlphabetArray;
                 $scope.gameStarted = data.gameStarted;
@@ -888,7 +912,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
           //change icon
           //if($('#hidGameId').val() == data.gameId){
           if($scope.currentGameId == data.gameId){
-            makewords(data.places,data.animals,data.things);
+            //makewords(data.places,data.animals,data.things);
             $scope.gameTime = data.gameTime; //need this for the timer
             $scope.gameAlphabetArray = data.gameAlphabetArray;
             $scope.playingGame.name='';
@@ -1437,8 +1461,6 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
         return vcount;
     }
-    
-
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your game will be lost!.";
         e.preventDefault();
@@ -1456,9 +1478,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     }
 
     function makewords(p,a,t){
-        let rp = (Math.floor(Math.random() * (p.length+1 - 0)) + 0)||0;
-        let ra = (Math.floor(Math.random() * (a.length+1 - 0)) + 0)||0;
-        let rt = (Math.floor(Math.random() * (t.length+1 - 0)) + 0)||0;
+        let rp = 0;
+        let ra = 0;
+        let rt = 0;
         $scope.places=shuffle(p[rp].split(''));
         $scope.animals=shuffle(a[ra].split(''));
         $scope.things=shuffle(t[rt].split(''));

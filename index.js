@@ -241,7 +241,7 @@ io.sockets.on('connection', function(socket) { //socket code
                                             //seach words for game
                                             let updated = false;
                                             game.wordsForGame.forEach(words => {
-                                                console.log(obj.words[0].substr(1,0)+ ',' + words[0].substr(1,0));
+                                                //console.log(obj.words[0].substr(1,0)+ ',' + words[0].substr(1,0));
                                                 if(obj.words[0].substr(1,0) == words[0].substr(1,0)){ //submitted once->update
                                                     words = obj.words;
                                                     updated=true;
@@ -631,7 +631,7 @@ io.sockets.on('connection', function(socket) { //socket code
         }
         else{
             array.forEach(function(v,i,a){
-                console.log(v);
+                //console.log(v);
                 v = v.replace('\r','')
                 animal.push(v);
             })

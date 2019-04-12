@@ -107,7 +107,7 @@
                     <div class="alphabet js-alphabet">{{alphabet}}</div>
                 </div>
                 <div class="col-md-1 col-xs-1">
-                    <input type="checkbox" data-ng-model="hint" ng-show="gameStarted" />hint
+                    <input type="button" class="btn btn-sm btn-primary" ng-show="gameStarted" data-ng-click="getHints()" value="Hint"></input>
                 </div>
                 <div class="col-md-2 col-xs-2 text-center">
                     <div id="gameStartedIndicator" data-ng-class="gameStartedIndicatorClass()" ng-click="playStart()" style="font-size: 23px;padding: 8px;" title="waiting to get started..."></div>
@@ -179,7 +179,7 @@
             <div class="row" data-ng-show="hint">
                 <div class="col-xs-2">&nbsp;</div>
                 <div class="col-xs-10">
-                    <div class="textBlock btn btn-default" data-ng-repeat="p in places track by $index">{{p}}</div>
+                    <div class="textBlock btn btn-default" data-ng-click="pclick(this)" data-ng-repeat="p in places track by $index">{{p}}</div>
                 </div>
             </div>
             <div class="row textboxrowpadding">

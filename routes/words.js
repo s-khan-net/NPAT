@@ -56,6 +56,34 @@ router.get('/place/:word',async (req,res)=>{
     }
     res.send(valid);
 });
+router.get('/hints/:letter/:ip/:loc',async (req,res)=>{
+    let a = req.params.letter;
+    /* place  */
+    let place='';
+    let filename = a +'.txt';
+    var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
+    let array = data.split(/\n/);
+    let max = array.length;
+    place = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+    /************************************** */
+    /* animal */
+    let animal='';
+    filename = a +'.txt';
+    data = fs.readFileSync(`assets/animals/${filename}`,'UTF-8');
+    array = data.split(/\n/);
+    max = array.length;
+    animal = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+    /************************************** */
+     /* thing */
+     let thing='';
+     filename = a +' Words.txt';
+     data = fs.readFileSync(`assets/thing/${filename}`,'UTF-8');
+     array = data.split(/\n/);
+     max = array.length;
+     thing = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+     /********************************************* */
+     res.send({places:place,animals:animal,things:thing}).status(200);
+});
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
