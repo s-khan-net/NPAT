@@ -34,9 +34,9 @@
     <link rel="stylesheet" href="css/main.css">
     <script>
         $(document).ready(function(){
-            // if ('serviceWorker' in navigator) {
-            //     navigator.serviceWorker.register('worker.js');
-            // }
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js');
+            }
             //$('[data-toggle="popover"]').popover({html:true});
 //            $('[data-toggle="tooltip"]').tooltip({html:true});
             initialize();
