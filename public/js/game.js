@@ -52,8 +52,6 @@ mainmodule.factory('socket', function($rootScope) {
   });
 
 mainmodule.controller("game", function ($scope, $window, $location, $http, socket) {
-    $scope._ip=0;
-
     $scope.wait = false;
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
@@ -315,7 +313,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.getHints = function(){
         $scope.loaderMsg='wait...';
         $scope.wait=true;
-        $http.get(`/api/words/hints/${$scope.alphabet}/0/0`)
+        let _ip=0;
+        getUserIP(function(ip){_ip = ip;});
+        $http.get(`/api/words/hints/${$scope.alphabet}/${_ip}/0`)
         .then(function (result) {
             if(result.status==200){
                 $scope.hint=true;
@@ -656,12 +656,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     /*----------play start-------------- */
     $scope.playStart = function(){
-        if($scope.currentPlayerId.indexOf('~')>-1 && $scope.players.length>1){
-            if(_ip==0){
-                getUserIP(function(IP) { _ip =IP;});
-            }
-            socket.emit('playStarted', {gameId:$scope.currentGameId,ip:_ip});
-        }
+        //if($('#hidPlayerId').val().indexOf('~')>-1)
+        if($scope.currentPlayerId.indexOf('~')>-1 && $scope.players.length>1)
+            socket.emit('playStarted', $scope.currentGameId);
+            //socket.emit('playStarted', `${$('#hidGameId').val()}`);
     }
     socket.on('onPlayStarted',function(data){
         if(data.err!=''){

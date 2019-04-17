@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-
+const https = require('https');
 //const cities = require("all-the-cities")
 
 router.get('/thing/:word',async (req,res)=>{
@@ -61,11 +61,47 @@ router.get('/hints/:letter/:ip/:loc',async (req,res)=>{
     let a = req.params.letter;
     /* place  */
     let place='';
-    let filename = a +'.txt';
-    var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
-    let array = data.split(/\n/);
-    let max = array.length;
-    place = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+    if(req.params.ip!=0){
+        https.get(`https://tools.keycdn.com/geo.json?host=${req.params.ip}`, (resp) => {
+            let allcites = [];
+            let data = '';
+          
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+              data += chunk;
+            });
+          
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+              let d = JSON.parse(data);
+              if(d){
+                let lt = d.data.geo.latitude;
+                let ln = d.data.geo.longitude;
+                let cities = JSON.parse(fs.readFileSync(`assets/cities.json`));
+                //console.log(cities[1]);
+                cities.forEach(city => {
+                    if((city.lat-lt<13 || city.lat-lt>-13) && city.name.substring(0,1).toUpperCase()==a){
+                        allcites.push(city);
+                    }
+                    if(city.lng-ln<13 || city.lng-ln>-13 && city.name.substring(0,1).toUpperCase()==a){
+                        allcites.push(city);
+                    }
+                });
+              }
+              
+            });
+          
+          }).on("error", (err) => {
+            console.log("Error: " + err.message);
+          });
+    }
+    else{
+        let filename = a +'.txt';
+        var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
+        let array = data.split(/\n/);
+        let max = array.length;
+        place = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+    }
     /************************************** */
     /* animal */
     let animal='';

@@ -10,7 +10,6 @@ const {Game, validate} = require('./models/game');
 const app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-const https = require('https');
 require('dotenv').load();
 
 mongoose.connect(process.env.mongoConnection,{useNewUrlParser:true})
@@ -163,17 +162,17 @@ io.sockets.on('connection', function(socket) { //socket code
 		io.sockets.in(`game-${val[0]}`).emit('onPoints', val);
     });
     
-    socket.on('playStarted', function(data) { 
-        logger.info(`starting ${data.gameId}`);
+    socket.on('playStarted', function(gameId) { 
+        logger.info(`starting ${gameId}`);
 		let msg='Starting game...';
-        io.sockets.in(`game-${data.gameId}`).emit('onWait',msg); //send wait for everyone in the game
+        io.sockets.in(`game-${gameId}`).emit('onWait',msg); //send wait for everyone in the game
         const p = new Promise((resolve,reject)=>{
             //get the game
-            Game.findOne({gameId:data.gameId},function(err,game){
+            Game.findOne({gameId:gameId},function(err,game){
                 if(err){
-                    logger.error(`Could not retrieve ${data.gameId} from the database, erred out: ${err.message}`);
+                    logger.error(`Could not retrieve ${gameId} from the database, erred out: ${err.message}`);
                     var d = {err:'could not start, please try again'}
-                    io.sockets.in(`game-${data.gameId}`).emit('onStopWait',err);
+                    io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                     resolve(d);
                 }
                 else{
@@ -186,7 +185,7 @@ io.sockets.on('connection', function(socket) { //socket code
                     //remove a
                     game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
 
-                    var wordsObj = getWords(a,data.ip);
+                    var wordsObj = getWords(a);
                     game.gameStarted=true;
                     game.gameStartedAt=Date.now();
                     game.save()
@@ -196,24 +195,24 @@ io.sockets.on('connection', function(socket) { //socket code
                             resolve(d);
                         })
                         .catch(err=>{
-                            logger.error(`Could not save updated ${data.gameId} to the database, erred out: ${err.message}`);
+                            logger.error(`Could not save updated ${gameId} to the database, erred out: ${err.message}`);
                             var d = {err:'could not start, please try again'}
-                            io.sockets.in(`game-${data.gameId}`).emit('onStopWait',err);
+                            io.sockets.in(`game-${gameId}`).emit('onStopWait',err);
                             resolve(d);
                         });
                 }
             });
 		});
 		
-		p.then((d)=>{
-            logger.info(`Emitting onPlayStart event to game : ${data.gameId}`)
-			io.sockets.in(`game-${data.gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
-			io.sockets.in(`game-${data.gameId}`).emit('onPlayStarted',d);
+		p.then((data)=>{
+            logger.info(`Emitting onPlayStart event to game : ${gameId}`)
+			io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+			io.sockets.in(`game-${gameId}`).emit('onPlayStarted',data);
 		}).catch(err=>{
             logger.error(`Fatal Error occured while starting ${err}`)
             var data = {err:'could not start dame, please try again'}
-            io.sockets.in(`game-${data.gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
-            io.sockets.in(`game-${data.gameId}`).emit('onPlayStarted', d)
+            io.sockets.in(`game-${gameId}`).emit('onStopWait',msg); //stop waiting for everyone in the game
+            io.sockets.in(`game-${data.gameId}`).emit('onPlayStarted', data)
         })
     });
     
@@ -322,7 +321,7 @@ io.sockets.on('connection', function(socket) { //socket code
                     let a = game.gameAlphabetArray[Math.floor(Math.random()*game.gameAlphabetArray.length)];
                     //remove a
                     game.gameAlphabetArray.splice(game.gameAlphabetArray.indexOf(a),1);
-                    var wordsObj = getWords(a,0);
+                    var wordsObj = getWords(a);
                     game.save()
                         .then(g=>{
                             logger.info(`updated the game with next info and alphabet:${a}`);
@@ -576,70 +575,35 @@ io.sockets.on('connection', function(socket) { //socket code
 
     }
 
-    function getWords(a,ip){
+    function getWords(a){
         /* place  */
         let place=[];
-        if(ip!=0){
-            https.get(`https://tools.keycdn.com/geo.json?host=${req.params.ip}`, (resp) => {
-            let data = '';
-          
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-              data += chunk;
-            });
-          
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-              let d = JSON.parse(data);
-              if(d){
-                let lt = d.data.geo.latitude;
-                let ln = d.data.geo.longitude;
-                let cities = JSON.parse(fs.readFileSync(`assets/cities.json`));
-                console.log(cities[1]);
-                cities.forEach(city => {
-                    if(city.lat-lt<13 || city.lat-lt>-13){
-                        cities.push(city.name);
-                    }
-                    if(city.lng-ln<13 || city.lng-ln>-13){
-                        cities.push(city.name);
-                    }
-                });
-              }
-              
-            });
-          
-          }).on("error", (err) => {
-            console.log("Error: " + err.message);
-          });
+        let filename = a +'.txt';
+        var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
+        let array = data.split(/\n/);
+        let max = array.length;
+        let min = 0;
+        if(max>19){
+            min = Math.floor(Math.random() * (array.length - 1)) + 1;
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
+            place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
         }
         else{
-            let filename = a +'.txt';
-            var data = fs.readFileSync(`assets/cities/${filename}`,'UTF-8');
-            let array = data.split(/\n/);
-            let max = array.length;
-            let min = 0;
-            if(max>19){
-                min = Math.floor(Math.random() * (array.length - 1)) + 1;
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-                place.push(array[Math.floor(Math.random() * (max - min)) + min].replace('\r','').toUpperCase());
-            }
-            else{
-                array.forEach(function(v,i,a){
-                    v = v.replace('\r','')
-                    place.push(v.replace('\r',''));
-                })
-            }
+            array.forEach(function(v,i,a){
+                v = v.replace('\r','')
+                place.push(v.replace('\r',''));
+            })
         }
         /************************************** */
         /* animal */
