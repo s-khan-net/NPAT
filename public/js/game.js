@@ -52,6 +52,8 @@ mainmodule.factory('socket', function($rootScope) {
   });
 
 mainmodule.controller("game", function ($scope, $window, $location, $http, socket) {
+    $scope._ip=0;
+
     $scope.wait = false;
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
@@ -654,10 +656,12 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     /*----------play start-------------- */
     $scope.playStart = function(){
-        //if($('#hidPlayerId').val().indexOf('~')>-1)
-        if($scope.currentPlayerId.indexOf('~')>-1 && $scope.players.length>1)
-            socket.emit('playStarted', $scope.currentGameId);
-            //socket.emit('playStarted', `${$('#hidGameId').val()}`);
+        if($scope.currentPlayerId.indexOf('~')>-1 && $scope.players.length>1){
+            if(_ip==0){
+                getUserIP(function(IP) { _ip =IP;});
+            }
+            socket.emit('playStarted', {gameId:$scope.currentGameId,ip:_ip});
+        }
     }
     socket.on('onPlayStarted',function(data){
         if(data.err!=''){
@@ -1500,5 +1504,40 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             arra1[index] = temp;
         }
         return arra1;
+    }
+    function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
+        //compatibility for firefox and chrome
+        var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+        var pc = new myPeerConnection({
+            iceServers: []
+        }),
+        noop = function() {},
+        localIPs = {},
+        ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
+        key;
+    
+        function iterateIP(ip) {
+            if (!localIPs[ip]) onNewIP(ip);
+            localIPs[ip] = true;
+        }
+    
+         //create a bogus data channel
+        pc.createDataChannel("");
+    
+        // create offer and set local description
+        pc.createOffer(function(sdp) {
+            sdp.sdp.split('\n').forEach(function(line) {
+                if (line.indexOf('candidate') < 0) return;
+                line.match(ipRegex).forEach(iterateIP);
+            });
+            
+            pc.setLocalDescription(sdp, noop, noop);
+        }, noop); 
+    
+        //listen for candidate events
+        pc.onicecandidate = function(ice) {
+            if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+            ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+        };
     }
 });
