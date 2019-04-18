@@ -411,3 +411,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   border:1px solid #CCC;
   display: inline-block
 }
+.textSpace{
+  height: 21px;
+  width: 11px;
+  text-align: center;
+  cursor: default;
+  margin-right:5px;
+  margin-bottom:2px;
+  padding:0px;
+  display: inline-block
+}

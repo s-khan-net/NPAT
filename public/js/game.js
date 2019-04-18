@@ -317,9 +317,49 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         .then(function (result) {
             if(result.status==200){
                 $scope.hint=true;
-                $scope.places = shuffle(result.data.places.split(''));
-                $scope.animals = shuffle(result.data.animals.split(''));
-                $scope.things = shuffle(result.data.things.split(''));
+                if(result.data.places.indexOf(' ')>-1){
+                    let arr = result.data.places.split(' ');
+                    arr.forEach(element => {
+                        let s = shuffle(element.split(''))
+                        s.forEach(e => {
+                            $scope.places.push(e);
+                        });
+                        $scope.places.push(' ');
+                    });
+                    $scope.places.pop();
+                }
+                else{
+                    $scope.places = shuffle(result.data.places.split(''));
+                }
+                if(result.data.animals.indexOf(' ')>-1){
+                    let arr = result.data.animals.split(' ');
+                    arr.forEach(element => {
+                        let s = shuffle(element.split(''))
+                        s.forEach(e => {
+                            $scope.animals.push(e);
+                        });
+                        $scope.animals.push(' ');
+                    });
+                    $scope.animals.pop();
+                }
+                else{
+                    $scope.animals = shuffle(result.data.animals.split(''));
+                }
+                if(result.data.things.indexOf(' ')>-1){
+                    let arr = result.data.things.split(' ');
+                    let things=[];
+                    arr.forEach(element => {
+                        let s = shuffle(element.split(''))
+                        s.forEach(e => {
+                            $scope.things.push(e);
+                        });
+                        $scope.things.push(' ');
+                    });
+                    $scope.things.pop();
+                }
+                else{
+                    $scope.things = shuffle(result.data.things.split(''));
+                }
             }
             $scope.loaderMsg='loading...';
             $scope.wait=false;
@@ -328,6 +368,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $scope.hint=false;
             $scope.loaderMsg='loading...';
             $scope.wait=false;
+            console.log(error);
         });
     }
     // $scope.pclick = function(p){
@@ -1187,6 +1228,12 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.meClass = function(me){
         if(me)
             return 'fa fa-user-o green'
+    }
+    $scope.hintText = function(v){
+        if(v!=' ')
+            return 'textBlock';
+        else
+            return 'textSpace';
     }
 
     /*----validate name-----*/

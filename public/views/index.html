@@ -179,7 +179,7 @@
             <div class="row" data-ng-show="hint">
                 <div class="col-xs-2">&nbsp;</div>
                 <div class="col-xs-10">
-                    <div class="textBlock" data-ng-repeat="p in places track by $index">{{p}}</div>
+                    <div ng-class="hintText(p)" data-ng-repeat="p in places track by $index">{{p}}</div>
                 </div>
             </div>
             <div class="row textboxrowpadding">
