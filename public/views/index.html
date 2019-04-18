@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="Name Place Animal Thing, a multiplayer game, play online with anyone, the oldest word game, you played with pen and paper, now play on the internet with anyone, anywhere">
     <title>Name Place Animal Thing</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -34,9 +34,9 @@
     <link rel="stylesheet" href="css/main.css">
     <script>
         $(document).ready(function(){
-            // if ('serviceWorker' in navigator) {
-            //     navigator.serviceWorker.register('worker.js');
-            // }
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js');
+            }
             //$('[data-toggle="popover"]').popover({html:true});
 //            $('[data-toggle="tooltip"]').tooltip({html:true});
             initialize();
