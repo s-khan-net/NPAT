@@ -12,7 +12,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 require('dotenv').load();
 
-mongoose.connect(process.env.mongoConnection)
+mongoose.connect(process.env.mongoConnection,{useNewUrlParser:true})
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
