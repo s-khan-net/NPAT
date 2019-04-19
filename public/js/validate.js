@@ -306,6 +306,12 @@ function initialize(){
             keyboard:true
         });
     });
+    $('#showAbout').click(function(){
+        $("#modalAbout").modal({
+            backdrop: "static",
+            keyboard:true
+        });
+    });
     $('#logoDiv').click(function(){
         $("#modalHelp").modal({
             backdrop: "static",
@@ -366,11 +372,11 @@ function initialize(){
     });
 }
 
-function playerDetails(p){
-    let id = $(p.children[0]).html()
-    let admin = $(p.children[1]).html()
-    console.log(`player ${id} -> ${admin}`);
-    var position = $(p).position();
-    console.log(position.top + ' ' + position.left );
-    $('.playerDetailsDiv').attr('style', 'top:' + p.pageY + 'px;left:' +p.pageX + 'px;display:block;');
-}
+// function playerDetails(p){
+//     let id = $(p.children[0]).html()
+//     let admin = $(p.children[1]).html()
+//     console.log(`player ${id} -> ${admin}`);
+//     var position = $(p).position();
+//     console.log(position.top + ' ' + position.left );
+//     $('.playerDetailsDiv').attr('style', 'top:' + p.pageY + 'px;left:' +p.pageX + 'px;display:block;');
+// }

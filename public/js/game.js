@@ -73,6 +73,13 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         message:0,
 
     };
+    $scope.playerDetails={ //only for boot
+        playerId:'',
+        playerName:'',
+        isCreator:false,
+        typing:'',
+        showme:false //used to show the player  details to boot!!!
+    };
 
     $scope.nameVal=false;
     $scope.placeVal=false;
@@ -306,9 +313,16 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
         $window.location.href = ur;
     }
-    $scope.playerDetails = function(playerId,admin){
+    $scope.playerDetails = function(name,playerId,admin,typing){
         console.log(`player details for ${playerId} --> ${admin}`);
-       
+       //if($scope.currentPlayerId.indexOf('~')>-1){
+         console.log('show');
+         $scope.playerDetails.playerId = playerId;
+         $scope.playerDetails.playerName = name;
+         $scope.playerDetails.isCreator=admin;
+         $scope.playerDetails.typing = typing;
+         $scope.playerDetails.showme=true;
+       //}
     }
     $scope.getHints = function(){
         $scope.loaderMsg='wait...';

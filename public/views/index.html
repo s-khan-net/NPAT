@@ -84,7 +84,7 @@
                                 <i ng-class="meClass(p.me)" aria-hidden="true" title="Me"></i>&nbsp;
                                 <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true"></i>
                             </div>  
-                            <div id="btnPlayer" onclick="playerDetails(this)">
+                            <div id="btnPlayer" ng-click="playerDetails(p.playerName,p.playerId,p.isCreator,p.playerTyping)">
                                 <div style="display:none">{{p.playerId}}</div>
                                 <div style="display:none">{{p.isCreator}}</div>
                                 <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
@@ -107,7 +107,8 @@
                     <div class="alphabet js-alphabet">{{alphabet}}</div>
                 </div>
                 <div class="col-md-1 col-xs-1">
-                    <input type="button" class="btn btn-sm btn-primary" ng-show="gameStarted" data-ng-click="getHints()" value="Hint"></input>
+                    <!-- uncomment for hints -->
+                    <!-- <input type="button" class="btn btn-sm btn-primary" ng-show="gameStarted" data-ng-click="getHints()" value="Hint"></input> -->
                 </div>
                 <div class="col-md-2 col-xs-2 text-center">
                     <div id="gameStartedIndicator" data-ng-class="gameStartedIndicatorClass()" ng-click="playStart()" style="font-size: 23px;padding: 8px;" title="waiting to get started..."></div>
@@ -145,8 +146,8 @@
                             </div>
                         </li>
                         <li class="divider" data-ng-show="showInvite"></li>
-                        <li><a id="showHelp" style="cursor:pointer"><i class="fa fa-question fa-1x" aria-hidden="true"></i></a></li>
-                        <!-- <li><a><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a></li> -->
+                        <li><a id="showHelp" style="cursor:pointer;text-align:center"><i class="fa fa-question fa-1x" aria-hidden="true"></i></a></li>
+                        <!-- <li><a id="showAbout" href="https://github.com/s-khan-net" target="_blank" style="cursor:pointer;text-align:center"><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i></a></li> -->
                         <li class="divider"></li>
                         <li><a style="color:darkred;cursor:pointer" ng-confirm="really??" ng-click="leaveGame()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></i>Leave game</a></li>
                     </ul>
@@ -525,18 +526,21 @@
                         </div>
                       </div>
                     </div>
+                    
                 <!-- </div> -->
             </div>
         </div>
         <div class="modal-footer">
           <div class="row">
             <div class="col-xs-8">
-                <img src="images/meanh_23.png" />
+                <a href="https://github.com/s-khan-net/NPAT" target="_blank"><img src="images/meanh_23.png" /></a>
             </div>
           <div class="col-xs-4">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
+          
           </div>
+          
         </div>
       </div>
     </div>
@@ -616,7 +620,15 @@
       </div>
     </div>
 </div>
-<div class="playerDetailsDiv"></div>
+
+<div class="playerDetailsDiv" data-ng-show="playerDetails.showme">
+    <div class="row">
+        {{playerDetails.playerName}}<span data-ng-class="typingClass(playerDetails.typing)"></span>
+    </div>
+    <div class="row">
+        <input type="button" value="Force S" class="btn btn-danger btn-sm" />
+    </div>
+</div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
