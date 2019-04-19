@@ -60,10 +60,38 @@ router.get('/place/:word',async (req,res)=>{
 router.get('/hints/:letter/:ip/:loc',async (req,res)=>{
     let a = req.params.letter;
     /* place  */
+    // let place='';
+    // let allcites = [];
+    getallCities(a,req.params.ip,function(allcites,place){
+        /* animal */
+        let animal='';
+        filename = a +'.txt';
+        data = fs.readFileSync(`assets/animals/${filename}`,'UTF-8');
+        array = data.split(/\n/);
+        max = array.length;
+        animal = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+        /************************************** */
+        /* thing */
+        let thing='';
+        filename = a +' Words.txt';
+        data = fs.readFileSync(`assets/thing/${filename}`,'UTF-8');
+        array = data.split(/\n/);
+        max = array.length;
+        thing = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
+        /********************************************* */
+        res.send({places:place,animals:animal,things:thing,allCities:allcites}).status(200);
+    })
+});
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+function getallCities(a,ip,callback){
     let place='';
-    if(req.params.ip!=0){
-        https.get(`https://tools.keycdn.com/geo.json?host=${req.params.ip}`, (resp) => {
-            let allcites = [];
+    let allcites = [];
+    if(ip!=0){
+        console.log('getting location from IP');
+        https.get(`https://tools.keycdn.com/geo.json?host=${ip}`, (resp) => {
+            
             let data = '';
           
             // A chunk of data has been recieved.
@@ -78,19 +106,15 @@ router.get('/hints/:letter/:ip/:loc',async (req,res)=>{
                 let lt = d.data.geo.latitude;
                 let ln = d.data.geo.longitude;
                 let cities = JSON.parse(fs.readFileSync(`assets/cities.json`));
-                //console.log(cities[1]);
                 cities.forEach(city => {
-                    if((city.lat-lt<13 || city.lat-lt>-13) && city.name.substring(0,1).toUpperCase()==a){
-                        allcites.push(city);
-                    }
-                    if(city.lng-ln<13 || city.lng-ln>-13 && city.name.substring(0,1).toUpperCase()==a){
+                    let distance = getDistanceFromLatLonInKm(lt,ln,city.lat,city.lng);
+                    console.log(distance);
+                    if(city.name.substring(0,1).toUpperCase()==a && distance<500){
                         allcites.push(city);
                     }
                 });
               }
-              
             });
-          
           }).on("error", (err) => {
             console.log("Error: " + err.message);
           });
@@ -102,26 +126,23 @@ router.get('/hints/:letter/:ip/:loc',async (req,res)=>{
         let max = array.length;
         place = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
     }
-    /************************************** */
-    /* animal */
-    let animal='';
-    filename = a +'.txt';
-    data = fs.readFileSync(`assets/animals/${filename}`,'UTF-8');
-    array = data.split(/\n/);
-    max = array.length;
-    animal = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
-    /************************************** */
-     /* thing */
-     let thing='';
-     filename = a +' Words.txt';
-     data = fs.readFileSync(`assets/thing/${filename}`,'UTF-8');
-     array = data.split(/\n/);
-     max = array.length;
-     thing = array[Math.floor(Math.random() * (max - 0)) + 0].replace('\r','').toUpperCase();
-     /********************************************* */
-     res.send({places:place,animals:animal,things:thing}).status(200);
-});
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    callback(allcites,place);
 }
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+  
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
 module.exports = router;

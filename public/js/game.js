@@ -60,6 +60,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.places=[];
     $scope.animals=[];
     $scope.things=[];
+    $scope.allCities=[];
 
     $scope.playState={
         gameId:'',
@@ -314,22 +315,37 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $scope.loaderMsg='wait...';
         $scope.wait=true;
         let _ip=0;
-        getUserIP(function(ip){_ip = ip;});
-        $http.get(`/api/words/hints/${$scope.alphabet}/${_ip}/0`)
-        .then(function (result) {
-            if(result.status==200){
-                $scope.hint=true;
-                $scope.places = shuffle(result.data.places.split(''));
-                $scope.animals = shuffle(result.data.animals.split(''));
-                $scope.things = shuffle(result.data.things.split(''));
+        getUserIP(function(ip){
+            _ip = ip;
+            if($scope.allCities.length>0){
+                if($scope.allCities[0].substr(0,1).toUpperCase() == $scope.alphabet){
+                    _ip=0;
+                }
             }
-            $scope.loaderMsg='loading...';
-            $scope.wait=false;
-        },
-        function(error){
-            $scope.hint=false;
-            $scope.loaderMsg='loading...';
-            $scope.wait=false;
+            $http.get(`/api/words/hints/${$scope.alphabet}/${_ip}/0`)
+            .then(function (result) {
+                if(result.status==200){
+                    $scope.hint=true;
+                    if($scope.allCities.length>0){
+                        $scope.places = shuffle($scope.allCities[Math.floor(Math.random()*$scope.allCities)]);
+                    }
+                    else if(result.data.places){
+                        $scope.places = shuffle(result.data.places.split(''));
+                    }
+                    else{
+                        $scope.places = ['-','-','-'];
+                    }
+                    $scope.animals = shuffle(result.data.animals.split(''));
+                    $scope.things = shuffle(result.data.things.split(''));
+                }
+                $scope.loaderMsg='loading...';
+                $scope.wait=false;
+            },
+            function(error){
+                $scope.hint=false;
+                $scope.loaderMsg='loading...';
+                $scope.wait=false;
+            });
         });
     }
     // $scope.pclick = function(p){
