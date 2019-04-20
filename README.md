@@ -35,7 +35,7 @@ Click the logo in the game for more detailed help.
 
 ## To run locally
 
-- make sure you have [mongodb](https://www.mongodb.com/download-center/community) and preferably [compass](https://www.mongodb.com/download-center/compass?jmp=hero) or [robomongo](https://robomongo.org/download)
+- make sure you have [mongodb](https://www.mongodb.com/download-center/community) and optionally [compass](https://www.mongodb.com/download-center/compass?jmp=hero) or [robomongo](https://robomongo.org/download)
 - nodejs and git
 
 ## install
