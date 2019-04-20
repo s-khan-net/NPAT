@@ -22,9 +22,37 @@ each game is a room where players are sockets with game rules.
 ### Join -
   To join a game, select a game from the list (to the right). This is how a game would look like 
   
-  <img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/public/images/gameListItem.png" />
+  <img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/public/images/gameListItem.png" /> Click the game to join.
 
 ### Play -
-  The creator of the game will be prompted to start, once there are 2 or more players. And then... the alphabets come on and type away in the 4 test boxes that have validations.
-  
+  The creator of the game will be prompted to start, once there are 2 or more players. And then... the alphabets come on and type away in the 4 test boxes that have validations.  Watch: [Video](https://youtu.be/nvsAxbnXk1w)
+ 
   ---
+
+Click the logo in the game for more detailed help.
+
+---
+
+## To run locally
+
+- make sure you have [mongodb](https://www.mongodb.com/download-center/community) and preferably [compass](https://www.mongodb.com/download-center/compass?jmp=hero) or [robomongo](https://robomongo.org/download)
+- nodejs and git
+
+## install
+
+   - clone this repo  using
+   ```
+   git clone https://github.com/s-khan-net/NPAT.git
+   ```
+   - run npm install 
+   ```
+   cd\NPAT
+   $\NPAT> npm install
+   ```
+   this will install all the node modules
+   
+   - then
+   ```
+   npm start
+   ```
+   
