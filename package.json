@@ -25,8 +25,6 @@
   },
   "homepage": "https://github.com/s-khan-net/NPAT#readme",
   "dependencies": {
-    "all-the-cities": "^2.0.1",
-    "bcrypt": "^1.0.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
