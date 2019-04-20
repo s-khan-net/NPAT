@@ -173,7 +173,9 @@ function initialize(){
         $('#avatarContainer > img').prop('src',`/images/avatars/${v}.png`);
         $('#txtPlayerName').attr('placeholder',items[v]);
     });
-    
+    $('#logoDiv').on('mouseover mouseout',function(){
+        $('#logoDiv i').toggle();
+    });
     $('#modalAvatars').on('shown.bs.modal', function() {
         var html = '<div class="row">';
         for (let i = 1; i <= pics; i++) {
