@@ -403,8 +403,8 @@ io.sockets.on('connection', function(socket) { //socket code
     });
 
     socket.on('leave',function(obj){
-        logger.info(`${obj.playerId} is leaving ${obj.gameId}`);
         if(obj.playerId && obj.gameId){
+            logger.info(`${obj.playerId} is leaving ${obj.gameId}`);
             const p = new Promise((resolve,reject)=>{
                 //get the game
                 Game.findOne({gameId:obj.gameId},function(err,game){
@@ -427,7 +427,7 @@ io.sockets.on('connection', function(socket) { //socket code
                                     if(player.isActive) actives++;
                                 });
                                 if(actives==0){ 
-                                    logger.info(`abandoning game ${obj.gameId} cause al the players left`);
+                                    logger.info(`abandoning game ${obj.gameId} cause all the players left`);
                                     game.gameAbandoned=true;
                                 }
                             }
