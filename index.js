@@ -1,9 +1,7 @@
 const express = require('express');
 const winston = require('winston');
-const users =require('./routes/users');
 const words =require('./routes/words');
 const game =require('./routes/game');
-const Joi = require('joi');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const {Game, validate} = require('./models/game');
@@ -32,7 +30,6 @@ app.get('/join',(req,res)=>{
     res.sendFile(`${__dirname}/public/views/index.html`)}
 );
 //routes
-app.use('/api/users',users);
 app.use('/api/words',words);
 app.use('/api/game',game);
 //statics
@@ -44,14 +41,14 @@ app.use('/images', express.static(__dirname + '/public/images'));
 app.use('/assets', express.static(__dirname + '/assets'));
 
 
-//check if jwtkey is present
-if(!process.env.jwtKey) {
-    logger.error('FATAL ERROR: jwt token key not set');
-    process.exit(1);
-}
-else{
-    logger.info(process.env.jwtKey);
-}
+// //check if jwtkey is present
+// if(!process.env.jwtKey) {
+//     logger.error('FATAL ERROR: jwt token key not set');
+//     process.exit(1);
+// }
+// else{
+//     logger.info(process.env.jwtKey);
+// }
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 io.sockets.on('connection', function(socket) { //socket code
     socket.on('testMsg',function(obj){
@@ -671,9 +668,5 @@ io.sockets.on('connection', function(socket) { //socket code
     }
 });
 server.listen(process.env.PORT, function() {
-    console.log(process.env.PORT);
+    console.log(`http://localhost:${process.env.PORT}`);
 });
-
-
-// // Reduce the logging output of Socket.IO
-// io.set('log level',1);

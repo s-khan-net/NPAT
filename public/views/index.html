@@ -149,6 +149,9 @@
                         <li><a id="showHelp" style="cursor:pointer;text-align:center"><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i></a></li>
                         <!-- <li><a id="showAbout" href="https://github.com/s-khan-net" target="_blank" style="cursor:pointer;text-align:center"><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i></a></li> -->
                         <li class="divider"></li>
+                        <li ng-show="adminAction" >
+                            <a style="cursor:pointer;text-align: center" ng-confirm="really??" ng-click="forceNewPlay()">Force new play</a>
+                        </li>
                         <li><a style="color:darkred;cursor:pointer" ng-confirm="really??" ng-click="leaveGame()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></i>Leave game</a></li>
                     </ul>
                 </div>
