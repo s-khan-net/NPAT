@@ -12,7 +12,7 @@ each game is a room where players are sockets with game rules.
 
 ### After you have entered your name and clicked ahead, 
 
-<img src="" />
+<img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/assets/gif-strt.gif" width="32%"/>
 
 ### you can either join a  game or create one
 
