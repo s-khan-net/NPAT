@@ -11,61 +11,63 @@
  limitations under the License.
 */
 
-// Names of the two caches used in this version of the service worker.
-// Change to v2, etc. when you update any of the local resources, which will
-// in turn trigger the install event again.
-const PRECACHE = 'precache-v1';
-const RUNTIME = 'runtime';
+const CACHE_VERSION = 1;
+let CURRENT_CACHES = {
+  offline: 'offline-v' + CACHE_VERSION
+};
+const OFFLINE_URL = 'offline.html';
 
-// A list of local resources we always want to be cached.
-const PRECACHE_URLS = [
-//   'css/main.css',
-];
+function createCacheBustedRequest(url) {
+  let request = new Request(url, {cache: 'reload'});
 
-// The install handler takes care of precaching the resources we always need.
+  if ('cache' in request) {
+    return request;
+  }
+
+  let bustedUrl = new URL(url, self.location.href);
+  bustedUrl.search += (bustedUrl.search ? '&' : '') + 'cachebust=' + Date.now();
+  return new Request(bustedUrl);
+}
+
 self.addEventListener('install', event => {
-//   event.waitUntil(
-//     caches.open(PRECACHE)
-//       .then(cache => cache.addAll(PRECACHE_URLS))
-//       .then(self.skipWaiting())
-//   );
+  event.waitUntil(
+    fetch(createCacheBustedRequest(OFFLINE_URL)).then(function(response) {
+      return caches.open(CURRENT_CACHES.offline).then(function(cache) {
+        return cache.put(OFFLINE_URL, response);
+      });
+    })
+  );
 });
 
-// The activate handler takes care of cleaning up old caches.
 self.addEventListener('activate', event => {
-//   const currentCaches = [PRECACHE, RUNTIME];
-//   event.waitUntil(
-//     caches.keys().then(cacheNames => {
-//       return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
-//     }).then(cachesToDelete => {
-//       return Promise.all(cachesToDelete.map(cacheToDelete => {
-//         return caches.delete(cacheToDelete);
-//       }));
-//     }).then(() => self.clients.claim())
-//   );
+  let expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
+    return CURRENT_CACHES[key];
+  });
+
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (expectedCacheNames.indexOf(cacheName) === -1) {
+            console.log('Deleting out of date cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
 
-// The fetch handler serves responses for same-origin resources from a cache.
-// If no response is found, it populates the runtime cache with the response
-// from the network before returning it to the page.
 self.addEventListener('fetch', event => {
-  // Skip cross-origin requests, like those for Google Analytics.
-//   if (event.request.url.startsWith(self.location.origin)) {
-//     event.respondWith(
-//       caches.match(event.request).then(cachedResponse => {
-//         if (cachedResponse) {
-//           return cachedResponse;
-//         }
-
-//         return caches.open(RUNTIME).then(cache => {
-//           return fetch(event.request).then(response => {
-//             // Put a copy of the response in the runtime cache.
-//             return cache.put(event.request, response.clone()).then(() => {
-//               return response;
-//             });
-//           });
-//         });
-//       })
-//     );
- // }
+  if (event.request.mode === 'navigate' ||
+      (event.request.method === 'GET' &&
+       event.request.headers.get('accept').includes('text/html'))) {
+    console.log('Handling fetch event for', event.request.url);
+    event.respondWith(
+      fetch(event.request).catch(error => {
+        console.log('Fetch failed; returning offline page instead.', error);
+        return caches.match(OFFLINE_URL);
+      })
+    );
+  }
 });
