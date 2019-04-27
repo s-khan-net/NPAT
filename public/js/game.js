@@ -674,7 +674,8 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $scope.wait=false;
             $('#divStatus').hide();
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
-            playClick();
+            if(data.playerId!=$scope.currentPlayerId.split('~')[0])
+                playClick();
         }
     });
 
@@ -693,7 +694,8 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $("#chatbox").scrollTop(1E10);
         $('#divStatus').hide();
         $('#divStatus').text(`${data.playerName} texted`).fadeIn('slow').fadeOut(1000);
-        playClick();
+        if(data.playerId!=$scope.currentPlayerId.split('~')[0])
+            playClick();
     })
 
     /*-----wait from socket----*/

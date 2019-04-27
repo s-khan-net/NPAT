@@ -4,10 +4,10 @@ Name-Place-Animal-Thing -  Play this multiplayer game
 built on MEAN stack & hosted on heroku (free dyno - can stop working every 550 hours)
 <img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/public/images/meanh_23.png" />
 
-This multiplyer game uses sockets to keep up, 
+This game uses sockets to keep up, 
 also has a chat
 
-each game is a room where players are sockets with game rules.
+each game is a room where players are sockets.
 
 ### After you have entered your name and clicked ahead, 
 
