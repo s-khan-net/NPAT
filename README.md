@@ -1,7 +1,6 @@
 ![NPAT](https://raw.githubusercontent.com/s-khan-net/NPAT/master/public/images/logo_145X145_t.png)
 ---
-Name-Place-Animal-Thing - An old game, played with pen and paper; this is and attempt make the bookmark obsolete (who does that!?)
-
+Name-Place-Animal-Thing -  Play this multiplayer game 
 built on MEAN stack & hosted on heroku (free dyno - can stop working every 550 hours)
 <img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/public/images/meanh_23.png" />
 
