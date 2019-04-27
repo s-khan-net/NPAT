@@ -56,6 +56,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
     $scope.waitThing = false;
+    $scope.adminAction = false;
 
     $scope.places=[];
     $scope.animals=[];
@@ -792,6 +793,10 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             setTimeout(() => {
                 submitGameWOStop();
             }, timeout);
+            if($scope.currentPlayerId.indexOf('~')>-1)
+                setTimeout(() => {
+                    $scope.adminAction = true;
+                }, 13000); //13 seconds ;)
         }
     });
 
@@ -954,7 +959,11 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         return p;
     }
     /*-----------new play------------------ */
+    $scope.forceNewPlay=function(){
+        socket.emit('newPlay', $scope.currentGameId);
+    }
     socket.on('onNewPlay',function(data){
+        $scope.adminAction = false;
         $.each($scope.players,function(i,v){
           v.playerTyping='';
         });
