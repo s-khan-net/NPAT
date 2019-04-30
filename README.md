@@ -26,11 +26,11 @@ each game is a room where players are sockets.
   When you join a game that is already started, you will be resuming the plays (alphabets left in the game)
 
 ### Play -
-  The creator of the game will be prompted to start, once there are 2 or more players. And then... the alphabets come on and type away in the 4 test boxes that have validations.  Watch: [Video](https://youtu.be/nvsAxbnXk1w)
+   The creator of the game will be prompted to start, once there are 2 or more players. And then... the alphabets come on and type away in the 4 test boxes that have validations.  Watch: [Video](https://youtu.be/nvsAxbnXk1w)
  
-### invite others
-  When in the game open up the menu to see the invite options. These will send a link to you invite, that will enable them to join the game. 
-  ---
+### Invite others -    
+#####   When in the game open up the menu to see the invite options. These will send a link to you invite, that will enable them to join the game.
+   ---
 
 Click the logo in the game for more detailed help.
 
