@@ -55,3 +55,15 @@ Click the logo in the game for more detailed help.
    npm start
    ```
    
+
+
+
+
+
+
+
+
+## what do we say for writing documentation?
+```
+not today
+```
