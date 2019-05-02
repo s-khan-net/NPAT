@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="description" content="Name Place Animal Thing, a multiplayer game, play online with anyone, the oldest word game, you played with pen and paper, now play on the internet with anyone, anywhere, anyone">
+    <meta name="description" content="Name Place Animal Thing, a multiplayer game, play online with anyone, the oldest word game, you played with pen and paper, now play on the internet with anyone, anywhere">
     <title>Name Place Animal Thing</title>
-    <meta property="og:title" content="NPAT" >
+    <meta property="og:title" content="NPAThing" >
     <meta property="og:url" content="https://npathing.herokuapp.com/" >
-    <meta property="og:description" content="multiplayer game, play online with anyone">
+    <meta property="og:description" content="Name Place Animal Thing, a multiplayer game, play online with anyone, anywhere">
     <meta property="og:image" content="/assets/favicon/ms-icon-310x310.png">
     <meta property="og:type" content="website" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -89,7 +89,8 @@
                                 <i ng-class="meClass(p.me)" aria-hidden="true" title="Me"></i>&nbsp;
                                 <i data-ng-class="typingClass(p.playerTyping)" aria-hidden="true"></i>
                             </div>  
-                            <div id="btnPlayer" ng-click="playerDetails(p.playerName,p.playerId,p.isCreator,p.playerTyping)">
+                            <div id="btnPlayer">
+                                <!-- ng-click="playerDetails(p.playerName,p.playerId,p.isCreator,p.playerTyping)"> -->
                                 <div style="display:none">{{p.playerId}}</div>
                                 <div style="display:none">{{p.isCreator}}</div>
                                 <span class="notify-badge" style="position:absolute;z-index:3">{{p.isCreator?'admin':''}}</span>
