@@ -1,4 +1,4 @@
-var mainmodule = angular.module("app-npat",['timer','ngConfirm'])
+var mainmodule = angular.module("app-npat",['timer','ngConfirm','ngClipboard'])
 
 mainmodule.config(function($locationProvider) { //just for url params
     $locationProvider.html5Mode({
@@ -51,7 +51,7 @@ mainmodule.factory('socket', function($rootScope) {
     };
   });
 
-mainmodule.controller("game", function ($scope, $window, $location, $http, socket) {
+mainmodule.controller("game", function ($scope, $window, $location, $http, socket, ngClipboard) {
     $scope.wait = false;
     $scope.waitPlace = false;
     $scope.waitAnimal = false;
@@ -306,12 +306,18 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 ur=`mailto:?subject=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}`;
                 break;
             case 'tw':
-                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}}`;
+                ur=`https://twitter.com/intent/tweet?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}`;
+                break;
             case 'fb':
                 ur=`fb-messenger://share?text=You%20have%20been%20invited%20to%20join%20Name-Place-Animal-Thing%20at%20${l}%3Fid%3D${$scope.currentGameId}`;
+                break;
+            case 'cp':
+                ngClipboard.toClipboard(`${l.replace("%3A%2F%2F","://")}?id=${$scope.currentGameId}`);
+                break;
             default:
                 break;
         }
+        if(t!='cp')
         $window.location.href = ur;
     }
     $scope.playerDetails = function(name,playerId,admin,typing){

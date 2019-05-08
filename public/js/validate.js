@@ -35,6 +35,7 @@ function initialize(){
         $('#btnChat #btnChat').hide();
         $('.js-PlayerPic').css('margin-left','-7px');
         $('.wa').hide();
+        $('.js-share').show();
     }
     else{
         $('#logoDiv > img').prop('src','/images/logo_75X75_t.png');
@@ -47,6 +48,7 @@ function initialize(){
             $('#btnChat #btnChat').show();
         $('.js-PlayerPic').css('margin-left','7px');
         $('.wa').show();
+        $('.js-share').hide();
     }
     if(w<=360){
         $('label').css({letterSpacing:'1px',fontSize:'inherit',lineHeight:1.7,paddingLeft:'7px'});

@@ -134,7 +134,9 @@
                       </button>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu">
                         <li data-ng-show="showInvite"><div class="row">
-                                 <div class="col-xs-2"><i class="fa fa-share fa-2x" aria-hidden="true"></i></div>
+                                 <div class="col-xs-2 js-share">
+                                     <i class="fa fa-share fa-2x" aria-hidden="true"></i>
+                                </div>
                                 <div class="col-xs-2">
                                     <div class="social fb" data-ng-click="invite('fb')">
                                         <!-- <i class="fa fa-facebook-f " aria-hidden="true"></i> -->
@@ -144,6 +146,11 @@
                                 <div class="col-xs-2">
                                     <div class="social tw" data-ng-click="invite('tw')">
                                         <i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="social cp" data-ng-click="invite('cp')">
+                                        <i class="fa fa-copy" aria-hidden="true"></i>
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
@@ -660,6 +667,7 @@
 <script src="js/moment.js"></script>
 <script src="js/angular-timer.min.js"></script>
 <script src="js/angular-sanitize.js"></script>
+<script src="js/ngClipboard.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

@@ -353,6 +353,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   color:white;
   background-color:darkblue
 }
+.cp{
+  padding-left: 6px;
+  padding-top: 3px;
+}
+.cp:hover{
+  color:#fff;
+  background-color:#ccc
+}
 /*-----------------------------*/
 .chatCover{
   position: absolute;
