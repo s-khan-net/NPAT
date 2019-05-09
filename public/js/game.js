@@ -57,6 +57,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.waitAnimal = false;
     $scope.waitThing = false;
     $scope.adminAction = false;
+    $scope.newMessage=false;
 
     $scope.places=[];
     $scope.animals=[];
@@ -265,29 +266,28 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             return game.gameName.toLocaleLowerCase().indexOf(filterby) != -1;
         });
     }
+    /*-----------refresh players-------------------- */
     function refreshPlayerList(){
-        $('.js-playerLoad').show();
-        let gameId=$scope.currentGameId;//$('#hidGameId').val();
-        $http.get('/api/game/'+gameId)
-        .then(function (result) {
-            if(result.status==200){
-                $scope.game =result.data.game;
-                //build players list
-                $scope.players=[];
-                $.each(result.data.game.gamePlayers,function(i,v){
-                    let p = v.pointsForGame.reduce((a, b) => a + b, 0);
-                    $scope.players.push({playerId:v.playerid,playerName:v.playerName,pointsForGame:p,isCreator:v.isCreator,playerAvatar:`images/avatars/${v.playerAvatar}`});
-                })
-            }
-            else{
-                
-            }
-            $('.js-playerLoad').hide();
-        },
-        function(error){
-            $('.js-playerLoad').hide();
-        });
+        var obj={
+            gameId:$scope.currentGameId,
+            gamePlayers:$scope.players
+        }
+        socket.emit('players',obj);
     }
+    socket.on('onPlayers', function(data){
+        if(data.err!=''){
+            console.log('players err');
+        }
+        else{
+            if(data.gameId == $scope.currentGameId){
+                $.each(data.disconPlayers,function(i,v){
+                    if($scope.players.indexOf(v)==-1){
+                        console.log(`${v} is disconnected`);
+                    }
+                });
+            }
+        }
+    })
 
     /*--------------UI click------------- */
     $scope.randomize = function(){
@@ -400,7 +400,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.createGame = function(){
         //create a new game
         let gameid = `G-${$scope.gameName.substring(0, 3)}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
-        let playerid = `P-${$scope.gameName.substring(0, 3)}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
+        let playerid = `P-${$scope.gameName.substring(0, 3)}${socket.socket.id}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
         //set player state
         $scope.playState.gamerId = gameid;
         $scope.playState.playerId = playerid;
@@ -533,7 +533,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $scope.gameName = gameName;
             $scope.wait=true;
             $scope.loaderMsg='Joining game...';
-            var playerId = `P-${gameName.substring(0, 3)}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
+            var playerId = `P-${gameName.substring(0, 3)}${socket.socket.id}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
             let av = new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]
             var obj={
                 gameId:gameId,
@@ -682,6 +682,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
             if(data.playerId!=$scope.currentPlayerId.split('~')[0])
                 playClick();
+            setInterval(() => {
+                refreshPlayerList();
+            }, 10000);
         }
     });
 
@@ -695,6 +698,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         }
     }
     socket.on('onMessage',function(data){
+        $scope.newMessage = true;
+        
+        //its bad to manipulate the dom from angular!!!
         $('#chatbox').append(`<div style="border:1px solid #ddd;padding:3px;margin-top: 2px;margin-left:-22px;margin-
         right: 2px;background-color: white;border-radius: 7px;"><div class="row"><div class="col-xs-8" style="letter-spacing:2px;font-size:9px">${data.playerName}</div></div><div class="row"><div class="col-xs-2"><img src="${data.playerAvatar}" width=30 /></div><div class="col-xs-10" style="margin-left:-15px;font-size: 12px;font-family: monospace;">:&nbsp;${data.message}</div></div></div>`);
         $("#chatbox").scrollTop(1E10);
@@ -702,6 +708,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         $('#divStatus').text(`${data.playerName} texted`).fadeIn('slow').fadeOut(1000);
         if(data.playerId!=$scope.currentPlayerId.split('~')[0])
             playClick();
+        setTimeout(() => {
+            $scope.newMessage = false;
+        }, 3000);
     })
 
     /*-----wait from socket----*/
@@ -1255,6 +1264,12 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
                 return '';
                 break;
         }
+    }
+    $scope.newMessageClass = function(){
+        if($scope.newMessage)
+            return 'blinker';
+        else
+            return '';
     }
     $scope.meClass = function(me){
         if(me)

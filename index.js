@@ -61,6 +61,40 @@ io.sockets.on('connection', function(socket) { //socket code
             logger.info(`${obj.playerId} added to game?->>${there}`);
         });
     })
+    socket.on('players',function(obj){
+        logger.info(`getting connected players to ${obj.gameId}`);
+        try{
+            var players=[];
+            var disconPlayers=[];
+            var err='';
+            var gplayers = obj.gamePlayers;
+            io.of('/').in(`game-${obj.gameId}`).clients((error, clients) => {
+                logger.info(`${clients.length} players present of ${gplayers.length}`);
+                if (error) err=error.message;
+                clients.forEach(c => {
+                    gplayers.forEach(p => {
+                        if(p.playerId.split('-')[1].slice(3, p.playerId.length) == c){
+                            players.push(p);
+                        }
+                    });
+                });
+                if(clients.length>players.length){
+                    gplayers.forEach(p=>{
+                        if(players.indexOf(p)==-1)
+                            disconPlayers.push(p);
+                    });
+                }
+            });
+            var obj ={
+                gameId:obj.gameId,
+                disconPlayers:disconPlayers
+            }
+            io.sockets.in(`game-${obj.gameId}`).emit('onPlayers',obj);
+        }
+        catch(ex){
+            logger.error(`error while getting disconnected players for ${obj.gameId} error:${ex.message}`);
+        }
+    })
     socket.on('createGame', function(obj) {
         logger.info(`creating, joining game: ${obj.gameId} with socket id of ${socket.id}`);
         socket.join(`game-${obj.gameId}`);
@@ -143,6 +177,7 @@ io.sockets.on('connection', function(socket) { //socket code
             logger.error(`error while sending chat message from player ${obj.playerId} error:${ex.message}`);
         }
     });
+
 
     socket.on('typing', function(val) { 
         try{
