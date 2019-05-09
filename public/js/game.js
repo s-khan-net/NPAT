@@ -107,6 +107,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
 
     var FullList = [];
     $scope.players =[];
+    $scope.disconnectedPlayers=[];
     $scope.gameName='';
     $scope.games =[];
     $scope.game={};
@@ -282,7 +283,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             if(data.gameId == $scope.currentGameId){
                 $.each(data.disconPlayers,function(i,v){
                     if($scope.players.indexOf(v)==-1){
-                        console.log(`${v} is disconnected`);
+                        console.log(`${v.playerName} is disconnected`);
                     }
                 });
             }
