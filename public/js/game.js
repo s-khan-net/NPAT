@@ -683,9 +683,6 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
             if(data.playerId!=$scope.currentPlayerId.split('~')[0])
                 playClick();
-            setInterval(() => {
-                refreshPlayerList();
-            }, 10000);
         }
     });
 
