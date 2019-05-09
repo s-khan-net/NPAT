@@ -29,7 +29,7 @@ each game is a room where players are sockets.
    The creator of the game will be prompted to start, once there are 2 or more players. And then... the alphabets come on and type away in the 4 text boxes that have validations.  Watch: [Video](https://youtu.be/nvsAxbnXk1w)
  
 ### Invite others -    
-#####   When in the game open up the menu to see the invite options. These will send a link to you invite, that will enable them to join the game.
+#####   When in the game open up the menu to see the invite options. 
    ---
 
 Click the logo in the game for more detailed help.
@@ -60,8 +60,12 @@ Click the logo in the game for more detailed help.
    ```
    
 
-
-
+### NPAT uses
+[timer](https://github.com/siddii/angular-timer)
+[confirm](https://github.com/m19c/ng-confirm)
+[slimscroll](http://rocha.la/jQuery-slimScroll)
+[clipboard](https://github.com/nico-val/ngClipboard)
+[moment](http://momentjs.com/)
 
 
 
