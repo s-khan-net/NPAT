@@ -382,6 +382,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b8e1fc', end
   padding-left: 32px;
   margin-top:32px;
 }
+.disconn{
+  opacity: 0.4
+}
 /*-----------------------labels------------------*/
 .nameC{
   color:#cb0a0a

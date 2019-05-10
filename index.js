@@ -72,13 +72,16 @@ io.sockets.on('connection', function(socket) { //socket code
                 logger.info(`${clients.length} players present of ${gplayers.length}`);
                 if (error) err=error.message;
                 clients.forEach(c => {
+                    
                     gplayers.forEach(p => {
-                        if(p.playerId.split('-')[1].slice(3, p.playerId.length) == c){
+                        //console.log(`${c}, ${p.playerId}`);
+                        if(p.playerId.split('-')[5] == c){
                             players.push(p);
+                            //console.log(`players: ${players}`);
                         }
                     });
                 });
-                if(clients.length>players.length){
+                if(players.length<gplayers.length){
                     gplayers.forEach(p=>{
                         if(players.indexOf(p)==-1)
                             disconPlayers.push(p);
@@ -177,7 +180,6 @@ io.sockets.on('connection', function(socket) { //socket code
             logger.error(`error while sending chat message from player ${obj.playerId} error:${ex.message}`);
         }
     });
-
 
     socket.on('typing', function(val) { 
         try{

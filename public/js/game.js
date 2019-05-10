@@ -276,14 +276,17 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
         socket.emit('players',obj);
     }
     socket.on('onPlayers', function(data){
-        if(data.err!=''){
+        if(data.err){
             console.log('players err');
         }
         else{
+            $scope.disconnectedPlayers=[];
             if(data.gameId == $scope.currentGameId){
                 $.each(data.disconPlayers,function(i,v){
                     if($scope.players.indexOf(v)==-1){
-                        console.log(`${v.playerName} is disconnected`);
+                        $('#divStatus').hide();
+                        $('#divStatus').text(`${v.playerName} is disconnected`).fadeIn('fast').fadeOut(4000);
+                        $scope.disconnectedPlayers.push(v);
                     }
                 });
             }
@@ -401,7 +404,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
     $scope.createGame = function(){
         //create a new game
         let gameid = `G-${$scope.gameName.substring(0, 3)}-${uuidv4()}-${Date.now()}-${uuidv4()}`;
-        let playerid = `P-${$scope.gameName.substring(0, 3)}${socket.socket.id}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
+        let playerid = `P-${$scope.gameName.substring(0, 3)}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}-${socket.socket.id}`;
         //set player state
         $scope.playState.gamerId = gameid;
         $scope.playState.playerId = playerid;
@@ -534,7 +537,7 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $scope.gameName = gameName;
             $scope.wait=true;
             $scope.loaderMsg='Joining game...';
-            var playerId = `P-${gameName.substring(0, 3)}${socket.socket.id}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}`;
+            var playerId = `P-${gameName.substring(0, 3)}-${$scope.playerName}-${Date.now()}-${$('#hidPlayerAv').val().split('.')[0]}-${socket.socket.id}`;
             let av = new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]
             var obj={
                 gameId:gameId,
@@ -683,6 +686,9 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             $('#divStatus').text(`${p} has joined`).fadeIn('slow').fadeOut(5000);
             if(data.playerId!=$scope.currentPlayerId.split('~')[0])
                 playClick();
+            setInterval(() => {
+                refreshPlayerList();
+            }, 10000);
         }
     });
 
@@ -1268,6 +1274,16 @@ mainmodule.controller("game", function ($scope, $window, $location, $http, socke
             return 'blinker';
         else
             return '';
+    }
+    $scope.connClass = function(id){
+        var c='';
+        if(id)
+        $.each($scope.disconnectedPlayers,function(i,v){
+            if(id==v.playerId){
+                c='disconn';
+            }
+        });
+        return c;
     }
     $scope.meClass = function(me){
         if(me)

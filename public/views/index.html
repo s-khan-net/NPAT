@@ -76,8 +76,7 @@
             </div> 
             <div class="row" style="padding-top:3px;direction: 'ltr'">
                 <div id="playersContainer">
-                    <div class="row " ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
-                        
+                    <div class="row" data-ng-class="connClass(p.playerId)" ng-repeat="p in players" style="padding: 2px;background-color: #EEE;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;">
                         <div class=" col-md-8 col-xs-12 js-playerName" style="padding-left:17px">
                             <div>
                                 <div class="col-md-12 col-xs-12 text-right js-PlayerName" >
