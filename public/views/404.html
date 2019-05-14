@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Page not found</title>
+    <meta name="theme-color" content="#c0deea" id="themeColor">
+    <script src="js/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css" />
+    <script src="js/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap/dist/js/bootstrap-tooltip.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+        $(document).ready(function(){
+            $('.blinker').dblclick(function(){
+                $('.well').show('slow')
+            });
+            $('input').on('change',function(){
+                if($(this).val()=='SUPERCALIFRAGILISTICEXPIALIDOCIOUS'){
+                    alert('Even though the sound of it is something quite atrocious');
+                }
+            });
+        });
+    </script>
+</head>
+<body >
+    <div class="container" >
+        <div class="jumbotron" style="background-color: transparent">
+            <div class="row">
+                <div class="col-xs-12 text-center" style="font-size:24px;cursor: default"><span>4</span><span class="blinker">0</span><span>4 - Page not found</span></div>
+            </div>
+        </div>
+        <div class="well" style="display:none">
+            <div class="row">
+                <div class="col-xs-4">Wassup!</div>
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

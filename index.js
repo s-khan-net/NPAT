@@ -704,6 +704,11 @@ io.sockets.on('connection', function(socket) { //socket code
          return {places:place,animals:animal,things:thing};
     }
 });
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+    res.status(404).sendFile('404.html',{root:`${__dirname}/public/views/`});
+});
+  
 server.listen(process.env.PORT, function() {
     console.log(`http://localhost:${process.env.PORT}`);
 });
