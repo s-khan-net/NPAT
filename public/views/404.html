@@ -14,13 +14,29 @@
     <script>
         $(document).ready(function(){
             $('.blinker').dblclick(function(){
+                $('input').val('');
                 $('.well').show('slow')
             });
             $('input').on('change',function(){
                 if($(this).val()=='SUPERCALIFRAGILISTICEXPIALIDOCIOUS'){
-                    alert('Even though the sound of it is something quite atrocious');
+                    $(this).attr('disabled','disabled');
+                    typeWriter();
                 }
             });
+            var i = 0;
+            var txt = 'Even though the sound of it is something quite atrocious';
+            var speed = 50;
+
+            function typeWriter() {
+                if (i < txt.length) {
+                    document.getElementById("type").innerHTML += txt.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+                else{
+                    
+                }
+            }
         });
     </script>
 </head>
@@ -35,8 +51,11 @@
             <div class="row">
                 <div class="col-xs-4">Wassup!</div>
                 <div class="col-xs-8">
-                    <input type="text" class="form-control" />
+                    <input type="text" style="font-size:24px" class="form-control" />
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center" id="type" style="font-size:24px;cursor: default"></div>
             </div>
         </div>
     </div>
