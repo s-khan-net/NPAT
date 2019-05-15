@@ -8,16 +8,15 @@
     <script src="js/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="js/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css" />
-    <script src="js/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/bootstrap/dist/js/bootstrap-tooltip.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <script>
         $(document).ready(function(){
+            init();
             $('.blinker').dblclick(function(){
                 $('input').val('');
                 $('.well').show('slow')
             });
-            $('input').on('change',function(){
+            $('input').click(function(){
                 if($(this).val()=='SUPERCALIFRAGILISTICEXPIALIDOCIOUS'){
                     $(this).attr('disabled','disabled');
                     typeWriter();
@@ -34,14 +33,80 @@
                     setTimeout(typeWriter, speed);
                 }
                 else{
-                    
+                    $('#main').hide(5000);
+                    $('#grid').show(4000);
                 }
             }
         });
+        function init(){
+            $.get('/api/game/games',function(data){
+                var d = data;
+            });
+            var grid = $("#list");
+                grid.jqGrid({
+                url:'/api/game/games',
+		        datatype: "json",
+                colNames: ['ID','Game', 'Active', 'Started', 'Ended', 'Abandoned'],
+                colModel: [{
+                    name:'gameId',
+                    index:'gameId',
+                    key: true,
+                    width:100,
+                },{
+                    name: 'gameName',
+                    index: 'gameName',
+                    width: 70,
+                }, {
+                    name: 'gameActive',
+                    index: 'gameActive',
+                    width: 70,
+                }, {
+                    name: 'gameStarted',
+                    index: 'gameStarted',
+                    width: 70
+                }, {
+                    name: 'gameEnded',
+                    index: 'gameEnded',
+                    width: 70,
+                }, {
+                    name: 'gameAbandoned',
+                    index: 'gameAbandoned',
+                    width: 70,
+                }],
+                search: true,
+                pager: '#pager',
+                jsonReader: {
+                    cell: ""
+                },
+                rowNum: 10,
+                rowList: [5, 10, 20, 50],
+                sortname: 'gameId',
+                sortorder: 'asc',
+                viewrecords: true,
+                height: "100%",
+                multiSort:true,
+                caption: "All the games"
+                
+            });
+            grid.jqGrid('navGrid', '#pager', {
+                add: false,
+                edit: false,
+                del: false,
+                search: true,
+                refresh: true
+            }, {}, {}, {}, {
+                multipleSearch: true,
+                multipleGroup: true,
+                showQuery: true
+            });
+        }
     </script>
 </head>
 <body >
-    <div class="container" >
+    <div class="container" id="grid" style="display:none">
+        <table id="list"></table><div id="pager"></div>
+    </div>
+    <div class="container" id="main">
         <div class="jumbotron" style="background-color: transparent">
             <div class="row">
                 <div class="col-xs-12 text-center" style="font-size:24px;cursor: default"><span>4</span><span class="blinker">0</span><span>4 - Page not found</span></div>
@@ -59,4 +124,10 @@
             </div>
         </div>
     </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css" rel="stylesheet" type="text/css" />
 </body>

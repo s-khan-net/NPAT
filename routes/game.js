@@ -13,6 +13,11 @@ router.get('/', async (req,res)=>{
     if(g) res.status(200).send({game:g});
     else res.status(401).send('Games not found');
 });
+router.get('/games', async (req,res)=>{
+    const g = await Game.find();
+    if(g) res.status(200).send(g);
+    else res.status(401).send('Games not found');
+});
 router.get('/:gameId', async (req,res)=>{
     const g = await Game.findOne({gameId:req.params.gameId});
     if(g) res.status(200).send({game:g});
