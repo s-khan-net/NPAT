@@ -39,9 +39,6 @@
             }
         });
         function init(){
-            $.get('/api/game/games',function(data){
-                var d = data;
-            });
             var grid = $("#list");
                 grid.jqGrid({
                 url:'/api/game/games',
@@ -85,7 +82,8 @@
                 viewrecords: true,
                 height: "100%",
                 multiSort:true,
-                caption: "All the games"
+                caption: "All the games",
+                widtH:'100%'
                 
             });
             grid.jqGrid('navGrid', '#pager', {
