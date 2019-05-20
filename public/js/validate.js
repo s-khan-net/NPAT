@@ -131,13 +131,13 @@ function initialize(){
     $('#txtPlayerName').on('keyup',function(){
         if($('#txtPlayerName').val().length>3){
             $('#txtPlayerName').attr('style','border:none');
-            $('#btnPlayerOn').removeAttr('disabled');
-            $('#btnPlayerOnJoin').removeAttr('disabled');
+            // $('#btnPlayerOn').removeAttr('disabled');
+            // $('#btnPlayerOnJoin').removeAttr('disabled');
         }
         else{
             $('#txtPlayerName').attr('style','border:1px solid red');
-            $('#btnPlayerOn').attr('disabled','disabled');
-            $('#btnPlayerOnJoin').attr('disabled','disabled');
+            // $('#btnPlayerOn').attr('disabled','disabled');
+            // $('#btnPlayerOnJoin').attr('disabled','disabled');
         }
     });
     $('#btnPlayerOn').click(function(){
@@ -151,7 +151,7 @@ function initialize(){
             $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
         }
         else{
-            
+
         }
     });
     $('#txtGameName').on('keyup',function(){

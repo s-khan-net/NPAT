@@ -330,10 +330,10 @@
                     <input type="text" class="form-control" id="txtPlayerName" data-ng-model="playerName" placeholder="player1" maxlength="8" required/>
                 </div>
                 <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px" ng-hide="game.gameName">
-                    <button class="btn btn-primary btn-sm" disabled id="btnPlayerOn"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
+                    <button class="btn btn-primary btn-sm" id="btnPlayerOn"><i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
                 </div>
                 <div class="col-md-2 col-xs-2 text-left" style="padding-left:0px;"  ng-show="game.gameName">
-                    <button class="btn btn-primary btn-sm" disabled id="btnPlayerOnJoin" data-ng-click="joinGame(game.gameId,game.gameName,game.gamePlayers.length)">Join <i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
+                    <button class="btn btn-primary btn-sm" id="btnPlayerOnJoin" data-ng-click="joinGame(game.gameId,game.gameName,game.gamePlayers.length)">Join <i style="padding-top:6px" class="fa fa-arrow-right fa-lg"></i></button>
                 </div>
             </div>
             
