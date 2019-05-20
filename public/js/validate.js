@@ -130,22 +130,29 @@ function initialize(){
 
     $('#txtPlayerName').on('keyup',function(){
         if($('#txtPlayerName').val().length>3){
+            $('#txtPlayerName').attr('style','border:none');
             $('#btnPlayerOn').removeAttr('disabled');
             $('#btnPlayerOnJoin').removeAttr('disabled');
         }
         else{
+            $('#txtPlayerName').attr('style','border:1px solid red');
             $('#btnPlayerOn').attr('disabled','disabled');
             $('#btnPlayerOnJoin').attr('disabled','disabled');
         }
     });
     $('#btnPlayerOn').click(function(){
-        $('.js-playerStuff').hide();
-        $('#js-gameContainer').removeClass().addClass('col-xs-9').addClass('col-md-6');
-        $('#gamesList').fadeIn('slow');
-        //$('#gameTime').val(60); doesnt set the scope var!!:(
-        $('.js-gameStuff').show();
-        $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
-        $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
+        if($('#txtPlayerName').val().length>3){
+            $('.js-playerStuff').hide();
+            $('#js-gameContainer').removeClass().addClass('col-xs-9').addClass('col-md-6');
+            $('#gamesList').fadeIn('slow');
+            //$('#gameTime').val(60); doesnt set the scope var!!:(
+            $('.js-gameStuff').show();
+            $('#avatarContainer2 > img').prop('src',$('#avatarContainer > img').prop('src'));
+            $('#hidPlayerAv').val(new URL($('#avatarContainer > img').prop('src')).pathname.split('/')[3]);
+        }
+        else{
+            
+        }
     });
     $('#txtGameName').on('keyup',function(){
         if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
