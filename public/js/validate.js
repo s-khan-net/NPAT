@@ -156,10 +156,10 @@ function initialize(){
     });
     $('#txtGameName').on('keyup',function(){
         if($('#txtGameName').val().length>3  && $('#gameTime').find(":selected").text()!='Select time'){
-            $('#btnGameOn').removeAttr('disabled');
+            $('#txtGameName').attr('style','border:none');
         }
         else{
-            $('#btnGameOn').attr('disabled','disabled');
+            $('#txtGameName').attr('style','border:1px solid red');
         }
     });
     $('#gameTime').on('change',function(){
