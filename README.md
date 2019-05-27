@@ -11,7 +11,7 @@ each game is a room where players are sockets.
 
 ### After you have entered your name and clicked ahead, 
 
-<img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/assets/gif-strt.gif" width="32%"/>
+<img src="https://npathing.herokuapp.com/assets/gif-strt.gif" width="32%"/>
 
 ### you can either join a  game or create one
 
@@ -21,7 +21,7 @@ each game is a room where players are sockets.
 ### Join -
   To join a game, select a game from the list (to the right). This is how a game would look like 
   
-  <img src="https://raw.githubusercontent.com/s-khan-net/NPAT/master/public/images/gameListItem.png" /> Click the game to join.
+  <img src="https://npathing.herokuapp.com/images/gameListItem.png" /> Click the game to join.
 
   When you join a game that is already started, you will be resuming the plays (alphabets left in the game)
 
