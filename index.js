@@ -52,7 +52,6 @@ app.use('/assets', express.static(__dirname + '/assets'));
 let alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 io.sockets.on('connection', function(socket) { //socket code
     socket.on('testMsg',function(obj){
-        logger.error('test message');
         var data ={msg:'wassup from server',o:obj};
         io.sockets.emit('onTestMsg', data)
     })
