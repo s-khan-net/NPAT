@@ -1,4 +1,4 @@
-![NPAT](https://npathing.herokuapp.com/images/logo_145X145_t.png)
+<img src="https://github.com/s-khan-net/NPAT/tree/master/public/images/logo_145X145_t.png"
 ---
 Name-Place-Animal-Thing -  Play this multiplayer game 
 built on MEAN stack & hosted on heroku (free dyno - can stop working every 550 hours)
