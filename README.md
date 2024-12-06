@@ -2,7 +2,7 @@
 ---
 Name-Place-Animal-Thing -  Play this multiplayer game 
 built on MEAN stack & hosted on heroku (free dyno - can stop working every 550 hours)
-<img src="https://npathing.herokuapp.com/images/meanh_23.png" />
+<img src="[https://npathing.herokuapp.com/image](https://github.com/s-khan-net/NPAT/tree/master/public/images)s/meanh_23.png" />
 
 This game uses sockets to keep up, 
 also has a chat
